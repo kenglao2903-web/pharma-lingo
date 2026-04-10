@@ -1,5 +1,6 @@
 'use client'
 import { useState, useRef, useEffect } from 'react';
+import { specialData } from './specialData';
 
 // ==========================================
 // 🛠️ Component: จัดการชื่อยาไม่ให้ล้นกรอบ (Auto-Scale)
@@ -14,27 +15,17 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
       if (containerRef.current && textRef.current) {
         const containerW = containerRef.current.offsetWidth;
         const textW = textRef.current.offsetWidth;
-        if (textW > containerW) {
-          setScale(containerW / textW);
-        } else {
-          setScale(1);
-        }
+        if (textW > containerW) setScale(containerW / textW);
+        else setScale(1);
       }
     };
-    resize();
-    window.addEventListener('resize', resize);
+    resize(); window.addEventListener('resize', resize);
     return () => window.removeEventListener('resize', resize);
   }, [text]);
 
   return (
     <div ref={containerRef} className="w-full flex items-center justify-center overflow-visible px-2">
-      <span
-        ref={textRef}
-        className={`inline-block font-black whitespace-nowrap origin-center transition-transform duration-200 ${
-          isMain ? 'text-4xl md:text-6xl lg:text-[4.5rem] text-slate-900 drop-shadow-sm' : 'text-xl md:text-3xl text-yellow-900 opacity-80'
-        }`}
-        style={{ transform: `scale(${scale})` }}
-      >
+      <span ref={textRef} className={`inline-block font-black whitespace-nowrap origin-center transition-transform duration-200 ${isMain ? 'text-4xl md:text-6xl lg:text-[4.5rem] text-slate-900 drop-shadow-sm' : 'text-xl md:text-3xl text-yellow-900 opacity-80'}`} style={{ transform: `scale(${scale})` }}>
         {text.toUpperCase()}
       </span>
     </div>
@@ -210,49 +201,12 @@ const LANGUAGES = [
   { code: 'ja', flag: '🇯🇵', label: 'Japan' }, { code: 'ar', flag: '🇦🇪', label: 'United Arab Emirates' }
 ];
 
-// ==========================================
-// 🪄 คลังข้อมูลยาเทคนิคพิเศษ (Specialty Devices Data)
-// ==========================================
-const specialData = [
-  {
-    id: 'mdi',
-    icon: '💨',
-    title: { th: 'ยาพ่นสูด (MDI Inhaler)', en: 'MDI Inhaler', de: 'Dosieraerosol', zh: '定量吸入器 (MDI)', ja: 'MDI 吸入器', ru: 'Дозированный ингалятор', ar: 'جهاز الاستنشاق بالجرعات' },
-    steps: [
-      { icon: '🪇', desc: { th: 'เขย่าขวด 3-5 ครั้ง', en: 'Shake well 3-5 times', de: '3-5 mal gut schütteln', zh: '用力摇匀 3-5 次', ja: '3〜5回よく振る', ru: 'Хорошо встряхнуть 3-5 раз', ar: 'رج جيدا 3-5 مرات' } },
-      { icon: '😮‍💨', desc: { th: 'หายใจออกให้สุด', en: 'Breathe out completely', de: 'Vollständig ausatmen', zh: '完全呼气', ja: '完全に息を吐く', ru: 'Полностью выдохните', ar: 'الزفير تماما' } },
-      { icon: '🌬️', desc: { th: 'อมปากกระบอก กดพร้อมสูดเข้าลึกๆ', en: 'Press and inhale deeply', de: 'Drücken und tief einatmen', zh: '按下并深吸气', ja: '押して深く吸い込む', ru: 'Нажмите и глубоко вдохните', ar: 'اضغط واستنشق بعمق' } },
-      { icon: '⏳', desc: { th: 'กลั้นหายใจ 10 วินาที', en: 'Hold breath for 10 seconds', de: 'Atem 10 Sekunden anhalten', zh: '屏住呼吸 10 秒', ja: '10秒間息を止める', ru: 'Задержите дыхание на 10 сек', ar: 'حبس الأنفاس لمدة 10 ثوان' } },
-    ]
-  },
-  {
-    id: 'accuhaler',
-    icon: '🕹️',
-    title: { th: 'ยาพ่นผงแห้ง (Accuhaler)', en: 'Accuhaler / Diskus', de: 'Pulverinhalator', zh: '干粉吸入剂 (Accuhaler)', ja: 'アキュヘラー', ru: 'Порошковый ингалятор (Accuhaler)', ar: 'جهاز الاستنشاق الجاف' },
-    steps: [
-      { icon: '🔓', desc: { th: 'เลื่อนเปิดและดันคันโยกจนดังกริ๊ก', en: 'Slide open & push lever until click', de: 'Aufschieben & Hebel bis zum Klick drücken', zh: '滑开并推动控制杆直到咔哒声', ja: 'スライドさせて開き、カチッと鳴るまでレバーを押す', ru: 'Сдвиньте и нажмите рычаг до щелчка', ar: 'افتح الشريحة وادفع الرافعة حتى تنقر' } },
-      { icon: '😮‍💨', desc: { th: 'หายใจออกให้สุด (ห้ามเป่าใส่เครื่อง)', en: 'Breathe out (do not blow into device)', de: 'Ausatmen (nicht ins Gerät blasen)', zh: '呼气（不要吹入设备）', ja: '息を吐く（デバイスに吹き込まない）', ru: 'Выдохните (не дуйте в устройство)', ar: 'تزفر (لا تنفخ في الجهاز)' } },
-      { icon: '🌬️', desc: { th: 'อมปากกระบอก สูดเข้าแรงและลึก', en: 'Inhale deeply and forcefully', de: 'Tief und kräftig einatmen', zh: '用力深吸气', ja: '深く力強く吸い込む', ru: 'Вдохните глубоко и с силой', ar: 'يستنشق بعمق وبقوة' } },
-      { icon: '🔒', desc: { th: 'กลั้นหายใจ 10 วิ แล้วเลื่อนปิด', en: 'Hold breath 10s, then slide to close', de: 'Atem 10s anhalten, dann zuschieben', zh: '屏住呼吸10秒，然后滑动关闭', ja: '10秒間息を止め、スライドして閉じる', ru: 'Задержите дыхание 10с, затем закройте', ar: 'احبس أنفاسك 10 ثوانٍ ثم اغلق' } },
-    ]
-  },
-  {
-    id: 'eye_drops',
-    icon: '👁️',
-    title: { th: 'ยาหยอดตา (Eye Drops)', en: 'Eye Drops', de: 'Augentropfen', zh: '滴眼液', ja: '点眼薬', ru: 'Глазные капли', ar: 'قطرات العين' },
-    steps: [
-      { icon: '🧼', desc: { th: 'ล้างมือให้สะอาดก่อนใช้', en: 'Wash hands thoroughly before use', de: 'Vor Gebrauch Hände waschen', zh: '使用前彻底洗手', ja: '使用前に手をよく洗う', ru: 'Тщательно вымойте руки перед использованием', ar: 'اغسل يديك جيدا قبل الاستخدام' } },
-      { icon: '🙄', desc: { th: 'แหงนหน้าขึ้น ดึงเปลือกตาล่างลง', en: 'Tilt head back, pull lower eyelid down', de: 'Kopf zurück, unteres Lid nach unten ziehen', zh: '仰起头，向下拉下眼睑', ja: '頭を後ろに傾け、下まぶたを引く', ru: 'Наклоните голову, оттяните нижнее веко', ar: 'قم بإمالة الرأس للخلف واسحب الجفن السفلي' } },
-      { icon: '💧', desc: { th: 'หยอด 1 หยด (ห้ามปลายโดนตา)', en: 'Apply 1 drop (do not touch eye)', de: '1 Tropfen (Auge nicht berühren)', zh: '滴 1 滴（管口勿接触眼睛）', ja: '1滴点眼（先端が目に触れないように）', ru: 'Капните 1 каплю (не касаясь глаза)', ar: 'ضع قطرة واحدة (لا تلمس العين)' } },
-      { icon: '😌', desc: { th: 'หลับตาเบาๆ 1-2 นาที', en: 'Close eye gently for 1-2 mins', de: 'Auge sanft 1-2 Min schließen', zh: '轻轻闭眼 1-2 分钟', ja: '1〜2分間優しく目を閉じる', ru: 'Мягко закройте глаз на 1-2 мин', ar: 'أغلق العين بلطف لمدة 1-2 دقيقة' } },
-    ]
-  }
-];
-
 export default function PharmaLingoApp() {
   const [hasStarted, setHasStarted] = useState(false);
   const [animatingLang, setAnimatingLang] = useState<string | null>(null); 
   const [patientLang, setPatientLang] = useState<Lang>('en');
+  // 🎙️ เพิ่ม State เลือกระบุเพศของเสียงพูด
+  const [voiceGender, setVoiceGender] = useState<'female' | 'male'>('female');
   
   const [appMode, setAppMode] = useState<AppMode>('history');
   const [dispenseState, setDispenseState] = useState<DispenseState>('input'); 
@@ -260,8 +214,6 @@ export default function PharmaLingoApp() {
   
   const [activeQuestion, setActiveQuestion] = useState<string | null>(null);
   const [boolAnswer, setBoolAnswer] = useState<string | null>(null); 
-
-  // 🪄 State สำหรับ Instant Guide
   const [activeGuide, setActiveGuide] = useState<any>(null);
 
   // 🛒 ตะกร้ายา (Cart)
@@ -333,39 +285,61 @@ export default function PharmaLingoApp() {
     setIsTranslating(false);
   };
 
-  const speakSpecificRx = (rx: Prescription) => {
+  // 🎙️ อัปเกรดระบบดึงเสียงให้รองรับ Siri / เพศหญิงชาย
+  const speakText = (text: string, langCode: string, forceEnglish: boolean = false) => {
     if (!synthRef.current) return;
-    synthRef.current.cancel(); 
-    const text = generateSpeechText(rx);
-    if (!text) return;
-    const utterance = new SpeechSynthesisUtterance(text.replace(/\|/g, ','));
+    synthRef.current.cancel();
+    
+    const utterance = new SpeechSynthesisUtterance(text);
     const voices = synthRef.current.getVoices();
-    const targetVoice = voices.find(v => v.lang.startsWith(patientLang));
-    if (targetVoice) utterance.voice = targetVoice;
+    const targetLangMatch = forceEnglish ? 'en' : langCode;
+    
+    let filteredVoices = voices.filter(v => v.lang.startsWith(targetLangMatch));
+    
+    // ค้นหาเสียงระดับ Premium หรือ Siri ก่อน
+    let preferredVoice = filteredVoices.find(v => {
+      const name = v.name.toLowerCase();
+      const isPremium = name.includes('premium') || name.includes('siri') || name.includes('enhanced');
+      if (voiceGender === 'male') return isPremium && (name.includes('male') || name.includes('otoya') || name.includes('aaron'));
+      return isPremium && (name.includes('female') || name.includes('kyoko') || name.includes('samantha'));
+    });
+
+    // ถ้าไม่มีเสียง Premium ค่อยหาเสียงธรรมดาตามเพศ
+    if (!preferredVoice) {
+      preferredVoice = filteredVoices.find(v => {
+        const name = v.name.toLowerCase();
+        if (voiceGender === 'male') return name.includes('male') || name.includes('otoya') || name.includes('aaron');
+        return name.includes('female') || name.includes('kyoko') || name.includes('samantha');
+      });
+    }
+
+    // ถ้ายังไม่เจออีก เอาเสียงแรกที่เจอก็พอ
+    if (!preferredVoice && filteredVoices.length > 0) preferredVoice = filteredVoices[0];
+    
+    if (preferredVoice) utterance.voice = preferredVoice;
+
     const voiceLangMap: any = { ar: 'ar-SA', de: 'de-DE', en: 'en-US', zh: 'zh-CN', ja: 'ja-JP', ru: 'ru-RU' };
-    utterance.lang = voiceLangMap[patientLang] || patientLang;
+    utterance.lang = voiceLangMap[targetLangMatch] || targetLangMatch;
     utterance.rate = 0.85; 
-    utterance.onend = () => setIsSpeaking(false); utterance.onerror = () => setIsSpeaking(false);
-    setIsSpeaking(true); synthRef.current.speak(utterance);
+    utterance.onend = () => setIsSpeaking(false);
+    
+    setIsSpeaking(true);
+    synthRef.current.speak(utterance);
   };
 
-  // 🪄 เสียงพูดสำหรับ Instant Guide (ยาเทคนิคพิเศษ)
+  const speakSpecificRx = (rx: Prescription) => {
+    if (!synthRef.current) return;
+    const text = generateSpeechText(rx);
+    if (text) speakText(text.replace(/\|/g, ','), patientLang);
+  };
+
   const speakGuide = (guide: any) => {
     if (!synthRef.current) return;
-    synthRef.current.cancel(); 
     let text = (guide.title[patientLang] || guide.title.en) + '.\n';
     guide.steps.forEach((step: any, i: number) => {
        text += `Step ${i + 1}: ${step.desc[patientLang] || step.desc.en}.\n`;
     });
-    const utterance = new SpeechSynthesisUtterance(text);
-    const voices = synthRef.current.getVoices();
-    const targetVoice = voices.find(v => v.lang.startsWith(patientLang));
-    if (targetVoice) utterance.voice = targetVoice;
-    const voiceLangMap: any = { ar: 'ar-SA', de: 'de-DE', en: 'en-US', zh: 'zh-CN', ja: 'ja-JP', ru: 'ru-RU' };
-    utterance.lang = voiceLangMap[patientLang] || patientLang;
-    utterance.rate = 0.85; 
-    utterance.onend = () => setIsSpeaking(false); utterance.onerror = () => setIsSpeaking(false);
-    setIsSpeaking(true); synthRef.current.speak(utterance);
+    speakText(text, patientLang);
   };
 
   const toggleHistorySpeech = () => {
@@ -374,26 +348,18 @@ export default function PharmaLingoApp() {
     else {
       const text = activeQuestion ? (dict[patientLang] as any)[activeQuestion] : translatedText;
       speakText(text, patientLang);
-      setIsSpeaking(true);
     }
   };
 
-  const speakText = (text: string, langCode: string) => {
-    if (!synthRef.current) return;
-    synthRef.current.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    const voices = synthRef.current.getVoices();
-    const targetVoice = voices.find(v => v.lang.startsWith(langCode));
-    if (targetVoice) utterance.voice = targetVoice;
-    const voiceLangMap: any = { ar: 'ar-SA', de: 'de-DE', en: 'en-US', zh: 'zh-CN', ja: 'ja-JP', ru: 'ru-RU' };
-    utterance.lang = voiceLangMap[langCode] || langCode;
-    utterance.rate = 0.85; 
-    utterance.onend = () => setIsSpeaking(false);
-    synthRef.current.speak(utterance);
+  // 🌏 เมื่อกดเลือกประเทศ ให้อ่านชื่อประเทศ (เป็นภาษาอังกฤษ) ยืนยันเสียงด้วย
+  const handleLangSelect = (code: string, label: string) => { 
+    setPatientLang(code as Lang); 
+    setAnimatingLang(code); 
+    speakText(label, 'en', true); // บังคับอ่านภาษาอังกฤษ
+    setTimeout(() => { setHasStarted(true); setAnimatingLang(null); }, 1000); 
   };
 
-  const handleLangSelect = (code: string) => { setPatientLang(code as Lang); setAnimatingLang(code); setTimeout(() => { setHasStarted(true); setAnimatingLang(null); }, 800); };
-  const askQuestion = (qId: string) => { setAppMode('history'); setActiveQuestion(qId); setTranslatedText(''); setBoolAnswer(null); setIsSpeaking(true); speakText((dict[patientLang] as any)[qId], patientLang); };
+  const askQuestion = (qId: string) => { setAppMode('history'); setActiveQuestion(qId); setTranslatedText(''); setBoolAnswer(null); speakText((dict[patientLang] as any)[qId], patientLang); };
   const parseSmartText = (template: string, value: string | number, unitKey: string) => { const numValue = Number(value) || 0; return template.replace('{n}', numValue.toString()).replace('{u}', unitDict[unitKey][patientLang]); };
 
   const translateDrugName = async () => {
@@ -490,11 +456,18 @@ export default function PharmaLingoApp() {
   if (!hasStarted) {
     return (
       <div className="min-h-[100dvh] w-full bg-[#0f172a] flex flex-col items-center justify-center relative overflow-hidden font-sans">
-        <div className={`absolute top-12 md:top-20 text-center z-20 transition-opacity duration-300 ${animatingLang ? 'opacity-0' : 'opacity-100'}`}>
+        <div className={`absolute top-8 md:top-20 text-center z-20 transition-opacity duration-300 ${animatingLang ? 'opacity-0' : 'opacity-100'}`}>
           <h1 className="text-3xl md:text-5xl font-black text-white tracking-widest drop-shadow-md">Assistance Dispenser</h1>
           <p className="text-slate-400 mt-2 text-sm md:text-base font-bold tracking-widest uppercase">Tap to Select Patient Language</p>
+          
+          {/* 🎙️ ปุ่มเลือกเพศของเสียงพูด */}
+          <div className="flex items-center justify-center gap-4 mt-6">
+            <button onClick={() => setVoiceGender('female')} className={`px-6 py-3 rounded-full font-black text-sm md:text-base transition-all border-2 ${voiceGender === 'female' ? 'bg-pink-600 text-white border-pink-400 shadow-[0_0_15px_rgba(219,39,119,0.5)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700'}`}>👩🏻 Female Voice</button>
+            <button onClick={() => setVoiceGender('male')} className={`px-6 py-3 rounded-full font-black text-sm md:text-base transition-all border-2 ${voiceGender === 'male' ? 'bg-blue-600 text-white border-blue-400 shadow-[0_0_15px_rgba(37,99,235,0.5)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700'}`}>👨🏻 Male Voice</button>
+          </div>
         </div>
-        <div className="relative w-[320px] h-[320px] flex items-center justify-center mt-10">
+
+        <div className="relative w-[320px] h-[320px] flex items-center justify-center mt-10 md:mt-20">
           <div className={`absolute w-full h-full rounded-full border-[4px] border-slate-800 transition-opacity duration-300 ${animatingLang ? 'opacity-0' : 'opacity-100'}`}></div>
           <div className={`absolute text-slate-600 text-5xl animate-pulse transition-opacity duration-300 ${animatingLang ? 'opacity-0' : 'opacity-100'}`}>👆</div>
           {LANGUAGES.map((l, index) => {
@@ -502,7 +475,7 @@ export default function PharmaLingoApp() {
             const isAnimating = animatingLang === l.code;
             const isOther = animatingLang && animatingLang !== l.code;
             return (
-              <button key={l.code} onClick={() => handleLangSelect(l.code)}
+              <button key={l.code} onClick={() => handleLangSelect(l.code, l.label)}
                 className={`absolute top-1/2 left-1/2 w-16 h-16 -ml-8 -mt-8 flex flex-col items-center justify-center outline-none transition-all duration-[800ms] ease-[cubic-bezier(0.8,0,0.2,1)] ${isOther ? 'opacity-0 scale-0' : ''} ${isAnimating ? 'z-50' : 'z-10 hover:scale-110 cursor-pointer'}`}
                 style={isAnimating ? { transform: 'translate(0px, 0px) scale(80)' } : { transform: `rotate(${rotation}deg) translateY(-160px)` }}
               >
@@ -528,28 +501,24 @@ export default function PharmaLingoApp() {
   // ==========================================
   const renderGuideCard = (guide: any) => {
     return (
-      <div className="w-full max-w-lg h-full max-h-[85vh] bg-white rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden border-4 border-teal-200 relative" dir={isRTL ? 'rtl' : 'ltr'}>
+      <div className="w-full max-w-lg landscape:max-w-4xl h-full max-h-[85vh] landscape:max-h-screen bg-white rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden border-4 border-teal-200 relative" dir={isRTL ? 'rtl' : 'ltr'}>
         <div className="bg-gradient-to-r from-teal-700 to-emerald-900 p-4 md:p-6 text-center relative shrink-0 flex justify-between items-center shadow-inner">
           <span className="text-3xl opacity-30">🪄</span>
           <div className="flex flex-col items-center">
             <h1 className="text-white font-black text-base md:text-xl tracking-widest uppercase leading-none">Bangkok Pattaya Hospital</h1>
             <p className="text-teal-200 text-[10px] md:text-sm font-bold mt-1 tracking-widest">{p.spec_guide}</p>
           </div>
-          {/* 🔊 ปุ่มลำโพงประจำการ์ด Instant Guide */}
           <button onClick={() => speakGuide(guide)} className={`w-12 h-12 md:w-14 md:h-14 rounded-full text-xl md:text-2xl shadow-lg flex items-center justify-center transition-all ${isSpeaking ? 'bg-white text-teal-600 animate-pulse' : 'bg-slate-800/50 text-white border border-white/20 hover:bg-slate-700'}`}>
             {isSpeaking ? '🛑' : '🔊'}
           </button>
         </div>
 
-        <div className="bg-teal-50/30 flex flex-col gap-3 flex-1 relative overflow-y-auto p-4 md:p-6 custom-scrollbar">
-          <div className="bg-gradient-to-r from-teal-100 to-emerald-100 border-2 border-teal-400 rounded-3xl p-5 flex items-center justify-center gap-4 shadow-sm text-center shrink-0">
+        <div className="bg-teal-50/30 flex flex-col landscape:flex-row gap-3 flex-1 relative overflow-y-auto landscape:overflow-y-auto p-4 md:p-6 custom-scrollbar">
+          <div className="landscape:flex-1 bg-gradient-to-r from-teal-100 to-emerald-100 border-2 border-teal-400 rounded-3xl p-5 flex items-center justify-center gap-4 shadow-sm text-center shrink-0">
             <span className="text-5xl drop-shadow-md">{guide.icon}</span>
-            <span className="text-teal-900 font-black text-2xl md:text-3xl leading-tight drop-shadow-sm">
-              {guide.title[patientLang] || guide.title.en}
-            </span>
+            <span className="text-teal-900 font-black text-2xl md:text-3xl leading-tight drop-shadow-sm">{guide.title[patientLang] || guide.title.en}</span>
           </div>
-
-          <div className="flex flex-col gap-3 mt-3">
+          <div className="flex flex-col landscape:flex-1 landscape:grid landscape:grid-cols-2 gap-3 mt-3 landscape:mt-0">
             {guide.steps.map((step: any, sIdx: number) => (
               <div key={sIdx} className="flex items-center gap-4 bg-white p-4 md:p-5 rounded-3xl shadow-sm border border-teal-100/50">
                 <div className="text-4xl md:text-5xl shrink-0 drop-shadow-sm">{step.icon}</div>
@@ -571,7 +540,6 @@ export default function PharmaLingoApp() {
   const renderBoardingPass = (rx: Prescription, index: number) => {
     const displayDrugEn = rx.drugInput.trim();
     const displayDrugLocal = rx.drugName && rx.drugName.toLowerCase() !== rx.drugInput.toLowerCase() ? rx.drugName : '';
-
     const totalW = rx.rxWarnings.length + rx.customWarnings.length;
     const warnPadding = totalW >= 5 ? 'p-2' : 'p-3 md:p-4'; 
     const warnGap = totalW >= 5 ? 'gap-1' : 'gap-2 md:gap-3';
@@ -587,10 +555,10 @@ export default function PharmaLingoApp() {
 
     return (
       <div key={index} className="w-full flex-shrink-0 snap-center flex justify-center items-center h-full px-4" dir={isRTL ? 'rtl' : 'ltr'}>
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-4 md:gap-8 w-full max-w-6xl h-full max-h-[85vh]">
+        {/* 📱 1. ปรับปรุง Landscape เลเอาต์ให้ Scroll ได้และไม่ถูกตัดแหว่ง */}
+        <div className="flex flex-col lg:flex-row landscape:flex-row items-center landscape:items-stretch justify-center gap-4 md:gap-8 w-full max-w-6xl h-full max-h-[85vh] landscape:max-h-screen landscape:py-4">
           
-          {/* 🔵 ใบที่ 1: วิธีใช้ยา */}
-          <div className="flex-1 w-full max-w-[500px] h-full bg-white rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-2 border-blue-100 min-h-0">
+          <div className="flex-1 w-full max-w-[500px] h-full bg-white rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-2 border-blue-100 min-h-0 landscape:overflow-y-auto">
             <div className="bg-gradient-to-r from-blue-900 to-indigo-900 p-3 md:p-4 text-center relative shadow-inner shrink-0 flex justify-between items-center">
               <span className="text-2xl opacity-20">🏥</span>
               <div className="flex flex-col items-center">
@@ -602,8 +570,7 @@ export default function PharmaLingoApp() {
               </button>
             </div>
 
-            <div className={`bg-blue-50/30 flex flex-col ${instGap} flex-1 relative overflow-hidden justify-center p-3 md:p-6`}>
-              
+            <div className={`bg-blue-50/30 flex flex-col ${instGap} flex-1 relative overflow-y-auto justify-center p-3 md:p-6`}>
               {(displayDrugEn || displayDrugLocal) && (
                 <div className="bg-gradient-to-r from-amber-100 to-yellow-200 border-2 border-yellow-400 rounded-[1.5rem] md:rounded-[2rem] py-3 md:py-5 flex flex-col items-center justify-center shadow-sm text-center relative shrink-0">
                   <span className="text-yellow-800 text-[10px] md:text-xs font-black uppercase mb-1 tracking-widest">💊 {p.drug_name}</span>
@@ -625,7 +592,7 @@ export default function PharmaLingoApp() {
               )}
 
               {rx.isTapering ? (
-                <div className="bg-white rounded-2xl p-2 shadow-sm border border-slate-100 flex-1 overflow-hidden flex flex-col">
+                <div className="bg-white rounded-2xl p-2 shadow-sm border border-slate-100 flex-1 overflow-hidden flex flex-col min-h-[150px]">
                   <div className="text-indigo-600 font-black text-[10px] md:text-xs uppercase mb-1 text-center border-b pb-1">📉 {p.taper_mode}</div>
                   <div className="flex-1 overflow-y-auto custom-scrollbar pr-1">
                     <table className="w-full text-center border-collapse">
@@ -698,8 +665,7 @@ export default function PharmaLingoApp() {
             </div>
           </div>
 
-          {/* 🔴 ใบที่ 2: คำเตือน */}
-          <div className="flex-1 w-full max-w-[500px] h-full bg-white rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-2 border-red-100 min-h-0">
+          <div className="flex-1 w-full max-w-[500px] h-full bg-white rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-2 border-red-100 min-h-0 landscape:overflow-y-auto">
             <div className="bg-gradient-to-r from-red-800 to-rose-900 p-3 md:p-4 text-center relative shadow-inner shrink-0">
               <div className="absolute top-1/2 left-4 transform -translate-y-1/2 text-2xl opacity-20">⚠️</div>
               <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase">Bangkok Pattaya Hospital</h1>
@@ -707,19 +673,19 @@ export default function PharmaLingoApp() {
               <div className="absolute top-1/2 right-4 transform -translate-y-1/2 text-2xl opacity-20">🚨</div>
             </div>
 
-            <div className={`bg-red-50/50 flex flex-col flex-1 overflow-hidden justify-center p-3 md:p-6`}>
+            <div className={`bg-red-50/50 flex flex-col flex-1 overflow-y-auto justify-center p-3 md:p-6`}>
               <h3 className="text-red-600 font-black text-xs md:text-sm uppercase tracking-widest mb-2 border-b-2 border-red-200 pb-2 shrink-0 text-center">⚠️ {p.warn_title}</h3>
-              <div className={`flex-1 flex flex-col ${warnGap} justify-center overflow-hidden`}>
+              <div className={`flex-1 flex flex-col ${warnGap} justify-center overflow-y-auto min-h-[100px]`}>
                 {(rx.rxWarnings.length > 0 || rx.customWarnings.length > 0) ? (
                   <>
                     {rx.rxWarnings.map((wIdx: number) => (
-                      <div key={wIdx} className={`flex items-center bg-white rounded-2xl shadow-sm border border-red-100 w-full ${warnPadding}`}>
+                      <div key={wIdx} className={`flex items-center bg-white rounded-2xl shadow-sm border border-red-100 w-full ${warnPadding} shrink-0`}>
                         <span className={`shrink-0 ${warnIconSize} mr-3`}>{th.warn_icons[wIdx]}</span>
                         <span className={`text-red-700 font-black leading-tight ${warnTextSize}`}>{p.warn[wIdx]}</span>
                       </div>
                     ))}
                     {rx.customWarnings.map((cw: string, i: number) => (
-                      <div key={i} className={`flex items-center bg-red-100/50 rounded-2xl shadow-sm border border-red-200 w-full ${warnPadding}`}>
+                      <div key={i} className={`flex items-center bg-red-100/50 rounded-2xl shadow-sm border border-red-200 w-full ${warnPadding} shrink-0`}>
                         <span className={`shrink-0 ${warnIconSize} mr-3`}>🚨</span>
                         <span className={`text-red-800 font-black leading-tight ${warnTextSize}`}>{cw}</span>
                       </div>
@@ -746,7 +712,6 @@ export default function PharmaLingoApp() {
       <div className={`w-full flex justify-center items-center rotate-180 transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)]
         ${isFullscreen ? 'fixed inset-0 z-[100] bg-slate-900 p-4 h-full' : `bg-slate-100 ${patientHeightClass}`}`}>
         
-        {/* ⚡ ระบบจอพลิก: โชว์ปิด Boarding Pass หรือ Instant Guide */}
         {isFullscreen && (
           <div className="absolute top-4 right-4 z-50 flex gap-3">
             <button onClick={() => { setIsFullscreen(false); setDispenseState('input'); setActiveGuide(null); if(synthRef.current) synthRef.current.cancel(); setIsSpeaking(false); }} className="bg-red-500 hover:bg-red-400 text-white w-14 h-14 rounded-full text-2xl font-black shadow-[0_0_20px_rgba(239,68,68,0.5)] flex items-center justify-center active:scale-95 border-2 border-red-300">
@@ -755,11 +720,9 @@ export default function PharmaLingoApp() {
           </div>
         )}
 
-        {/* 🪄 ถ้ากดจากแท็บ 3 (Instant Guide) จะโชว์การ์ด 4 สเต็ปทันที ไม่เกี่ยวกับตะกร้า */}
         {activeGuide ? (
           renderGuideCard(activeGuide)
         ) : dispenseState === 'present' ? (
-          // 🛒 ถ้ากดจากแท็บ 2 โชว์ตั๋วในตะกร้ายาตามปกติ
           <div className="w-full h-full flex flex-col justify-center items-center relative" dir={isRTL ? 'rtl' : 'ltr'}>
             {cart.length > 1 && (
               <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-50 flex items-center gap-4 bg-slate-900/80 px-6 py-2 rounded-full border border-slate-700 backdrop-blur-md">
@@ -774,7 +737,7 @@ export default function PharmaLingoApp() {
             {cart.length > 1 && (
               <div className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2 animate-bounce">{p.swipe_hint}</div>
             )}
-            <div className="w-full flex-1 overflow-x-auto snap-x snap-mandatory flex hide-scrollbar items-center pb-8" 
+            <div className="w-full flex-1 overflow-x-auto snap-x snap-mandatory flex hide-scrollbar items-center pb-8 landscape:pb-0" 
                  onScroll={(e) => {
                    const scrollLeft = (e.target as HTMLElement).scrollLeft;
                    const width = (e.target as HTMLElement).clientWidth;
@@ -792,7 +755,6 @@ export default function PharmaLingoApp() {
             </div>
           </div>
         ) : (
-          /* 📋 โหมดซักประวัติ (คำถาม Yes/No) */
           <div dir={isRTL ? 'rtl' : 'ltr'} 
             className={`relative transition-all duration-500 flex flex-col w-full h-full bg-white rounded-[2rem] shadow-[0_15px_40px_rgba(0,0,0,0.1)] border border-slate-200 overflow-hidden
             ${activeQuestion ? 'opacity-100 p-6' : 'opacity-0'}`}>
@@ -878,12 +840,10 @@ export default function PharmaLingoApp() {
             <div className="flex bg-slate-800 rounded-xl p-1 border border-slate-700 shadow-inner">
               <button onClick={() => { setAppMode('history'); setDispenseState('input'); }} className={`px-4 py-2 md:py-3 rounded-lg text-sm md:text-base font-black transition-all ${appMode === 'history' ? 'bg-cyan-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>{th.tab_history}</button>
               <button onClick={() => { setAppMode('dispense'); setActiveQuestion(null); setDispenseState('input'); }} className={`px-4 py-2 md:py-3 rounded-lg text-sm md:text-base font-black transition-all ${appMode === 'dispense' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>{th.tab_dispense}</button>
-              {/* แท็บที่ 3: ยาเทคนิคพิเศษ */}
               <button onClick={() => { setAppMode('specialty'); setActiveQuestion(null); setDispenseState('input'); }} className={`px-4 py-2 md:py-3 rounded-lg text-sm md:text-base font-black transition-all ${appMode === 'specialty' ? 'bg-teal-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>{th.tab_special}</button>
             </div>
             
             <div className="flex gap-2">
-              {/* 🗑️ ปุ่มเคลียร์ตะกร้าจะโชว์เฉพาะแท็บจ่ายยาปกติเท่านั้น! */}
               {appMode === 'dispense' && (
                 <button onClick={clearAll} className="text-xs md:text-sm font-black text-white bg-red-900/40 px-4 py-2 md:py-3 rounded-xl border border-red-800 hover:bg-red-800 transition-colors animate-in fade-in">🗑️ เคลียร์ตะกร้า</button>
               )}
@@ -894,8 +854,6 @@ export default function PharmaLingoApp() {
           </div>
 
           <div className="flex-1 overflow-y-auto p-4 md:p-6 pt-0 custom-scrollbar relative">
-            
-            {/* 📋 โหมดซักประวัติ */}
             {appMode === 'history' && (
               <>
                 {activeQuestion ? (
@@ -931,9 +889,9 @@ export default function PharmaLingoApp() {
               </>
             )}
 
-            {/* 💊 โหมดกรอกยา */}
+            {/* 📱 2. เปลี่ยน padding-bottom จาก pb-24 เป็น pb-40 เพื่อกันขอบตกหลัง Sticky Bar */}
             {appMode === 'dispense' && dispenseState === 'input' && (
-              <div className="flex flex-col gap-6 pb-24 animate-in">
+              <div className="flex flex-col gap-6 pb-40 animate-in">
                 
                 <div className="bg-gradient-to-br from-blue-900/40 to-indigo-900/40 p-4 md:p-5 rounded-[2rem] border border-blue-800/50 flex flex-col gap-4 shadow-inner">
                   <div className="flex flex-col gap-2">
@@ -1099,7 +1057,7 @@ export default function PharmaLingoApp() {
                   </div>
                 )}
 
-                <div className="bg-red-900/10 p-4 md:p-5 rounded-[2rem] border border-red-900/30 flex flex-col gap-4 shadow-inner">
+                <div className="bg-red-900/10 p-4 md:p-5 rounded-[2rem] border border-red-900/30 flex flex-col gap-4 shadow-inner relative z-0">
                   <span className="text-red-400 text-sm font-black uppercase tracking-widest flex items-center gap-2">⚠️ คำเตือน (Warnings)</span>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                     {th.warn.map((w: string, i: number) => (
@@ -1126,16 +1084,14 @@ export default function PharmaLingoApp() {
               </div>
             )}
 
-            {/* 🪄 โหมดแท็บที่ 3: แสดงคู่มือยาเทคนิคพิเศษ (ภาษาไทยล้วน สำหรับเภสัชกร) */}
             {appMode === 'specialty' && (
               <div className="flex flex-col gap-6 pb-24 animate-in">
                 <div className="bg-gradient-to-br from-teal-900/40 to-emerald-900/40 p-5 md:p-6 rounded-[2rem] border border-teal-800/50 shadow-inner">
-                  <h2 className="text-teal-300 font-black text-xl mb-4 flex items-center gap-2">🪄 เลือกอุปกรณ์เทคนิคพิเศษ เพื่อแสดงคู่มือให้คนไข้ทันที</h2>
+                  <h2 className="text-teal-300 font-black text-xl mb-4 flex items-center gap-2">🪄 เลือกอุปกรณ์เทคนิคพิเศษ</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {specialData.map(item => (
                       <button key={item.id} onClick={() => { setActiveGuide(item); setIsFullscreen(true); }} className="bg-slate-800 border-2 border-slate-700 hover:border-teal-400 hover:bg-slate-700 rounded-2xl p-4 flex items-center gap-4 transition-all active:scale-95 text-left group">
                         <span className="text-4xl group-hover:scale-110 transition-transform">{item.icon}</span>
-                        {/* ล็อกภาษาไทยให้เภสัชกร */}
                         <span className="text-slate-200 font-black text-sm md:text-base leading-tight">{item.title.th}</span>
                       </button>
                     ))}
@@ -1145,9 +1101,8 @@ export default function PharmaLingoApp() {
             )}
           </div>
 
-          {/* 📌 แถบ Sticky Bottom สำหรับ Cart (โชว์เฉพาะหน้าจ่ายยาปกติ) */}
           {appMode === 'dispense' && dispenseState === 'input' && (
-            <div className="absolute bottom-0 left-0 w-full p-4 bg-slate-900/90 backdrop-blur-md border-t border-slate-700 flex flex-col md:flex-row items-center gap-3 z-50">
+            <div className="absolute bottom-0 left-0 w-full p-4 bg-slate-900/95 backdrop-blur-md border-t border-slate-700 flex flex-col md:flex-row items-center gap-3 z-50">
                <button onClick={addToCart} disabled={!drugInput && rxIndication === null} className="w-full md:w-auto bg-slate-800 border-2 border-slate-600 hover:border-cyan-500 text-white font-black px-6 py-4 rounded-2xl active:scale-95 disabled:opacity-30 transition-all flex items-center justify-center gap-2">
                  {th.add_to_cart}
                </button>
@@ -1157,7 +1112,6 @@ export default function PharmaLingoApp() {
             </div>
           )}
 
-          {/* 📌 Footer Chat */}
           {appMode === 'history' && !activeQuestion && (
             <div className="p-6 pt-4 border-t-2 border-slate-800 shrink-0 pb-safe bg-[#0f172a] animate-in">
               <div className="flex gap-3 items-center">
