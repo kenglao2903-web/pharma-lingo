@@ -24,8 +24,8 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
   }, [text]);
 
   return (
-    <div ref={containerRef} className="w-full flex items-center justify-center overflow-visible px-2">
-      <span ref={textRef} className={`inline-block font-black whitespace-nowrap origin-center transition-transform duration-200 ${isMain ? 'text-4xl md:text-6xl lg:text-[4.5rem] text-slate-900 drop-shadow-sm' : 'text-xl md:text-3xl text-yellow-900 opacity-80'}`} style={{ transform: `scale(${scale})` }}>
+    <div ref={containerRef} className="w-full flex items-center justify-center overflow-visible px-2 relative z-10">
+      <span ref={textRef} className={`inline-block font-black whitespace-nowrap origin-center transition-transform duration-200 ${isMain ? 'text-6xl md:text-8xl lg:text-[7rem] text-slate-900 drop-shadow-sm' : 'text-3xl md:text-4xl text-yellow-900 opacity-80'}`} style={{ transform: `scale(${scale})` }}>
         {text.toUpperCase()}
       </span>
     </div>
@@ -39,9 +39,9 @@ const unitDict: any = {
   tab: { th: 'เม็ด', en: 'tablet(s)', de: 'Tablette(n)', zh: '粒/片', ja: '錠', ru: 'таб.', ar: 'حبة' },
   cap: { th: 'แคปซูล', en: 'capsule(s)', de: 'Kapsel(n)', zh: '胶囊', ja: 'カプセル', ru: 'капс.', ar: 'كبسولة' },
   tsp: { th: 'ช้อนชา', en: 'teaspoon(s)', de: 'Teelöffel', zh: '茶匙', ja: '小さじ', ru: 'ч.л.', ar: 'ملعقة صغيرة' },
-  tbsp: { th: 'ช้อนโต๊ะ', en: 'tablespoon(s)', de: 'Esslöffel', zh: '汤匙', ja: '大さじ', ru: 'ст.л.', ar: 'ملعقة كبيرة' },
+  tbsp: { th: 'ช้อนโต๊ะ', en: 'tablespoon(s)', de: 'Esslöffel', zh: '汤匙', ja: '大さじ', ru: 'ст.ล.', ar: 'ملعقة كبيرة' },
   ml: { th: 'มล. (ml)', en: 'ml', de: 'ml', zh: '毫升', ja: 'ml', ru: 'мл', ar: 'مل' },
-  cc: { th: 'ซีซี (cc)', en: 'cc', de: 'cc', zh: 'cc', ja: 'cc', ru: 'куб.см', ar: 'سم مكعب' },
+  cc: { th: 'ซีซี (cc)', en: 'cc', de: 'cc', zh: 'cc', ja: 'cc', ru: 'куб.см', ar: 'สม مكعب' },
   drop: { th: 'หยด', en: 'drop(s)', de: 'Tropfen', zh: '滴', ja: '滴', ru: 'кап.', ar: 'قطرة' },
   puff: { th: 'กด/ปั๊ม', en: 'puff(s)/spray(s)', de: 'Sprühstoß', zh: '喷/揿', ja: 'プッシュ/噴霧', ru: 'пшик.', ar: 'بخة/رشة' },
   hr: { th: 'ชั่วโมง', en: 'hour(s)', de: 'Stunde(n)', zh: '小时', ja: '時間', ru: 'час(ов)', ar: 'ساعات' },
@@ -65,9 +65,9 @@ const dict = {
     warn: ['ต้องกินจนหมด', 'อาจทำให้ง่วงนอน', 'ห้ามดื่มแอลกอฮอล์', 'ห้ามกินพร้อมนม', 'ระวังแสงแดดจัด', 'ดื่มน้ำตามมากๆ', 'เปลี่ยนสีปัสสาวะ', 'เคี้ยวให้ละเอียด', 'เก็บในตู้เย็น', 'ละลายน้ำก่อนดื่ม (ยาฟู่)'],
     warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'],
     allergy_alert: 'หยุดใช้ยาและพบแพทย์ทันที หากมีผื่นคัน หายใจติดขัด หรือมีอาการแพ้',
-    show_card: '🚀 โชว์ Boarding Pass', edit_rx: '⬅️ กลับไปแก้ไข', photo_prompt: 'ถ่ายรูปหน้าจอนี้เก็บไว้ (Take a photo)',
+    show_card: '🚀 โชว์ Boarding Pass', edit_rx: '⬅️ กลับไปแก้ไข', photo_prompt: '📸 ถ่ายรูปหน้าจอนี้เก็บไว้ (Take a photo)',
     smart_dose: 'ใช้ครั้งละ {n} {u}', smart_hour: 'ทุกๆ {n} {u}', smart_apply: 'ทาวันละ {n} {u}', smart_days: 'ติดต่อกัน {n} {u}',
-    add_to_cart: '📥 เก็บลงตะกร้า', cart: 'ตะกร้ายา', items: 'รายการ', swipe_hint: 'ปัดซ้าย-ขวา เพื่อดูยาตัวอื่น', scroll_down: '⬇️ เลื่อนลงเพื่อดูคำเตือน ⬇️',
+    add_to_cart: '📥 เก็บลงตะกร้า', cart: 'ตะกร้ายา', items: 'รายการ', swipe_hint: '👈 ปัดซ้าย-ขวา ดูยาตัวอื่น 👉', scroll_down: '⬇️ เลื่อนลงเพื่อดูคำเตือน',
     taper_mode: '📉 โหมดลดโดส / กินไม่เท่ากัน', standard_mode: 'กลับไปโหมดปกติ', add_step: '➕ เพิ่มขั้น',
     duration: 'ระยะเวลา', dosage: 'ปริมาณ', time_col: 'มื้ออาหาร / เวลา', rx_title: 'วิธีใช้ยา (Prescription)', warn_title: 'คำเตือน (Warnings)', spec_guide: 'คู่มือการใช้ยา (How to Use)'
   },
@@ -82,9 +82,9 @@ const dict = {
     period: ['Morning', 'Noon', 'Evening', 'Night', 'As needed'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['Finish the entire course.', 'May cause drowsiness.', 'Avoid alcohol.', 'Do not take with milk or antacids.', 'Avoid strong sunlight.', 'Drink plenty of water.', 'May change urine/stool color.', 'Chew well before swallowing.', 'Store in the refrigerator.', 'Dissolve in water before drinking'],
     allergy_alert: 'Stop use and seek medical help immediately if you develop a rash, breathing problems, or signs of an allergic reaction.',
-    show_card: '🚀 Show Boarding Pass', edit_rx: '⬅️ Edit', photo_prompt: 'Please take a photo of this screen',
+    show_card: '🚀 Show Boarding Pass', edit_rx: '⬅️ Edit', photo_prompt: '📸 Please take a photo of this screen',
     smart_dose: 'Take/Use {n} {u}', smart_hour: 'Every {n} {u}', smart_apply: 'Apply {n} {u} a day', smart_days: 'For {n} {u}',
-    add_to_cart: '📥 Add to Cart', cart: 'Cart', items: 'items', swipe_hint: 'Swipe left/right for other meds', scroll_down: '⬇️ Scroll down for warnings ⬇️',
+    add_to_cart: '📥 Add to Cart', cart: 'Cart', items: 'items', swipe_hint: '👈 Swipe left/right for other meds 👉', scroll_down: '⬇️ Scroll down for warnings',
     taper_mode: '📉 Step-down / Tapering Mode', standard_mode: 'Back to Standard Mode', add_step: '➕ Add Step', duration: 'Duration', dosage: 'Dose', time_col: 'Food / Time',
     tab_history: '📋 History', tab_dispense: '💊 Dispense', tab_special: '🪄 Specialty', spec_guide: 'How to Use'
   },
@@ -99,9 +99,9 @@ const dict = {
     period: ['Morgens', 'Mittags', 'Abends', 'Nachts', 'Bei Bedarf'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['Packung vollständig aufbrauchen.', 'Kann Schläfrigkeit verursachen.', 'Alkohol vermeiden.', 'Nicht mit Milch oder Antazida einnehmen.', 'Starke Sonneneinstrahlung vermeiden.', 'Viel Wasser trinken.', 'Kann Urin-/Stuhlfarbe verändern.', 'Vor dem Schlucken gut kauen.', 'Im Kühlschrank aufbewahren.', 'Vor dem Trinken in Wasser auflösen'],
     allergy_alert: 'Brechen Sie die Anwendung ab und suchen Sie sofort einen Arzt auf, falls ein Hautausschlag, Atemnot oder Anzeichen einer allergischen Reaktion auftreten.',
-    show_card: '🚀 Zeigen Boarding Pass', edit_rx: '⬅️ Bearbeiten', photo_prompt: 'Bitte fotografieren Sie diesen Bildschirm',
+    show_card: '🚀 Zeigen Boarding Pass', edit_rx: '⬅️ Bearbeiten', photo_prompt: '📸 Bitte fotografieren Sie diesen Bildschirm',
     smart_dose: '{n} {u} einnehmen', smart_hour: 'Alle {n} {u}', smart_apply: '{n}-mal täglich', smart_days: 'Für {n} {u}',
-    add_to_cart: '📥 In den Warenkorb', cart: 'Korb', items: 'Artikel', swipe_hint: 'Wischen Sie für andere Medikamente', scroll_down: '⬇️ Für Warnungen nach unten scrollen ⬇️',
+    add_to_cart: '📥 In den Warenkorb', cart: 'Korb', items: 'Artikel', swipe_hint: '👈 Wischen für andere 👉', scroll_down: '⬇️ Für Warnungen nach unten scrollen',
     taper_mode: '📉 Ausschleichende Dosierung', standard_mode: 'Standardmodus', add_step: '➕ Schritt hinzufügen', duration: 'Dauer', dosage: 'Dosis', time_col: 'Essen / Zeit',
     tab_history: '📋 Verlauf', tab_dispense: '💊 Ausgabe', tab_special: '🪄 Spezialität', spec_guide: 'Anwendung'
   },
@@ -116,9 +116,9 @@ const dict = {
     period: ['早上', '中午', '晚上', '睡前', '需要时'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['请服完整个疗程。', '可能引起嗜睡。', '避免饮酒。', '请勿与牛奶或抗酸药同服。', '避免强烈的阳光照射。', '多喝水。', '可能改变尿液/粪便的颜色。', '吞咽前须嚼碎。', '在冰箱中冷藏。', '饮用前将其溶解在水中'],
     allergy_alert: '如果出现皮疹、呼吸困难或过敏反应迹象，请立即停药并就医。',
-    show_card: '🚀 显示登机牌', edit_rx: '⬅️ 编辑', photo_prompt: '请拍照保存此屏幕',
+    show_card: '🚀 显示登机牌', edit_rx: '⬅️ 编辑', photo_prompt: '📸 请拍照保存此屏幕',
     smart_dose: '每次使用 {n} {u}', smart_hour: '每 {n} {u}一次', smart_apply: '每天 {n} {u}', smart_days: '连续使用 {n} {u}',
-    add_to_cart: '📥 加入购物车', cart: '购物车', items: '项目', swipe_hint: '左右滑动查看其他药物', scroll_down: '⬇️ 向下滚动查看警告 ⬇️',
+    add_to_cart: '📥 加入购物车', cart: '购物车', items: '项目', swipe_hint: '👈 左右滑动查看其他 👉', scroll_down: '⬇️ 向下滚动查看警告',
     taper_mode: '📉 递减/不规则剂量模式', standard_mode: '返回标准模式', add_step: '➕ 添加步骤', duration: '期间', dosage: '剂量', time_col: '餐/时间',
     tab_history: '📋 历史', tab_dispense: '💊 配药', tab_special: '🪄 专科药物', spec_guide: '如何使用'
   },
@@ -133,9 +133,9 @@ const dict = {
     period: ['朝', '昼', '夕方', '就寝前', '症状がある時'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['処方された分は最後まで飲みきってください。', '眠気を催すことがあります。', 'アルコールは避けてください。', '牛乳や制酸剤と一緒に飲まないでください。', '強い日差しを避けてください。', '多めに水を飲んでください。', '尿や便の色が変わることがあります。', '飲み込む前にしっかり噛んでください。', '冷蔵庫で保管してください。', '飲む前に水に溶かしてください'],
     allergy_alert: '発疹、息苦しさ、またはアレルギー反応の兆候が現れた場合は、直ちに使用を中止し、医師の診察を受けてください。',
-    show_card: '🚀 搭乗券を表示', edit_rx: '⬅️ 編集', photo_prompt: 'この画面の写真を撮って保存してください',
+    show_card: '🚀 搭乗券を表示', edit_rx: '⬅️ 編集', photo_prompt: '📸 この画面の写真を撮って保存してください',
     smart_dose: '1回 {n} {u} 使用', smart_hour: '{n} {u}ごと', smart_apply: '1日 {n} {u} 適用', smart_days: '{n} {u}間 連続',
-    add_to_cart: '📥 カートに追加', cart: 'カート', items: 'アイテム', swipe_hint: '左右にスワイプして他の薬を表示', scroll_down: '⬇️ 下にスクロールして警告を表示 ⬇️',
+    add_to_cart: '📥 カートに追加', cart: 'カート', items: 'アイテム', swipe_hint: '👈 左右にスワイプして他の薬を表示 👉', scroll_down: '⬇️ 下にスクロールして警告を表示',
     taper_mode: '📉 漸減・不規則服用モード', standard_mode: '標準モードに戻る', add_step: '➕ ステップを追加', duration: '期間', dosage: '用量', time_col: '食事 / 時間',
     tab_history: '📋 履歴', tab_dispense: '💊 調剤', tab_special: '🪄 特殊機器', spec_guide: '使い方'
   },
@@ -146,13 +146,13 @@ const dict = {
     dose: ['Половина (1/2) таблетки', '1 таблетка/капсула', '2 таблетки/капсулы', '1 чайная ложка (5 мл)', '1 столовая ложка (15 мл)', '1 пшик', '1 капля'],
     side: ['Левый глаз', 'Правый глаз', 'Оба глаза', 'Левое ухо', 'Правое ухо', 'Оба уха'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['1 раз в день', '2 раза в день', '3 раза в день', '4 раза в день', 'Каждые 4-6 часов', 'Каждые 6 часов', 'Каждые 8 часов'],
-    time: ['Перед едой', 'После еды', 'Сразу после еды', 'До или после еды'],
+    time: ['Перед едой', 'После едой', 'Сразуหลังจาก едой', 'До илиหลังจาก едой'],
     period: ['Утром', 'Днем', 'Вечером', 'На ночь', 'При симптомах'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['Пройдите полный курс лечения.', 'Может вызывать сонливость.', 'Избегайте употребления алкоголя.', 'Не принимайте с молоком или антацидами.', 'Избегайте сильного солнечного света.', 'Пейте больше воды.', 'Может изменить цвет мочи/кала.', 'Тщательно разжевать перед проглатыванием.', 'Хранить в холодильнике.', 'Растворить в воде перед приемом'],
     allergy_alert: 'Немедленно прекратите использование и обратитесь к врачу при появлении сыпи, затрудненного дыхания или других признаков аллергической реакции.',
-    show_card: '🚀 Показать', edit_rx: '⬅️ Назад', photo_prompt: 'Пожалуйста, сфотографируйте этот экран',
+    show_card: '🚀 Показать', edit_rx: '⬅️ Назад', photo_prompt: '📸 Пожалуйста, сфотографируйте этот экран',
     smart_dose: 'Принимать по {n} {u}', smart_hour: 'Каждые {n} {u}', smart_apply: 'Применять {n} {u} в день', smart_days: 'В течение {n} {u}',
-    add_to_cart: '📥 В корзину', cart: 'Корзина', items: 'шт.', swipe_hint: 'Проведите для просмотра других', scroll_down: '⬇️ Прокрутите вниз для предупреждений ⬇️',
+    add_to_cart: '📥 В корзину', cart: 'Корзина', items: 'шт.', swipe_hint: '👈 Проведите для просмотра 👉', scroll_down: '⬇️ Прокрутите вниз для предупреждений',
     taper_mode: '📉 Режим снижения дозы', standard_mode: 'Стандартный режим', add_step: '➕ Добавить шаг', duration: 'Период', dosage: 'Доза', time_col: 'Еда / Время',
     tab_history: '📋 История', tab_dispense: '💊 Выдача', tab_special: '🪄 Специальные', spec_guide: 'Как использовать'
   },
@@ -167,9 +167,9 @@ const dict = {
     period: ['الصباح', 'الظهر', 'المساء', 'الليل', 'عند الحاجة'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['أكمل الجرعة بالكامل.', 'قد يسبب النعاس.', 'تجنب الكحول.', 'لا تتناوله مع الحليب أو مضادات الحموضة.', 'تجنب أشعة الشمس القوية.', 'اشرب كمية كافية من الماء.', 'قد يغير لون البول/البراز.', 'امضغ جيداً قبل البلع.', 'يحفظ في الثلاجة.', 'تذوب في الماء قبل الشرب'],
     allergy_alert: 'توقف عن الاستخدام واطلب المساعدة الطبية فوراً إذا ظهر طفح جلدي أو صعوبة في التنفس أو علامات رد فعل تحسسي.',
-    show_card: '🚀 عرض بطاقة الصعود', edit_rx: '⬅️ تعديل', photo_prompt: 'يرجى التقاط صورة لهذه الشاشة',
+    show_card: '🚀 عرض بطاقة الصعود', edit_rx: '⬅️ تعديل', photo_prompt: '📸 يرجى التقاط صورة لهذه الشاشة',
     smart_dose: 'استخدم {n} {u}', smart_hour: 'كل {n} {u}', smart_apply: 'تطبيق {n} {u} يومياً', smart_days: 'لمدة {n} {u}',
-    add_to_cart: '📥 أضف إلى السلة', cart: 'سلة', items: 'عناصر', swipe_hint: 'اسحب لعرض أدوية أخرى', scroll_down: '⬇️ قم بالتمرير لأسفل للتحذيرات ⬇️',
+    add_to_cart: '📥 أضف إلى السلة', cart: 'سلة', items: 'عناصر', swipe_hint: '👈 اسحب لعرض أدوية أخرى 👉', scroll_down: '⬇️ قم بالتمرير لأسفل للتحذيرات',
     taper_mode: '📉 وضع تقليل الجرعة', standard_mode: 'الوضع القياسي', add_step: '➕ إضافة خطوة', duration: 'المدة', dosage: 'الجرعة', time_col: 'طعام / وقت',
     tab_history: '📋 سجل', tab_dispense: '💊 صرف', tab_special: '🪄 تخصص', spec_guide: 'كيف تستعمل'
   }
@@ -179,10 +179,12 @@ type Lang = keyof typeof dict;
 type AppMode = 'history' | 'dispense' | 'specialty';
 type DispenseState = 'input' | 'present'; 
 
+// Tapering Step Structure
 type TaperStep = {
   days: number; dose: string | number; unit: string; time: number | null; periods: number[];
 };
 
+// Prescription Object Structure
 type Prescription = {
   drugInput: string; drugName: string;
   rxIndication: number | null; customIndication: string;
@@ -216,6 +218,7 @@ export default function PharmaLingoApp() {
   const [cart, setCart] = useState<Prescription[]>([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
+  // State: Dispense Form
   const [drugInput, setDrugInput] = useState('');
   const [drugName, setDrugName] = useState('');
   const [isTranslatingDrug, setIsTranslatingDrug] = useState(false);
@@ -257,81 +260,9 @@ export default function PharmaLingoApp() {
 
   useEffect(() => { if (typeof window !== 'undefined') synthRef.current = window.speechSynthesis; }, []);
 
-  // 🚀 1. ระบบดึงเสียงอ่านใหม่ เจาะจงเพศได้ 100% แม้ในภาษาอาหรับหรือจีน
-  const speakText = (text: string, langCode: string, forceEnglish: boolean = false) => {
-    if (!synthRef.current) return;
-    synthRef.current.cancel();
-    
-    const utterance = new SpeechSynthesisUtterance(text);
-    const voices = synthRef.current.getVoices();
-    const targetLangMatch = forceEnglish ? 'en' : langCode;
-    
-    let filteredVoices = voices.filter(v => v.lang.startsWith(targetLangMatch));
-
-    // ดิกชันนารีชื่อเสียงแยกตามเพศ (ครอบคลุม iOS/Mac ทั้งหมด)
-    const fNames = ['female', 'siri female', 'kyoko', 'samantha', 'laila', 'ting', 'meijia', 'sin-ji', 'anna', 'helena', 'milena', 'karen', 'amelie', 'yuna'];
-    const mNames = ['male', 'siri male', 'otoya', 'aaron', 'maged', 'tarik', 'yushu', 'daniel', 'arthur', 'martin', 'yuri'];
-
-    const findVoice = (isPremiumOnly: boolean) => {
-      return filteredVoices.find(v => {
-        const name = v.name.toLowerCase();
-        const isPremium = name.includes('siri') || name.includes('premium') || name.includes('enhanced');
-        if (isPremiumOnly && !isPremium) return false;
-
-        const isFemale = fNames.some(f => name.includes(f));
-        const isMale = mNames.some(m => name.includes(m));
-
-        if (voiceGender === 'male') return isMale || (!isFemale && name.includes('male'));
-        return isFemale || (!isMale && name.includes('female'));
-      });
-    };
-
-    // ค้นหาตามลำดับ: 1. เสียง Siri/Premium ที่ตรงเพศ -> 2. เสียงธรรมดาที่ตรงเพศ -> 3. เสียงอะไรก็ได้ที่หาเจอ
-    let preferredVoice = findVoice(true); 
-    if (!preferredVoice) preferredVoice = findVoice(false); 
-    if (!preferredVoice && filteredVoices.length > 0) preferredVoice = filteredVoices[0]; 
-
-    if (preferredVoice) utterance.voice = preferredVoice;
-
-    const voiceLangMap: any = { ar: 'ar-SA', de: 'de-DE', en: 'en-US', zh: 'zh-CN', ja: 'ja-JP', ru: 'ru-RU' };
-    utterance.lang = voiceLangMap[targetLangMatch] || targetLangMatch;
-    utterance.rate = 0.85; 
-    utterance.onend = () => setIsSpeaking(false);
-    
-    setIsSpeaking(true);
-    synthRef.current.speak(utterance);
-  };
-
-  // 🚀 2. ระบบ 60 FPS ด้วย IntersectionObserver (ซ่อนเร้นกระบวนการ Scroll)
-  useEffect(() => {
-    if (dispenseState !== 'present' || cart.length <= 1) return;
-    const container = document.getElementById('horizontal-scroll-container');
-    if (!container) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        // เมื่อการ์ดยาแผ่นไหนเลื่อนมาอยู่กลางจอเกิน 50% ให้ปรับตัวเลขจุดไข่ปลาด้านบน
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-          const index = parseInt(entry.target.getAttribute('data-index') || '0', 10);
-          setCurrentCardIndex(index);
-        }
-      });
-    }, { root: container, threshold: 0.5 });
-
-    const children = container.querySelectorAll('.drug-slide');
-    children.forEach(child => observer.observe(child));
-
-    return () => observer.disconnect();
-  }, [dispenseState, cart.length]);
-
-  const scrollToCard = (index: number) => {
-    const container = document.getElementById('horizontal-scroll-container');
-    if (container) {
-      const width = container.clientWidth;
-      container.scrollTo({ left: width * index, behavior: 'smooth' });
-    }
-  };
-
+  // ==========================================
+  // 🛠️ ฟังก์ชันการจัดการ UI และ Data
+  // ==========================================
   const togglePeriod = (index: number) => setRxPeriod(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index].sort());
   const toggleWarning = (index: number) => setRxWarnings(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]);
   const handleNumberInput = (setter: any, value: string) => { if (value === '' || /^\d*\.?\d*$/.test(value)) setter(value); };
@@ -348,10 +279,54 @@ export default function PharmaLingoApp() {
     setIsTranslating(false);
   };
 
+  // 🎙️ อัปเกรดระบบดึงเสียงให้รองรับ Siri / เพศหญิงชาย
+  const speakText = (text: string, langCode: string, forceEnglish: boolean = false) => {
+    if (!synthRef.current) return;
+    synthRef.current.cancel();
+    
+    const utterance = new SpeechSynthesisUtterance(text);
+    const voices = synthRef.current.getVoices();
+    const targetLangMatch = forceEnglish ? 'en' : langCode;
+    
+    let filteredVoices = voices.filter(v => v.lang.startsWith(targetLangMatch));
+    
+    let preferredVoice = filteredVoices.find(v => {
+      const name = v.name.toLowerCase();
+      const isPremium = name.includes('premium') || name.includes('siri') || name.includes('enhanced');
+      if (voiceGender === 'male') return isPremium && (name.includes('male') || name.includes('otoya') || name.includes('aaron'));
+      return isPremium && (name.includes('female') || name.includes('kyoko') || name.includes('samantha'));
+    });
+
+    if (!preferredVoice) {
+      preferredVoice = filteredVoices.find(v => {
+        const name = v.name.toLowerCase();
+        if (voiceGender === 'male') return name.includes('male') || name.includes('otoya') || name.includes('aaron');
+        return name.includes('female') || name.includes('kyoko') || name.includes('samantha'));
+      });
+    }
+
+    if (!preferredVoice && filteredVoices.length > 0) preferredVoice = filteredVoices[0];
+    if (preferredVoice) utterance.voice = preferredVoice;
+
+    const voiceLangMap: any = { ar: 'ar-SA', de: 'de-DE', en: 'en-US', zh: 'zh-CN', ja: 'ja-JP', ru: 'ru-RU' };
+    utterance.lang = voiceLangMap[targetLangMatch] || targetLangMatch;
+    utterance.rate = 0.85; 
+    utterance.onend = () => setIsSpeaking(false);
+    
+    setIsSpeaking(true);
+    synthRef.current.speak(utterance);
+  };
+
   const speakSpecificRx = (rx: Prescription) => {
     if (!synthRef.current) return;
     const text = generateSpeechText(rx);
     if (text) speakText(text.replace(/\|/g, ','), patientLang);
+  };
+
+  const speakSpecificWarnings = (rx: Prescription) => {
+    if (!synthRef.current) return;
+    const text = generateWarningsSpeechText(rx);
+    if (text) speakText(text, patientLang);
   };
 
   const speakGuide = (guide: any) => {
@@ -465,8 +440,20 @@ export default function PharmaLingoApp() {
       if (Number(rx.cDays) > 0) parts.push(parseSmartText(p.smart_days, rx.cDays, rx.cDaysUnit));
     }
     let text = drugText + indText + (parts.length > 0 ? parts.join(' | ') + '.\n' : '');
-    if (rx.rxWarnings.length > 0 || rx.customWarnings.length > 0) { rx.rxWarnings.forEach(w => text += p.warn[w] + '\n'); rx.customWarnings.forEach(cw => text += cw + '\n'); }
-    text += p.allergy_alert + '\n'; return text;
+    return text;
+  };
+
+  const generateWarningsSpeechText = (rx: Prescription) => {
+    if (!rx) return '';
+    const p = dict[patientLang] as any;
+    let text = '';
+    if (rx.rxWarnings.length > 0 || rx.customWarnings.length > 0) {
+      text += p.warn_title + ':\n';
+      rx.rxWarnings.forEach(w => text += p.warn[w] + '\n');
+      rx.customWarnings.forEach(cw => text += cw + '\n');
+    }
+    text += p.allergy_alert + '\n';
+    return text;
   };
 
   const p = dict[patientLang] as any;
@@ -521,29 +508,29 @@ export default function PharmaLingoApp() {
   const renderGuideCard = (guide: any) => {
     return (
       <div className="w-full h-full lg:max-w-5xl bg-white lg:rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden border-0 lg:border-4 border-teal-200 relative" dir={isRTL ? 'rtl' : 'ltr'}>
-        <div className="bg-gradient-to-r from-teal-700 to-emerald-900 p-4 md:p-6 text-center relative shrink-0 flex justify-between items-center shadow-inner">
+        <div className="bg-gradient-to-r from-teal-700 to-emerald-900 p-4 md:p-6 text-center relative shrink-0 flex justify-between items-center shadow-inner pt-12 lg:pt-6">
           <span className="text-3xl opacity-30">🪄</span>
           <div className="flex flex-col items-center">
-            <h1 className="text-white font-black text-base md:text-xl tracking-widest uppercase leading-none">Bangkok Pattaya Hospital</h1>
-            <p className="text-teal-200 text-[10px] md:text-sm font-bold mt-1 tracking-widest">{p.spec_guide}</p>
+            <h1 className="text-white font-black text-base md:text-2xl tracking-widest uppercase leading-none">Bangkok Pattaya Hospital</h1>
+            <p className="text-teal-200 text-base md:text-lg font-bold mt-1 tracking-widest">{p.spec_guide}</p>
           </div>
-          <button onClick={() => speakGuide(guide)} className={`w-12 h-12 md:w-14 md:h-14 rounded-full text-xl md:text-2xl shadow-lg flex items-center justify-center transition-all ${isSpeaking ? 'bg-white text-teal-600 animate-pulse' : 'bg-slate-800/50 text-white border border-white/20 hover:bg-slate-700'}`}>
+          <button onClick={() => speakGuide(guide)} className={`w-14 h-14 md:w-16 md:h-16 rounded-full text-2xl md:text-3xl shadow-lg flex items-center justify-center transition-all ${isSpeaking ? 'bg-white text-teal-600 animate-pulse' : 'bg-slate-800/50 text-white border border-white/20 hover:bg-slate-700'}`}>
             {isSpeaking ? '🛑' : '🔊'}
           </button>
         </div>
 
         <div className="bg-teal-50/30 flex flex-col lg:flex-row gap-4 flex-1 relative overflow-y-auto p-4 md:p-6 custom-scrollbar scroll-smooth">
           <div className="lg:flex-1 bg-gradient-to-r from-teal-100 to-emerald-100 border-2 border-teal-400 rounded-3xl p-5 flex items-center justify-center gap-4 shadow-sm text-center shrink-0">
-            <span className="text-5xl drop-shadow-md">{guide.icon}</span>
-            <span className="text-teal-900 font-black text-2xl md:text-3xl leading-tight drop-shadow-sm">{guide.title[patientLang] || guide.title.en}</span>
+            <span className="text-6xl md:text-7xl drop-shadow-md">{guide.icon}</span>
+            <span className="text-teal-900 font-black text-3xl md:text-4xl leading-tight drop-shadow-sm">{guide.title[patientLang] || guide.title.en}</span>
           </div>
-          <div className="flex flex-col lg:flex-1 lg:grid lg:grid-cols-2 gap-3 mt-2 lg:mt-0">
+          <div className="flex flex-col lg:flex-1 lg:grid lg:grid-cols-2 gap-3 mt-3 lg:mt-0">
             {guide.steps.map((step: any, sIdx: number) => (
-              <div key={sIdx} className="flex items-center gap-4 bg-white p-4 md:p-5 rounded-3xl shadow-sm border border-teal-100/50">
-                <div className="text-4xl md:text-5xl shrink-0 drop-shadow-sm">{step.icon}</div>
+              <div key={sIdx} className="flex items-center gap-4 bg-white p-5 md:p-6 rounded-3xl shadow-sm border border-teal-100/50">
+                <div className="text-5xl md:text-6xl shrink-0 drop-shadow-sm">{step.icon}</div>
                 <div className="flex flex-col leading-tight">
-                  <span className="text-teal-500 text-[10px] md:text-xs font-black uppercase tracking-widest mb-1">Step {sIdx + 1}</span>
-                  <span className="font-black text-base md:text-xl text-slate-800">{step.desc[patientLang] || step.desc.en}</span>
+                  <span className="text-teal-500 text-xs md:text-sm font-black uppercase tracking-widest mb-1">Step {sIdx + 1}</span>
+                  <span className="font-black text-2xl md:text-3xl text-slate-800">{step.desc[patientLang] || step.desc.en}</span>
                 </div>
               </div>
             ))}
@@ -554,7 +541,7 @@ export default function PharmaLingoApp() {
   };
 
   // ==========================================
-  // 🎟️ Render Boarding Pass: ระบบ 2D Grid ที่สมบูรณ์แบบ
+  // 🎟️ Render Boarding Pass Component
   // ==========================================
   const renderBoardingPass = (rx: Prescription, index: number) => {
     const displayDrugEn = rx.drugInput.trim();
@@ -562,39 +549,38 @@ export default function PharmaLingoApp() {
     const totalW = rx.rxWarnings.length + rx.customWarnings.length;
     const warnPadding = totalW >= 5 ? 'p-2' : 'p-3 md:p-4'; 
     const warnGap = totalW >= 5 ? 'gap-1' : 'gap-2 md:gap-3';
-    const warnTextSize = totalW >= 6 ? 'text-[10px] md:text-sm' : totalW >= 4 ? 'text-xs md:text-base' : 'text-sm md:text-xl';
-    const warnIconSize = totalW >= 6 ? 'text-xl md:text-2xl' : 'text-3xl md:text-4xl';
+    const warnTextSize = totalW >= 6 ? 'text-sm md:text-base' : totalW >= 4 ? 'text-base md:text-lg' : 'text-lg md:text-2xl';
+    const warnIconSize = totalW >= 6 ? 'text-2xl md:text-3xl' : 'text-4xl md:text-5xl';
 
     let instCount = 0;
     if (rx.rxDose !== null || Number(rx.cDose) > 0) instCount++; if (rx.rxSide !== null) instCount++;
     if (rx.rxFreq !== null || Number(rx.cHour) > 0 || Number(rx.cApply) > 0) instCount++;
     if (rx.rxTime !== null || Number(rx.cDays) > 0) instCount++; if (rx.rxPeriod.length > 0) instCount++;
-    const instPadding = instCount >= 4 ? 'p-2 md:p-3' : 'p-4 md:p-5'; const instGap = instCount >= 4 ? 'gap-2' : 'gap-3 md:gap-4';
-    const instTextSize = instCount >= 4 ? 'text-xs md:text-base' : 'text-sm md:text-xl';
+    const instPadding = instCount >= 4 ? 'p-3 md:p-4' : 'p-5 md:p-6'; const instGap = instCount >= 4 ? 'gap-2' : 'gap-3 md:gap-4';
+    const instTextSize = instCount >= 4 ? 'text-lg md:text-xl' : 'text-xl md:text-3xl';
 
     return (
-      // 📱 แกนปัดตั้ง: เลื่อนสลับการ์ดสีฟ้าและสีแดง (1 จอ = 1 การ์ด)
-      <div key={index} data-index={index} className="drug-slide w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
+      <div key={index} data-index={index} className="drug-slide w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu pt-16 sm:pt-10" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
         
-        {/* 🔵 การ์ดวิธีใช้ยา (หน้าจอที่ 1) */}
-        <div className="w-full h-full flex items-center justify-center p-3 sm:p-6 snap-center">
-          <div className="w-full max-w-4xl h-full max-h-[850px] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-blue-100 overflow-hidden">
+        {/* 🔵 ใบที่ 1: วิธีใช้ยา (หน้าจอที่ 1) */}
+        <div className="w-full h-full flex items-center justify-center p-4 sm:p-6 snap-center">
+          <div className="w-full max-w-5xl h-full max-h-[850px] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-blue-100 overflow-hidden">
             <div className="bg-gradient-to-r from-blue-900 to-indigo-900 p-3 md:p-4 text-center relative shadow-inner shrink-0 flex justify-between items-center">
               <span className="text-2xl opacity-20">🏥</span>
               <div className="flex flex-col items-center">
-                <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase leading-none">Bangkok Pattaya Hospital</h1>
-                <p className="text-blue-200 text-[10px] md:text-xs font-bold mt-1 tracking-widest">{p.rx_title} {cart.length > 1 && `(${index + 1}/${cart.length})`}</p>
+                <h1 className="text-white font-black text-lg md:text-2xl tracking-widest uppercase leading-none">Bangkok Pattaya Hospital</h1>
+                <p className="text-blue-200 text-xs md:text-base font-bold mt-1 tracking-widest">{p.rx_title} {cart.length > 1 && `(${index + 1}/${cart.length})`}</p>
               </div>
-              <button onClick={() => speakSpecificRx(rx)} className={`w-10 h-10 md:w-12 md:h-12 rounded-full text-lg md:text-xl shadow-md flex items-center justify-center transition-all ${isSpeaking ? 'bg-white text-blue-600 animate-pulse' : 'bg-blue-800 text-white border border-blue-600 hover:bg-blue-700'}`}>
+              <button onClick={() => speakSpecificRx(rx)} className={`w-12 h-12 md:w-14 md:h-14 rounded-full text-lg md:text-xl shadow-md flex items-center justify-center transition-all ${isSpeaking ? 'bg-white text-blue-600 animate-pulse' : 'bg-blue-800 text-white border border-blue-600 hover:bg-blue-700'}`}>
                 {isSpeaking ? '🛑' : '🔊'}
               </button>
             </div>
 
             <div className={`bg-blue-50/30 flex flex-col ${instGap} flex-1 relative overflow-y-auto custom-scrollbar p-3 md:p-6`}>
               {(displayDrugEn || displayDrugLocal) && (
-                <div className="bg-gradient-to-r from-amber-100 to-yellow-200 border-2 border-yellow-400 rounded-[1.5rem] md:rounded-[2rem] py-3 md:py-5 flex flex-col items-center justify-center shadow-sm text-center relative shrink-0">
-                  <span className="text-yellow-800 text-[10px] md:text-xs font-black uppercase mb-1 tracking-widest">💊 {p.drug_name}</span>
-                  <div className="flex flex-col items-center justify-center w-full overflow-hidden px-2 gap-1">
+                <div className="bg-gradient-to-r from-amber-100 to-yellow-200 border-2 border-yellow-400 rounded-[1.5rem] md:rounded-[2rem] py-4 md:py-6 flex flex-col items-center justify-center shadow-sm text-center relative shrink-0">
+                  <span className="text-yellow-800 text-xs md:text-base font-black uppercase mb-1 tracking-widest relative z-10">💊 {p.drug_name}</span>
+                  <div className="flex flex-col items-center justify-center w-full overflow-hidden px-2 gap-1 relative z-10">
                     {displayDrugLocal && <FittedText text={displayDrugLocal} isMain={true} />}
                     {displayDrugEn && <FittedText text={displayDrugLocal ? `(${displayDrugEn})` : displayDrugEn} isMain={!displayDrugLocal} />}
                   </div>
@@ -605,19 +591,19 @@ export default function PharmaLingoApp() {
                 <div className="bg-blue-100/50 border-l-4 md:border-l-8 border-blue-400 rounded-r-2xl p-2 md:p-3 flex items-center gap-3 shadow-sm shrink-0">
                   <span className="text-2xl md:text-4xl shrink-0">🎯</span>
                   <div className="flex flex-col leading-tight">
-                    <span className="text-blue-500 text-[10px] uppercase font-black">{p.ind_title}</span>
-                    <span className="text-blue-800 font-black text-sm md:text-2xl mt-1 line-clamp-2">{rx.rxIndication !== null ? p.indication[rx.rxIndication] : rx.customIndication}</span>
+                    <span className="text-blue-500 text-xs md:text-sm uppercase font-black">{p.ind_title}</span>
+                    <span className="text-blue-800 font-black text-lg md:text-3xl mt-1 line-clamp-2">{rx.rxIndication !== null ? p.indication[rx.rxIndication] : rx.customIndication}</span>
                   </div>
                 </div>
               )}
 
               {rx.isTapering ? (
                 <div className="bg-white rounded-2xl p-2 shadow-sm border border-slate-100 flex-1 overflow-hidden flex flex-col min-h-[150px]">
-                  <div className="text-indigo-600 font-black text-[10px] md:text-xs uppercase mb-1 text-center border-b pb-1">📉 {p.taper_mode}</div>
+                  <div className="text-indigo-600 font-black text-base md:text-lg uppercase mb-1 text-center border-b pb-1">📉 {p.taper_mode}</div>
                   <div className="flex-1 overflow-y-auto custom-scrollbar pr-1">
                     <table className="w-full text-center border-collapse">
                       <thead>
-                        <tr className="text-slate-400 text-[9px] md:text-[10px] uppercase border-b-2 border-slate-100">
+                        <tr className="text-slate-400 text-xs md:text-base uppercase border-b-2 border-slate-100">
                           <th className="pb-1 text-left">💊 {p.dosage}</th>
                           <th className="pb-1">🍽️ {p.time_col}</th>
                           <th className="pb-1 text-right">🗓️ {p.duration}</th>
@@ -626,12 +612,12 @@ export default function PharmaLingoApp() {
                       <tbody>
                         {rx.taperSteps.map((step, idx) => (
                           <tr key={idx} className="border-b border-slate-50 last:border-0">
-                            <td className="py-2 font-black text-[10px] md:text-xs text-blue-600 whitespace-nowrap text-left">{step.dose} {unitDict[step.unit][patientLang]}</td>
-                            <td className="py-2 text-[10px] md:text-xs leading-tight">
+                            <td className="py-2.5 font-black text-sm md:text-base text-blue-600 whitespace-nowrap text-left">{step.dose} {unitDict[step.unit][patientLang]}</td>
+                            <td className="py-2.5 text-sm md:text-base leading-tight">
                                {step.time !== null && <div className="text-teal-600 font-bold mb-0.5">{p.time[step.time]}</div>}
                                <div className="text-orange-600 font-bold">{step.periods.map(i => `${p.period_icons[i]} ${p.period[i]}`).join(', ')}</div>
                             </td>
-                            <td className="py-2 font-black text-[10px] md:text-xs text-slate-700 whitespace-nowrap text-right">{step.days} {p.day}</td>
+                            <td className="py-2.5 font-black text-sm md:text-base text-slate-700 whitespace-nowrap text-right">{step.days} {p.day}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -642,17 +628,17 @@ export default function PharmaLingoApp() {
                 <div className={`flex flex-col ${instGap} shrink-0`}>
                   {(rx.rxDose !== null || Number(rx.cDose) > 0 || rx.rxSide !== null) && (
                     <div className={`flex items-center gap-3 bg-white rounded-2xl border border-slate-100 shadow-sm ${instPadding}`}>
-                      <span className="text-2xl">💊</span>
-                      <div className={`flex flex-col md:flex-row md:items-center gap-1 md:gap-3 font-black text-slate-800 ${instTextSize}`}>
+                      <span className="text-3xl md:text-4xl shrink-0">💊</span>
+                      <div className={`flex flex-col md:flex-row md:items-center gap-1.5 md:gap-3 font-black text-slate-800 ${instTextSize}`}>
                         {(rx.rxDose !== null || Number(rx.cDose) > 0) && <span>{rx.rxDose !== null ? p.dose[rx.rxDose] : parseSmartText(p.smart_dose, rx.cDose, rx.cDoseUnit)}</span>}
-                        {rx.rxSide !== null && <span className="text-purple-600 bg-purple-50 px-2 py-0.5 rounded-lg border border-purple-200 text-xs md:text-sm flex items-center gap-1">{p.side_icons[rx.rxSide]} {p.side[rx.rxSide]}</span>}
+                        {rx.rxSide !== null && <span className="text-purple-600 bg-purple-50 px-3 py-1.5 rounded-xl border-2 border-purple-200 text-xs md:text-sm flex items-center gap-2">{p.side_icons[rx.rxSide]} {p.side[rx.rxSide]}</span>}
                       </div>
                     </div>
                   )}
                   
                   {(rx.rxFreq !== null || Number(rx.cHour) > 0 || Number(rx.cApply) > 0) && (
                     <div className={`flex items-center gap-3 bg-white rounded-2xl border border-slate-100 shadow-sm ${instPadding}`}>
-                      <span className="text-2xl">🔄</span>
+                      <span className="text-3xl md:text-4xl shrink-0">🔄</span>
                       <span className={`font-black text-slate-800 ${instTextSize}`}>
                         {rx.rxFreq !== null && <div>{p.freq[rx.rxFreq]}</div>}
                         {Number(rx.cHour) > 0 && <div className="text-indigo-600">{parseSmartText(p.smart_hour, rx.cHour, rx.cHourUnit)}</div>}
@@ -663,7 +649,7 @@ export default function PharmaLingoApp() {
 
                   {(rx.rxTime !== null || Number(rx.cDays) > 0) && (
                     <div className={`flex items-center gap-3 bg-white rounded-2xl border border-slate-100 shadow-sm ${instPadding}`}>
-                      <span className="text-2xl">🍽️</span>
+                      <span className="text-3xl md:text-4xl shrink-0">🍽️</span>
                       <span className={`font-black text-slate-800 ${instTextSize}`}>
                         {rx.rxTime !== null && <div>{p.time[rx.rxTime]}</div>}
                         {Number(rx.cDays) > 0 && <div className="text-emerald-600 mt-1">{parseSmartText(p.smart_days, rx.cDays, rx.cDaysUnit)}</div>}
@@ -672,9 +658,9 @@ export default function PharmaLingoApp() {
                   )}
 
                   {rx.rxPeriod.length > 0 && (
-                    <div className="flex flex-wrap gap-1 md:gap-2 mt-1">
+                    <div className="flex flex-wrap gap-1.5 md:gap-2.5 mt-1.5">
                       {rx.rxPeriod.map((i: number) => (
-                        <span key={i} className={`bg-orange-50 text-orange-600 px-3 py-1.5 rounded-xl font-black border-2 border-orange-200 shadow-sm ${instTextSize}`}>
+                        <span key={i} className={`bg-orange-50 text-orange-600 px-4.5 py-2.5 rounded-xl font-black border-2 border-orange-200 shadow-sm ${instTextSize}`}>
                           {p.period_icons[i]} {p.period[i]}
                         </span>
                       ))}
@@ -682,27 +668,29 @@ export default function PharmaLingoApp() {
                   )}
                 </div>
               )}
-              <div className="shrink-0 text-center py-3 text-blue-500 font-bold animate-bounce text-xs sm:text-sm mt-auto opacity-80">
+              <div className="shrink-0 text-center py-3 text-blue-500 font-bold animate-bounce text-sm sm:text-base mt-auto opacity-80">
                   {p.scroll_down}
               </div>
             </div>
           </div>
         </div>
 
-        {/* 🔴 การ์ดคำเตือน (หน้าจอที่ 2) */}
-        <div className="w-full h-full flex items-center justify-center p-3 sm:p-6 snap-center">
-          <div className="w-full max-w-4xl h-full max-h-[850px] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-red-100 overflow-hidden">
+        {/* 🔴 ใบที่ 2: คำเตือน (หน้าจอที่ 2) */}
+        <div className="w-full h-full flex items-center justify-center p-4 sm:p-6 snap-center">
+          <div className="w-full max-w-5xl h-full max-h-[850px] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-red-100 overflow-hidden">
             <div className="bg-gradient-to-r from-red-800 to-rose-900 p-3 md:p-4 text-center relative shadow-inner shrink-0 flex justify-between items-center">
               <span className="text-2xl opacity-20">⚠️</span>
               <div className="flex flex-col items-center">
-                <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase leading-none">Bangkok Pattaya Hospital</h1>
-                <p className="text-red-200 text-[10px] md:text-xs font-bold mt-1 tracking-widest">{p.warn_title}</p>
+                <h1 className="text-white font-black text-lg md:text-2xl tracking-widest uppercase leading-none">Bangkok Pattaya Hospital</h1>
+                <p className="text-red-200 text-xs md:text-base font-bold mt-1 tracking-widest">{p.warn_title}</p>
               </div>
-              <span className="text-2xl opacity-20">🚨</span>
+              <button onClick={() => speakSpecificWarnings(rx)} className={`w-12 h-12 md:w-14 md:h-14 rounded-full text-lg md:text-xl shadow-md flex items-center justify-center transition-all ${isSpeaking ? 'bg-white text-red-600 animate-pulse' : 'bg-red-800 text-white border border-red-600 hover:bg-red-700'}`}>
+                {isSpeaking ? '🛑' : '🔊'}
+              </button>
             </div>
 
             <div className={`bg-red-50/50 flex flex-col flex-1 overflow-y-auto custom-scrollbar justify-center p-3 md:p-6`}>
-              <h3 className="text-red-600 font-black text-xs md:text-sm uppercase tracking-widest mb-2 border-b-2 border-red-200 pb-2 shrink-0 text-center">⚠️ {p.warn_title}</h3>
+              <h3 className="text-red-600 font-black text-base md:text-lg uppercase tracking-widest mb-2 border-b-2 border-red-200 pb-2 shrink-0 text-center">⚠️ {p.warn_title}</h3>
               <div className={`flex-1 flex flex-col ${warnGap} justify-center overflow-y-auto min-h-[100px]`}>
                 {(rx.rxWarnings.length > 0 || rx.customWarnings.length > 0) ? (
                   <>
@@ -723,8 +711,8 @@ export default function PharmaLingoApp() {
                   <div className="flex flex-col items-center justify-center h-full text-slate-300 opacity-60"><span className="text-5xl mb-2">✅</span><span className="font-black text-sm">No special warnings</span></div>
                 )}
               </div>
-              <div className="mt-3 bg-red-600 text-white rounded-2xl p-3 flex items-center gap-2 shadow-md shrink-0">
-                 <span className="text-2xl shrink-0">🛑</span><span className="font-black text-[9px] md:text-[10px] leading-tight">{p.allergy_alert}</span>
+              <div className="mt-3 bg-red-600 text-white rounded-2xl p-4 flex items-center gap-3 shadow-md shrink-0">
+                 <span className="text-3xl shrink-0">🛑</span><span className="font-black text-xs md:text-base leading-tight">{p.allergy_alert}</span>
               </div>
             </div>
           </div>
@@ -748,23 +736,25 @@ export default function PharmaLingoApp() {
                 ✕
               </button>
             </div>
-            <div className="flex-1 w-full h-full flex items-center justify-center p-4">
+            <div className="flex-1 w-full h-full flex items-center justify-center p-4 pt-16 sm:pt-10">
                {renderGuideCard(activeGuide)}
             </div>
           </div>
         ) : dispenseState === 'present' ? (
-          <div className="w-full h-full flex flex-col bg-slate-900" dir={isRTL ? 'rtl' : 'ltr'}>
+          <div className="w-full h-full flex flex-col bg-slate-900 relative" dir={isRTL ? 'rtl' : 'ltr'}>
             
-            {/* 📸 Top Bar แจ้งเตือน + นำทาง */}
+            {/* 📸 Top Bar แจ้งเตือน + นำทาง (Centered & Visible) */}
             <div className="w-full shrink-0 bg-slate-900 flex justify-between items-center p-4 pt-10 sm:pt-4 z-50">
-               <div className="bg-blue-600 text-white font-black px-4 py-2 sm:px-6 sm:py-3 rounded-full shadow-lg border-2 border-blue-400 animate-pulse text-xs sm:text-sm flex items-center gap-2">
-                 <span className="text-lg sm:text-xl">📸</span> <span className="hidden sm:inline">{p.photo_prompt}</span>
+               <div className="flex-1 flex justify-center pointer-events-none">
+                  <div className="bg-blue-600 text-white font-black px-4 py-2 sm:px-6 sm:py-3 rounded-full shadow-lg border-2 border-blue-400 animate-pulse text-xs sm:text-lg flex items-center gap-2 pointer-events-auto">
+                    <span className="text-lg sm:text-2xl">📸</span> <span className="hidden sm:inline">{p.photo_prompt}</span>
+                  </div>
                </div>
                <div className="flex items-center gap-3">
                  {cart.length > 1 && (
                    <div className="flex items-center gap-3 sm:gap-4 bg-slate-800 px-4 py-1.5 sm:py-2 rounded-full border border-slate-700">
                      <button onClick={() => scrollToCard(currentCardIndex - 1)} disabled={currentCardIndex === 0} className="text-white text-xl disabled:opacity-30 active:scale-90">◀</button>
-                     <span className="text-white font-black text-sm sm:text-base">{currentCardIndex + 1} / {cart.length}</span>
+                     <span className="text-white font-black text-sm sm:text-lg">{currentCardIndex + 1} / {cart.length}</span>
                      <button onClick={() => scrollToCard(currentCardIndex + 1)} disabled={currentCardIndex === cart.length - 1} className="text-white text-xl disabled:opacity-30 active:scale-90">▶</button>
                    </div>
                  )}
@@ -774,10 +764,10 @@ export default function PharmaLingoApp() {
                </div>
             </div>
 
-            {/* 🚀 แกนปัดแนวนอน 60 FPS */}
+            {/* 🚀 แกนปัดแนวนอน 60 FPS (Fit Screen & Centered) */}
             <div className="flex-1 w-full overflow-hidden relative">
-               {cart.length > 1 && <div className="absolute top-2 left-1/2 transform -translate-x-1/2 text-slate-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest animate-bounce z-50 pointer-events-none">{p.swipe_hint}</div>}
-               <div id="horizontal-scroll-container" className="w-full h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory flex hide-scrollbar scroll-smooth" style={{ WebkitOverflowScrolling: 'touch' }}>
+               {cart.length > 1 && <div className="absolute top-2 left-1/2 transform -translate-x-1/2 text-slate-400 text-[10px] sm:text-sm font-bold uppercase tracking-widest animate-bounce z-50 pointer-events-none">{p.swipe_hint}</div>}
+               <div id="horizontal-scroll-container" className="w-full h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory flex hide-scrollbar scroll-smooth transform-gpu" style={{ WebkitOverflowScrolling: 'touch' }}>
                    {cart.length > 0 ? (
                      cart.map((rx, idx) => renderBoardingPass(rx, idx))
                    ) : (
@@ -793,10 +783,10 @@ export default function PharmaLingoApp() {
         ) : (
           <div dir={isRTL ? 'rtl' : 'ltr'} 
             className={`relative transition-all duration-500 flex flex-col w-full h-full bg-white rounded-[2rem] shadow-[0_15px_40px_rgba(0,0,0,0.1)] border border-slate-200 overflow-hidden
-            ${activeQuestion ? 'opacity-100 p-6' : 'opacity-0'}`}>
+            ${activeQuestion ? 'opacity-100 p-6 pt-16 sm:pt-10' : 'opacity-0'}`}>
             
             {appMode === 'history' && (
-              <div className="text-center w-full flex flex-col h-full justify-center overflow-hidden">
+              <div className="text-center w-full flex flex-col h-full justify-center overflow-hidden pt-10 sm:pt-0">
                 {activeQuestion === 'custom_msg' ? (
                   <div className="animate-in"><div className="text-6xl mb-6 bg-blue-50 w-24 h-24 rounded-full flex items-center justify-center mx-auto shadow-inner">💬</div><h2 className="text-3xl md:text-5xl font-black text-blue-600 mb-4 leading-snug">{translatedText}</h2></div>
                 ) : (
@@ -926,11 +916,11 @@ export default function PharmaLingoApp() {
             )}
 
             {appMode === 'dispense' && dispenseState === 'input' && (
-              <div className="flex flex-col gap-6 pb-[150px] md:pb-[100px] animate-in">
+              <div className="flex flex-col gap-6 pb-[150px] md:pb-[100px] animate-in relative z-0">
                 
                 <div className="bg-gradient-to-br from-blue-900/40 to-indigo-900/40 p-4 md:p-5 rounded-[2rem] border border-blue-800/50 flex flex-col gap-4 shadow-inner">
                   <div className="flex flex-col gap-2">
-                    <span className="text-blue-300 text-sm font-black uppercase tracking-widest flex items-center gap-2">💊 {th.drug_name}</span>
+                    <span className="text-blue-300 text-sm font-black uppercase tracking-widest flex items-center gap-2 relative z-10">💊 {th.drug_name}</span>
                     <div className="flex gap-3">
                       <input type="text" value={drugInput} onChange={(e) => setDrugInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && translateDrugName()} placeholder="พิมพ์ชื่อยา (เช่น Paracetamol)..." className="flex-1 bg-slate-900/80 border-2 border-slate-700 text-white placeholder-slate-500 text-base rounded-2xl px-5 py-3 outline-none focus:border-blue-500 font-bold transition-colors" />
                       <button onClick={translateDrugName} disabled={!drugInput.trim() || isTranslatingDrug} className="bg-blue-600 hover:bg-blue-500 text-white text-sm font-black px-6 py-3 rounded-2xl active:scale-95 disabled:opacity-50 shadow-md">
@@ -944,7 +934,7 @@ export default function PharmaLingoApp() {
                     <span className="text-blue-300 text-sm font-black uppercase tracking-widest flex items-center gap-2">🎯 {th.ind_title}</span>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                       {th.indication.map((ind: string, i: number) => (
-                        <button key={i} onClick={() => { setRxIndication(rxIndication === i ? null : i); setCustomIndication(''); }} className={`px-2 py-2 rounded-xl text-[10px] md:text-xs font-black border transition-all active:scale-95 flex items-center gap-1 ${rxIndication === i ? 'bg-blue-600 border-blue-400 text-white shadow-lg' : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700 hover:border-slate-500'}`}>
+                        <button key={i} onClick={() => { setRxIndication(rxIndication === i ? null : i); setCustomIndication(''); }} className={`px-2 py-2 rounded-xl text-xs md:text-sm font-black border transition-all active:scale-95 flex items-center gap-1 ${rxIndication === i ? 'bg-blue-600 border-blue-400 text-white shadow-lg' : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700 hover:border-slate-500'}`}>
                           <span className="text-base">{th.ind_icons[i]}</span> {ind}
                         </button>
                       ))}
@@ -966,33 +956,33 @@ export default function PharmaLingoApp() {
 
                 {isTaperingMode ? (
                   <div className="bg-indigo-900/20 p-4 md:p-5 rounded-[2rem] border border-indigo-800/50 flex flex-col gap-4 shadow-inner">
-                     <h3 className="text-indigo-400 text-xs font-black uppercase tracking-widest text-center">ระบบจัดการลดโดส / กินไม่เท่ากัน</h3>
+                     <h3 className="text-indigo-400 text-sm md:text-base font-black uppercase tracking-widest text-center relative z-10">ระบบจัดการลดโดส / กินไม่เท่ากัน</h3>
                      {taperSteps.map((step, idx) => (
                        <div key={idx} className="bg-slate-900 p-4 rounded-2xl border border-slate-700 flex flex-col gap-3">
                          <div className="flex items-center justify-between border-b border-slate-700 pb-2">
-                            <span className="text-slate-400 font-black text-xs">Step {idx + 1}</span>
-                            {taperSteps.length > 1 && <button onClick={() => setTaperSteps(taperSteps.filter((_, i) => i !== idx))} className="text-red-500 font-black text-xs">✕ ลบ</button>}
+                            <span className="text-slate-400 font-black text-sm">Step {idx + 1}</span>
+                            {taperSteps.length > 1 && <button onClick={() => setTaperSteps(taperSteps.filter((_, i) => i !== idx))} className="text-red-500 font-black text-sm">✕ ลบ</button>}
                          </div>
                          <div className="flex gap-3 items-center">
                             <div className="flex-1 flex flex-col gap-1">
-                               <span className="text-[10px] text-slate-500 uppercase font-bold">ระยะเวลา (วัน)</span>
+                               <span className="text-xs md:text-sm text-slate-500 uppercase font-bold">ระยะเวลา (วัน)</span>
                                <div className="flex bg-slate-800 p-1 rounded-lg border border-slate-600">
                                  <button onClick={() => { const ns = [...taperSteps]; ns[idx].days = Math.max(1, ns[idx].days-1); setTaperSteps(ns);}} className="w-8 h-8 bg-slate-700 text-white rounded font-black">-</button>
-                                 <input type="text" value={step.days} onChange={(e) => { const val = e.target.value; if (/^\d*$/.test(val)) { const ns = [...taperSteps]; ns[idx].days = Number(val); setTaperSteps(ns); } }} className="flex-1 w-8 text-center font-black text-white bg-transparent outline-none focus:bg-slate-700 rounded" />
+                                 <input type="text" value={step.days} onChange={(e) => { const val = e.target.value; if (/^\d*$/.test(val)) { const ns = [...taperSteps]; ns[idx].days = Number(val); setTaperSteps(ns); } }} className="flex-1 w-8 text-center font-black text-white bg-transparent outline-none focus:bg-slate-700 rounded text-sm" />
                                  <button onClick={() => { const ns = [...taperSteps]; ns[idx].days++; setTaperSteps(ns);}} className="w-8 h-8 bg-indigo-600 text-white rounded font-black">+</button>
                                </div>
                             </div>
                             <div className="flex-1 flex flex-col gap-1">
-                               <span className="text-[10px] text-slate-500 uppercase font-bold">ปริมาณ (เม็ด/แคป)</span>
+                               <span className="text-xs md:text-sm text-slate-500 uppercase font-bold">ปริมาณ (เม็ด/แคป)</span>
                                <div className="flex bg-slate-800 p-1 rounded-lg border border-slate-600">
                                  <button onClick={() => { const ns = [...taperSteps]; ns[idx].dose = Math.max(0.5, Number(ns[idx].dose)-0.5); setTaperSteps(ns);}} className="w-8 h-8 bg-slate-700 text-white rounded font-black">-</button>
-                                 <input type="text" value={step.dose} onChange={(e) => { const val = e.target.value; if (/^\d*\.?\d*$/.test(val)) { const ns = [...taperSteps]; ns[idx].dose = val; setTaperSteps(ns); } }} className="flex-1 w-8 text-center font-black text-white bg-transparent outline-none focus:bg-slate-700 rounded" />
+                                 <input type="text" value={step.dose} onChange={(e) => { const val = e.target.value; if (/^\d*\.?\d*$/.test(val)) { const ns = [...taperSteps]; ns[idx].dose = val; setTaperSteps(ns); } }} className="flex-1 w-8 text-center font-black text-white bg-transparent outline-none focus:bg-slate-700 rounded text-sm" />
                                  <button onClick={() => { const ns = [...taperSteps]; ns[idx].dose = Number(ns[idx].dose) + 0.5; setTaperSteps(ns);}} className="w-8 h-8 bg-indigo-600 text-white rounded font-black">+</button>
                                </div>
                             </div>
                          </div>
                          <div className="flex flex-col gap-2 mt-2">
-                            <span className="text-[10px] text-slate-500 uppercase font-bold">เวลาอาหาร</span>
+                            <span className="text-xs md:text-sm text-slate-500 uppercase font-bold">เวลาอาหาร</span>
                             <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
                               {th.time.map((tFood: string, tIdx: number) => (
                                 <button key={tIdx} onClick={() => { const ns = [...taperSteps]; ns[idx].time = ns[idx].time === tIdx ? null : tIdx; setTaperSteps(ns); }} className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-[10px] md:text-xs font-black border transition-all active:scale-95 ${step.time === tIdx ? 'bg-teal-600 border-teal-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400'}`}>🍽️ {tFood}</button>
@@ -1000,7 +990,7 @@ export default function PharmaLingoApp() {
                             </div>
                          </div>
                          <div className="flex flex-col gap-2 mt-1">
-                            <span className="text-[10px] text-slate-500 uppercase font-bold">ช่วงเวลา</span>
+                            <span className="text-xs md:text-sm text-slate-500 uppercase font-bold">ช่วงเวลา</span>
                             <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
                               {th.period.map((pr: string, pIdx: number) => (
                                 <button key={pIdx} onClick={() => { const ns = [...taperSteps]; if(ns[idx].periods.includes(pIdx)) ns[idx].periods = ns[idx].periods.filter(i => i !== pIdx); else ns[idx].periods.push(pIdx); ns[idx].periods.sort(); setTaperSteps(ns); }} className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-[10px] md:text-xs font-black border transition-all active:scale-95 ${step.periods.includes(pIdx) ? 'bg-orange-500 border-orange-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400'}`}>{th.period_icons[pIdx]} {pr}</button>
@@ -1009,48 +999,48 @@ export default function PharmaLingoApp() {
                          </div>
                        </div>
                      ))}
-                     <button onClick={() => setTaperSteps([...taperSteps, { days: 3, dose: 1, unit: 'tab', time: null, periods: [0] }])} className="border-2 border-dashed border-indigo-500/50 text-indigo-400 py-3 rounded-2xl font-black text-sm hover:bg-indigo-900/30">
+                     <button onClick={() => setTaperSteps([...taperSteps, { days: 3, dose: 1, unit: 'tab', time: null, periods: [0] }])} className="border-2 border-dashed border-indigo-500/50 text-indigo-400 py-3 rounded-2xl font-black text-sm hover:bg-indigo-900/30 relative z-10">
                        ➕ เพิ่มช่วงเวลาใหม่ (Add Step)
                      </button>
                   </div>
                 ) : (
                   <div className="bg-slate-800/40 p-4 md:p-5 rounded-[2rem] border border-slate-700 flex flex-col gap-4 shadow-inner">
                     <div className="flex gap-3 overflow-x-auto pb-2 hide-scrollbar items-center">
-                      <span className="text-slate-500 text-[10px] md:text-sm font-black uppercase w-14 shrink-0">ปริมาณ:</span>
+                      <span className="text-slate-500 text-xs md:text-sm font-black uppercase w-14 shrink-0 relative z-10">ปริมาณ:</span>
                       {th.dose.map((item: string, i: number) => (
-                        <button key={i} onClick={() => { setRxDose(rxDose === i ? null : i); setCDose(0); }} className={`whitespace-nowrap px-4 py-2 rounded-xl text-xs md:text-sm font-black border transition-all active:scale-95 ${rxDose === i ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
+                        <button key={i} onClick={() => { setRxDose(rxDose === i ? null : i); setCDose(0); }} className={`whitespace-nowrap px-4 py-2 rounded-xl text-xs md:text-sm font-black border transition-all active:scale-95 ${rxDose === i ? 'bg-indigo-600 border-indigo-400 text-white shadow-lg' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           {i === 0 ? '🌗' : i > 4 ? (i > 6 ? '💧' : '💨') : '💊'} {item}
                         </button>
                       ))}
                     </div>
                     <div className="flex gap-3 overflow-x-auto pb-2 hide-scrollbar items-center">
-                      <span className="text-slate-500 text-[10px] md:text-sm font-black uppercase w-14 shrink-0">ข้าง:</span>
+                      <span className="text-slate-500 text-xs md:text-sm font-black uppercase w-14 shrink-0 relative z-10">ข้าง:</span>
                       {th.side.map((item: string, i: number) => (
-                        <button key={i} onClick={() => setRxSide(rxSide === i ? null : i)} className={`whitespace-nowrap px-4 py-2 rounded-xl text-xs md:text-sm font-black border transition-all active:scale-95 ${rxSide === i ? 'bg-purple-600 border-purple-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
+                        <button key={i} onClick={() => setRxSide(rxSide === i ? null : i)} className={`whitespace-nowrap px-4 py-2 rounded-xl text-xs md:text-sm font-black border transition-all active:scale-95 ${rxSide === i ? 'bg-purple-600 border-purple-400 text-white shadow-lg' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           {th.side_icons[i]} {item}
                         </button>
                       ))}
                     </div>
                     <div className="flex gap-3 overflow-x-auto pb-2 hide-scrollbar items-center">
-                      <span className="text-slate-500 text-[10px] md:text-sm font-black uppercase w-14 shrink-0">ความถี่:</span>
+                      <span className="text-slate-500 text-xs md:text-sm font-black uppercase w-14 shrink-0 relative z-10">ความถี่:</span>
                       {th.freq.map((item: string, i: number) => (
-                        <button key={i} onClick={() => { setRxFreq(rxFreq === i ? null : i); setCHour(0); setCApply(0); }} className={`whitespace-nowrap px-4 py-2 rounded-xl text-xs md:text-sm font-black border transition-all active:scale-95 ${rxFreq === i ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
+                        <button key={i} onClick={() => { setRxFreq(rxFreq === i ? null : i); setCHour(0); setCApply(0); }} className={`whitespace-nowrap px-4 py-2 rounded-xl text-xs md:text-sm font-black border transition-all active:scale-95 ${rxFreq === i ? 'bg-indigo-600 border-indigo-400 text-white shadow-lg' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           🔄 {item}
                         </button>
                       ))}
                     </div>
                     <div className="flex gap-3 overflow-x-auto pb-2 hide-scrollbar items-center">
-                      <span className="text-slate-500 text-[10px] md:text-sm font-black uppercase w-14 shrink-0">อาหาร:</span>
+                      <span className="text-slate-500 text-xs md:text-sm font-black uppercase w-14 shrink-0 relative z-10">อาหาร:</span>
                       {th.time.map((item: string, i: number) => (
-                        <button key={i} onClick={() => setRxTime(rxTime === i ? null : i)} className={`whitespace-nowrap px-4 py-2 rounded-xl text-xs md:text-sm font-black border transition-all active:scale-95 ${rxTime === i ? 'bg-teal-600 border-teal-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
+                        <button key={i} onClick={() => setRxTime(rxTime === i ? null : i)} className={`whitespace-nowrap px-4 py-2 rounded-xl text-xs md:text-sm font-black border transition-all active:scale-95 ${rxTime === i ? 'bg-teal-600 border-teal-400 text-white shadow-lg' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           🍽️ {item}
                         </button>
                       ))}
                     </div>
                     <div className="flex gap-3 overflow-x-auto pb-2 hide-scrollbar items-center">
-                      <span className="text-slate-500 text-[10px] md:text-sm font-black uppercase w-14 shrink-0">เวลา:</span>
+                      <span className="text-slate-500 text-xs md:text-sm font-black uppercase w-14 shrink-0 relative z-10">เวลา:</span>
                       {th.period.map((pTime: string, i: number) => (
-                        <button key={i} onClick={() => togglePeriod(i)} className={`whitespace-nowrap px-4 py-2 rounded-xl text-xs md:text-sm font-black border transition-all active:scale-95 ${rxPeriod.includes(i) ? 'bg-orange-500 border-orange-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
+                        <button key={i} onClick={() => togglePeriod(i)} className={`whitespace-nowrap px-4 py-2 rounded-xl text-xs md:text-sm font-black border transition-all active:scale-95 ${rxPeriod.includes(i) ? 'bg-orange-500 border-orange-400 text-white shadow-lg' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           {th.period_icons[i]} {pTime}
                         </button>
                       ))}
@@ -1060,28 +1050,28 @@ export default function PharmaLingoApp() {
 
                 {!isTaperingMode && (
                   <div className="bg-slate-800/40 p-4 rounded-[2rem] border border-slate-700 shadow-inner flex flex-col items-center transition-all duration-300">
-                    <button onClick={() => setIsSmartOpen(!isSmartOpen)} className="w-full flex items-center justify-between text-slate-300 hover:text-white font-black uppercase tracking-widest text-sm outline-none">
+                    <button onClick={() => setIsSmartOpen(!isSmartOpen)} className="w-full flex items-center justify-between text-slate-300 hover:text-white font-black uppercase tracking-widest text-sm outline-none relative z-10">
                       <span className="flex items-center gap-2">🔢 ระบบระบุตัวเลข (แปลอัตโนมัติ)</span>
-                      <span className="text-2xl bg-slate-700/50 w-10 h-10 rounded-full flex items-center justify-center border border-slate-600">{isSmartOpen ? '➖' : '➕'}</span>
+                      <span className="text-2xl bg-slate-700/50 w-10 h-10 rounded-full flex items-center justify-center border border-slate-600 shadow-md transition-colors hover:bg-slate-600">{isSmartOpen ? '➖' : '➕'}</span>
                     </button>
                     
                     {isSmartOpen && (
-                      <div className="grid grid-cols-2 gap-4 w-full max-w-2xl mt-4 animate-in fade-in">
+                      <div className="grid grid-cols-2 gap-4 w-full max-w-2xl mt-4 animate-in fade-in relative z-0">
                         {[
                           { label: 'ใช้ครั้งละ', val: cDose, setVal: setCDose, unit: cDoseUnit, setUnit: setCDoseUnit, step: 0.5, uOptions: ['tab', 'cap', 'tsp', 'tbsp', 'ml', 'cc', 'puff', 'drop'], icon: '💊', reset: () => setRxDose(null) },
                           { label: 'ทุกๆ', val: cHour, setVal: setCHour, unit: cHourUnit, setUnit: setCHourUnit, step: 1, uOptions: ['hr'], icon: '⏳', reset: () => setRxFreq(null) },
                           { label: 'ทาวันละ', val: cApply, setVal: setCApply, unit: cApplyUnit, setUnit: setCApplyUnit, step: 1, uOptions: ['times'], icon: '🧴', reset: () => setRxFreq(null) },
                           { label: 'ติดต่อกัน', val: cDays, setVal: setCDays, unit: cDaysUnit, setUnit: setCDaysUnit, step: 1, uOptions: ['day', 'wk'], icon: '🗓️', reset: () => {} }
                         ].map((input, idx) => (
-                          <div key={idx} className="bg-slate-900 border-2 border-slate-700 rounded-2xl p-3 flex flex-col items-center gap-2 shadow-sm">
-                            <span className="text-slate-300 text-sm font-black flex items-center gap-2">{input.icon} {input.label}</span>
-                            <div className="flex items-center gap-2">
-                              <div className="flex items-center bg-slate-800 rounded-xl p-1 border border-slate-600">
+                          <div key={idx} className="bg-slate-900 border-2 border-slate-700 rounded-2xl p-3 flex flex-col items-center gap-2 shadow-inner">
+                            <span className="text-slate-300 text-sm md:text-base font-black flex items-center gap-2 relative z-10">{input.icon} {input.label}</span>
+                            <div className="flex items-center gap-2 relative z-10">
+                              <div className="flex items-center bg-slate-800 rounded-xl p-1 border border-slate-600 shadow-inner">
                                 <button onClick={() => input.setVal(Math.max(0, Number(input.val) - input.step))} className="w-10 h-10 rounded-lg bg-slate-700 text-white font-black text-xl hover:bg-slate-600 active:scale-90">-</button>
-                                <input type="text" value={input.val} onChange={(e) => handleNumberInput(input.setVal, e.target.value)} className="font-black text-2xl text-cyan-400 w-12 text-center bg-transparent outline-none focus:bg-slate-700 rounded" />
+                                <input type="text" value={input.val} onChange={(e) => handleNumberInput(input.setVal, e.target.value)} className="font-black text-2xl text-cyan-400 w-12 text-center bg-transparent outline-none focus:bg-slate-700 rounded transition-colors" />
                                 <button onClick={() => { input.setVal(Number(input.val) + input.step); input.reset(); }} className="w-10 h-10 rounded-lg bg-cyan-700 text-white font-black text-xl hover:bg-cyan-600 active:scale-90">+</button>
                               </div>
-                              <select value={input.unit} onChange={(e) => input.setUnit(e.target.value)} className="bg-slate-800 text-slate-300 border border-slate-600 text-sm font-bold rounded-xl py-3 px-2 outline-none focus:border-cyan-500 cursor-pointer">
+                              <select value={input.unit} onChange={(e) => input.setUnit(e.target.value)} className="bg-slate-800 text-slate-300 border border-slate-600 text-sm md:text-base font-bold rounded-xl py-3 px-2 outline-none focus:border-cyan-500 cursor-pointer shadow-md">
                                 {input.uOptions.map(u => <option key={u} value={u}>{unitDict[u].th}</option>)}
                               </select>
                             </div>
@@ -1093,23 +1083,23 @@ export default function PharmaLingoApp() {
                 )}
 
                 <div className="bg-red-900/10 p-4 md:p-5 rounded-[2rem] border border-red-900/30 flex flex-col gap-4 shadow-inner relative z-0">
-                  <span className="text-red-400 text-sm font-black uppercase tracking-widest flex items-center gap-2">⚠️ คำเตือน (Warnings)</span>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                  <span className="text-red-400 text-sm font-black uppercase tracking-widest flex items-center gap-2 relative z-10">⚠️ คำเตือน (Warnings)</span>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2 relative z-10">
                     {th.warn.map((w: string, i: number) => (
-                      <button key={i} onClick={() => toggleWarning(i)} className={`px-3 py-3 rounded-xl text-[10px] md:text-xs font-black border transition-all active:scale-95 flex items-center gap-2 ${rxWarnings.includes(i) ? 'bg-red-500 border-red-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-400 hover:bg-slate-800'}`}>
-                        <span className="text-xl">{th.warn_icons[i]}</span> <span className="text-left leading-tight">{w}</span>
+                      <button key={i} onClick={() => toggleWarning(i)} className={`px-3 py-3 rounded-xl text-[10px] md:text-xs font-black border transition-all active:scale-95 flex items-center gap-2 shadow-sm ${rxWarnings.includes(i) ? 'bg-red-500 border-red-400 text-white shadow-lg' : 'bg-slate-900 border-slate-700 text-slate-400 hover:bg-slate-800'}`}>
+                        <span className="text-xl shrink-0">{th.warn_icons[i]}</span> <span className="text-left leading-tight line-clamp-2">{w}</span>
                       </button>
                     ))}
                   </div>
-                  <div className="flex gap-3 border-t border-red-900/30 pt-4 mt-1">
-                    <input type="text" value={warnInput} onChange={(e) => setWarnInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && translateWarning()} placeholder="พิมพ์คำเตือนพิเศษ (แปลอัตโนมัติ)..." className="flex-1 bg-slate-900/80 border-2 border-slate-700 text-white placeholder-slate-500 text-sm rounded-2xl px-5 py-3 outline-none focus:border-red-500" />
+                  <div className="flex gap-3 border-t border-red-900/30 pt-4 mt-1 relative z-10">
+                    <input type="text" value={warnInput} onChange={(e) => setWarnInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && translateWarning()} placeholder="พิมพ์คำเตือนพิเศษ (แปลอัตโนมัติ)..." className="flex-1 bg-slate-900/80 border-2 border-slate-700 text-white placeholder-slate-500 text-base rounded-2xl px-5 py-3 outline-none focus:border-red-500 font-bold transition-colors" />
                     <button onClick={translateWarning} disabled={!warnInput.trim() || isTranslatingWarn} className="bg-red-600 hover:bg-red-500 text-white text-sm font-black px-6 py-3 rounded-2xl active:scale-95 disabled:opacity-50 shadow-md">เพิ่ม</button>
                   </div>
                   {customWarnings.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-3">
+                    <div className="flex flex-wrap gap-2 mt-3 relative z-10">
                       {customWarnings.map((cw, i) => (
-                        <div key={i} className="bg-red-500/20 text-red-200 border-2 border-red-500/50 text-sm font-bold px-4 py-2 rounded-xl flex items-center gap-2">
-                          🚨 {cw} <button onClick={() => removeCustomWarning(i)} className="text-red-400 hover:text-red-300 ml-2 font-black text-xl leading-none">&times;</button>
+                        <div key={i} className="bg-red-500/20 text-red-200 border-2 border-red-500/50 text-sm font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow-inner">
+                          🚨 {cw} <button onClick={() => removeCustomWarning(i)} className="text-red-400 hover:text-red-300 ml-2 font-black text-xl leading-none transition-colors">&times;</button>
                         </div>
                       ))}
                     </div>
@@ -1120,14 +1110,14 @@ export default function PharmaLingoApp() {
             )}
 
             {appMode === 'specialty' && (
-              <div className="flex flex-col gap-6 pb-24 animate-in">
+              <div className="flex flex-col gap-6 pb-24 animate-in relative z-0">
                 <div className="bg-gradient-to-br from-teal-900/40 to-emerald-900/40 p-5 md:p-6 rounded-[2rem] border border-teal-800/50 shadow-inner">
-                  <h2 className="text-teal-300 font-black text-xl mb-4 flex items-center gap-2">🪄 เลือกอุปกรณ์เทคนิคพิเศษ เพื่อแสดงคู่มือให้คนไข้ทันที</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <h2 className="text-teal-300 font-black text-xl md:text-2xl mb-4 flex items-center gap-2 relative z-10">🪄 เลือกอุปกรณ์เทคนิคพิเศษ เพื่อแสดงคู่มือให้คนไข้ทันที</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative z-0">
                     {specialData.map(item => (
-                      <button key={item.id} onClick={() => { setActiveGuide(item); setIsFullscreen(true); }} className="bg-slate-800 border-2 border-slate-700 hover:border-teal-400 hover:bg-slate-700 rounded-2xl p-4 flex items-center gap-4 transition-all active:scale-95 text-left group">
-                        <span className="text-4xl group-hover:scale-110 transition-transform">{item.icon}</span>
-                        <span className="text-slate-200 font-black text-sm md:text-base leading-tight">{item.title.th}</span>
+                      <button key={item.id} onClick={() => { setActiveGuide(item); setIsFullscreen(true); }} className="bg-slate-800 border-2 border-slate-700 hover:border-teal-400 hover:bg-slate-700 rounded-2xl p-4 md:p-5 flex items-center gap-4 transition-all active:scale-95 text-left group shadow-lg">
+                        <span className="text-4xl md:text-5xl group-hover:scale-110 transition-transform">{item.icon}</span>
+                        <span className="text-slate-200 font-black text-base md:text-lg leading-tight relative z-10">{item.title.th}</span>
                       </button>
                     ))}
                   </div>
@@ -1136,22 +1126,23 @@ export default function PharmaLingoApp() {
             )}
           </div>
 
+          {/* แถบ Sticky Bottom สำหรับ Cart */}
           {appMode === 'dispense' && dispenseState === 'input' && (
-            <div className="absolute bottom-0 left-0 w-full p-4 bg-slate-900/95 backdrop-blur-md border-t border-slate-700 flex flex-col md:flex-row items-center gap-3 z-50 transform-gpu">
-               <button onClick={addToCart} disabled={!drugInput && rxIndication === null} className="w-full md:w-auto bg-slate-800 border-2 border-slate-600 hover:border-cyan-500 text-white font-black px-6 py-4 rounded-2xl active:scale-95 disabled:opacity-30 transition-all flex items-center justify-center gap-2">
+            <div className="absolute bottom-0 left-0 w-full p-4 bg-slate-900/95 backdrop-blur-md border-t border-slate-700 flex flex-col md:flex-row items-center gap-3 z-50 transform-gpu shadow-inner">
+               <button onClick={addToCart} disabled={!drugInput && rxIndication === null} className="w-full md:w-auto bg-slate-800 border-2 border-slate-600 hover:border-cyan-500 text-white font-black px-6 py-4 md:py-5 rounded-2xl active:scale-95 disabled:opacity-30 transition-all flex items-center justify-center gap-2 shadow-lg">
                  {th.add_to_cart}
                </button>
-               <button onClick={showBoardingPass} disabled={cart.length === 0 && !drugInput} className="flex-1 w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black text-lg py-4 rounded-2xl shadow-xl active:scale-95 disabled:opacity-30 transition-all flex items-center justify-center gap-3 border-2 border-indigo-400/50">
+               <button onClick={showBoardingPass} disabled={cart.length === 0 && !drugInput} className="flex-1 w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black text-lg md:text-xl py-4 md:py-5 rounded-2xl shadow-xl active:scale-95 disabled:opacity-30 transition-all flex items-center justify-center gap-3 border-2 border-indigo-400/50">
                  🚀 โชว์การ์ดทั้งหมด {cart.length > 0 ? `(${cart.length} ${th.items})` : ''}
                </button>
             </div>
           )}
 
           {appMode === 'history' && !activeQuestion && (
-            <div className="p-6 pt-4 border-t-2 border-slate-800 shrink-0 pb-safe bg-[#0f172a] animate-in">
+            <div className="p-6 pt-4 border-t-2 border-slate-800 shrink-0 pb-safe bg-[#0f172a] animate-in relative z-50">
               <div className="flex gap-3 items-center">
-                <input type="text" value={customText} onChange={(e) => setCustomText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleTranslate()} placeholder="พิมพ์สื่อสารทั่วไป (ภาษาไทย)..." className="flex-1 bg-slate-900 border-2 border-slate-700 text-white placeholder-slate-500 text-base rounded-2xl px-5 py-4 outline-none focus:border-cyan-500 transition-colors font-bold" />
-                <button onClick={handleTranslate} disabled={!customText.trim() || isTranslating} className="bg-cyan-600 hover:bg-cyan-500 text-white font-black px-8 py-4 rounded-2xl active:scale-95 disabled:opacity-50 transition-all shadow-[0_5px_15px_rgba(8,145,178,0.4)] text-base">ส่ง 💬</button>
+                <input type="text" value={customText} onChange={(e) => setCustomText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleTranslate()} placeholder="พิมพ์สื่อสารทั่วไป (ภาษาไทย)..." className="flex-1 bg-slate-900 border-2 border-slate-700 text-white placeholder-slate-500 text-base md:text-lg rounded-2xl px-5 py-4 outline-none focus:border-cyan-500 transition-colors font-bold shadow-inner" />
+                <button onClick={handleTranslate} disabled={!customText.trim() || isTranslating} className="bg-cyan-600 hover:bg-cyan-500 text-white font-black px-8 py-4 md:py-5 rounded-2xl active:scale-95 disabled:opacity-50 transition-all shadow-[0_5px_15px_rgba(8,145,178,0.4)] text-base md:text-lg border-2 border-cyan-400/50">ส่ง 💬</button>
               </div>
             </div>
           )}
