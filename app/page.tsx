@@ -67,7 +67,7 @@ const dict = {
     allergy_alert: 'หยุดใช้ยาและพบแพทย์ทันที หากมีผื่นคัน หายใจติดขัด หรือมีอาการแพ้',
     show_card: '🚀 โชว์ Boarding Pass', edit_rx: '⬅️ กลับไปแก้ไข', photo_prompt: '📸 ถ่ายรูปหน้าจอนี้เก็บไว้ (Take a photo)',
     smart_dose: 'ใช้ครั้งละ {n} {u}', smart_hour: 'ทุกๆ {n} {u}', smart_apply: 'ทาวันละ {n} {u}', smart_days: 'ติดต่อกัน {n} {u}',
-    add_to_cart: '📥 เก็บลงตะกร้า', cart: 'ตะกร้ายา', items: 'รายการ', swipe_hint: '👈 ปัดหน้าจอซ้าย-ขวา เพื่อดูยาตัวอื่น 👉',
+    add_to_cart: '📥 เก็บลงตะกร้า', cart: 'ตะกร้ายา', items: 'รายการ', swipe_hint: '👈 ปัดซ้าย-ขวา ดูยาตัวอื่น 👉', scroll_down: '⬇️ เลื่อนลงเพื่อดูคำเตือน',
     taper_mode: '📉 โหมดลดโดส / กินไม่เท่ากัน', standard_mode: 'กลับไปโหมดปกติ', add_step: '➕ เพิ่มขั้น',
     duration: 'ระยะเวลา', dosage: 'ปริมาณ', time_col: 'มื้ออาหาร / เวลา', rx_title: 'วิธีใช้ยา (Prescription)', warn_title: 'คำเตือน (Warnings)', spec_guide: 'คู่มือการใช้ยา (How to Use)'
   },
@@ -84,7 +84,7 @@ const dict = {
     allergy_alert: 'Stop use and seek medical help immediately if you develop a rash, breathing problems, or signs of an allergic reaction.',
     show_card: '🚀 Show Boarding Pass', edit_rx: '⬅️ Edit', photo_prompt: '📸 Please take a photo of this screen',
     smart_dose: 'Take/Use {n} {u}', smart_hour: 'Every {n} {u}', smart_apply: 'Apply {n} {u} a day', smart_days: 'For {n} {u}',
-    add_to_cart: '📥 Add to Cart', cart: 'Cart', items: 'items', swipe_hint: '👈 Swipe left/right to view other medicines 👉',
+    add_to_cart: '📥 Add to Cart', cart: 'Cart', items: 'items', swipe_hint: '👈 Swipe left/right for other meds 👉', scroll_down: '⬇️ Scroll down for warnings',
     taper_mode: '📉 Step-down / Tapering Mode', standard_mode: 'Back to Standard Mode', add_step: '➕ Add Step', duration: 'Duration', dosage: 'Dose', time_col: 'Food / Time',
     tab_history: '📋 History', tab_dispense: '💊 Dispense', tab_special: '🪄 Specialty', spec_guide: 'How to Use'
   },
@@ -101,7 +101,7 @@ const dict = {
     allergy_alert: 'Brechen Sie die Anwendung ab und suchen Sie sofort einen Arzt auf, falls ein Hautausschlag, Atemnot oder Anzeichen einer allergischen Reaktion auftreten.',
     show_card: '🚀 Zeigen Boarding Pass', edit_rx: '⬅️ Bearbeiten', photo_prompt: '📸 Bitte fotografieren Sie diesen Bildschirm',
     smart_dose: '{n} {u} einnehmen', smart_hour: 'Alle {n} {u}', smart_apply: '{n}-mal täglich', smart_days: 'Für {n} {u}',
-    add_to_cart: '📥 In den Warenkorb', cart: 'Korb', items: 'Artikel', swipe_hint: '👈 Wischen Sie nach links/rechts, um andere anzuzeigen 👉',
+    add_to_cart: '📥 In den Warenkorb', cart: 'Korb', items: 'Artikel', swipe_hint: '👈 Wischen für andere 👉', scroll_down: '⬇️ Für Warnungen nach unten scrollen',
     taper_mode: '📉 Ausschleichende Dosierung', standard_mode: 'Standardmodus', add_step: '➕ Schritt hinzufügen', duration: 'Dauer', dosage: 'Dosis', time_col: 'Essen / Zeit',
     tab_history: '📋 Verlauf', tab_dispense: '💊 Ausgabe', tab_special: '🪄 Spezialität', spec_guide: 'Anwendung'
   },
@@ -118,7 +118,7 @@ const dict = {
     allergy_alert: '如果出现皮疹、呼吸困难或过敏反应迹象，请立即停药并就医。',
     show_card: '🚀 显示登机牌', edit_rx: '⬅️ 编辑', photo_prompt: '📸 请拍照保存此屏幕',
     smart_dose: '每次使用 {n} {u}', smart_hour: '每 {n} {u}一次', smart_apply: '每天 {n} {u}', smart_days: '连续使用 {n} {u}',
-    add_to_cart: '📥 加入购物车', cart: '购物车', items: '项目', swipe_hint: '👈 左右滑动查看其他药物 👉',
+    add_to_cart: '📥 加入购物车', cart: '购物车', items: '项目', swipe_hint: '👈 左右滑动查看其他 👉', scroll_down: '⬇️ 向下滚动查看警告',
     taper_mode: '📉 递减/不规则剂量模式', standard_mode: '返回标准模式', add_step: '➕ 添加步骤', duration: '期间', dosage: '剂量', time_col: '餐/时间',
     tab_history: '📋 历史', tab_dispense: '💊 配药', tab_special: '🪄 专科药物', spec_guide: '如何使用'
   },
@@ -135,7 +135,7 @@ const dict = {
     allergy_alert: '発疹、息苦しさ、またはアレルギー反応の兆候が現れた場合は、直ちに使用を中止し、医師の診察を受けてください。',
     show_card: '🚀 搭乗券を表示', edit_rx: '⬅️ 編集', photo_prompt: '📸 この画面の写真を撮って保存してください',
     smart_dose: '1回 {n} {u} 使用', smart_hour: '{n} {u}ごと', smart_apply: '1日 {n} {u} 適用', smart_days: '{n} {u}間 連続',
-    add_to_cart: '📥 カートに追加', cart: 'カート', items: 'アイテム', swipe_hint: '👈 左右にスワイプして他の薬を表示 👉',
+    add_to_cart: '📥 カートに追加', cart: 'カート', items: 'アイテム', swipe_hint: '👈 左右にスワイプして他の薬を表示 👉', scroll_down: '⬇️ 下にスクロールして警告を表示',
     taper_mode: '📉 漸減・不規則服用モード', standard_mode: '標準モードに戻る', add_step: '➕ ステップを追加', duration: '期間', dosage: '用量', time_col: '食事 / 時間',
     tab_history: '📋 履歴', tab_dispense: '💊 調剤', tab_special: '🪄 特殊機器', spec_guide: '使い方'
   },
@@ -152,7 +152,7 @@ const dict = {
     allergy_alert: 'Немедленно прекратите использование и обратитесь к врачу при появлении сыпи, затрудненного дыхания или других признаков аллергической реакции.',
     show_card: '🚀 Показать', edit_rx: '⬅️ Назад', photo_prompt: '📸 Пожалуйста, сфотографируйте этот экран',
     smart_dose: 'Принимать по {n} {u}', smart_hour: 'Каждые {n} {u}', smart_apply: 'Применять {n} {u} в день', smart_days: 'В течение {n} {u}',
-    add_to_cart: '📥 В корзину', cart: 'Корзина', items: 'шт.', swipe_hint: '👈 Проведите влево/вправо для просмотра 👉',
+    add_to_cart: '📥 В корзину', cart: 'Корзина', items: 'шт.', swipe_hint: '👈 Проведите для просмотра 👉', scroll_down: '⬇️ Прокрутите вниз для предупреждений',
     taper_mode: '📉 Режим снижения дозы', standard_mode: 'Стандартный режим', add_step: '➕ Добавить шаг', duration: 'Период', dosage: 'Доза', time_col: 'Еда / Время',
     tab_history: '📋 История', tab_dispense: '💊 Выдача', tab_special: '🪄 Специальные', spec_guide: 'Как использовать'
   },
@@ -169,7 +169,7 @@ const dict = {
     allergy_alert: 'توقف عن الاستخدام واطلب المساعدة الطبية فوراً إذا ظهر طفح جلدي أو صعوبة في التنفس أو علامات رد فعل تحسسي.',
     show_card: '🚀 عرض بطاقة الصعود', edit_rx: '⬅️ تعديل', photo_prompt: '📸 يرجى التقاط صورة لهذه الشاشة',
     smart_dose: 'استخدم {n} {u}', smart_hour: 'كل {n} {u}', smart_apply: 'تطبيق {n} {u} يومياً', smart_days: 'لمدة {n} {u}',
-    add_to_cart: '📥 أضف إلى السلة', cart: 'سلة', items: 'عناصر', swipe_hint: '👈 اسحب لليسار/لليمين لعرض أدوية أخرى 👉',
+    add_to_cart: '📥 أضف إلى السلة', cart: 'سلة', items: 'عناصر', swipe_hint: '👈 اسحب لعرض أدوية أخرى 👉', scroll_down: '⬇️ قم بالتمرير لأسفل للتحذيرات',
     taper_mode: '📉 وضع تقليل الجرعة', standard_mode: 'الوضع القياسي', add_step: '➕ إضافة خطوة', duration: 'المدة', dosage: 'الجرعة', time_col: 'طعام / وقت',
     tab_history: '📋 سجل', tab_dispense: '💊 صرف', tab_special: '🪄 تخصص', spec_guide: 'كيف تستعمل'
   }
@@ -205,7 +205,6 @@ export default function PharmaLingoApp() {
   const [hasStarted, setHasStarted] = useState(false);
   const [animatingLang, setAnimatingLang] = useState<string | null>(null); 
   const [patientLang, setPatientLang] = useState<Lang>('en');
-  // 🎙️ เพิ่ม State เลือกระบุเพศของเสียงพูด
   const [voiceGender, setVoiceGender] = useState<'female' | 'male'>('female');
   
   const [appMode, setAppMode] = useState<AppMode>('history');
@@ -216,7 +215,6 @@ export default function PharmaLingoApp() {
   const [boolAnswer, setBoolAnswer] = useState<string | null>(null); 
   const [activeGuide, setActiveGuide] = useState<any>(null);
 
-  // 🛒 ตะกร้ายา (Cart)
   const [cart, setCart] = useState<Prescription[]>([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
@@ -224,7 +222,6 @@ export default function PharmaLingoApp() {
   const [drugInput, setDrugInput] = useState('');
   const [drugName, setDrugName] = useState('');
   const [isTranslatingDrug, setIsTranslatingDrug] = useState(false);
-  
   const [rxIndication, setRxIndication] = useState<number | null>(null);
   const [indInput, setIndInput] = useState('');
   const [customIndication, setCustomIndication] = useState('');
@@ -268,10 +265,7 @@ export default function PharmaLingoApp() {
   // ==========================================
   const togglePeriod = (index: number) => setRxPeriod(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index].sort());
   const toggleWarning = (index: number) => setRxWarnings(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]);
-  
-  const handleNumberInput = (setter: any, value: string) => { 
-    if (value === '' || /^\d*\.?\d*$/.test(value)) setter(value); 
-  };
+  const handleNumberInput = (setter: any, value: string) => { if (value === '' || /^\d*\.?\d*$/.test(value)) setter(value); };
 
   const handleTranslate = async () => {
     if (!customText.trim()) return;
@@ -296,7 +290,6 @@ export default function PharmaLingoApp() {
     
     let filteredVoices = voices.filter(v => v.lang.startsWith(targetLangMatch));
     
-    // ค้นหาเสียงระดับ Premium หรือ Siri ก่อน
     let preferredVoice = filteredVoices.find(v => {
       const name = v.name.toLowerCase();
       const isPremium = name.includes('premium') || name.includes('siri') || name.includes('enhanced');
@@ -304,7 +297,6 @@ export default function PharmaLingoApp() {
       return isPremium && (name.includes('female') || name.includes('kyoko') || name.includes('samantha'));
     });
 
-    // ถ้าไม่มีเสียง Premium ค่อยหาเสียงธรรมดาตามเพศ
     if (!preferredVoice) {
       preferredVoice = filteredVoices.find(v => {
         const name = v.name.toLowerCase();
@@ -313,9 +305,7 @@ export default function PharmaLingoApp() {
       });
     }
 
-    // ถ้ายังไม่เจออีก เอาเสียงแรกที่เจอก็พอ
     if (!preferredVoice && filteredVoices.length > 0) preferredVoice = filteredVoices[0];
-    
     if (preferredVoice) utterance.voice = preferredVoice;
 
     const voiceLangMap: any = { ar: 'ar-SA', de: 'de-DE', en: 'en-US', zh: 'zh-CN', ja: 'ja-JP', ru: 'ru-RU' };
@@ -351,11 +341,10 @@ export default function PharmaLingoApp() {
     }
   };
 
-  // 🌏 เมื่อกดเลือกประเทศ ให้อ่านชื่อประเทศ (เป็นภาษาอังกฤษ) ยืนยันเสียงด้วย
   const handleLangSelect = (code: string, label: string) => { 
     setPatientLang(code as Lang); 
     setAnimatingLang(code); 
-    speakText(label, 'en', true); // บังคับอ่านภาษาอังกฤษ
+    speakText(label, 'en', true);
     setTimeout(() => { setHasStarted(true); setAnimatingLang(null); }, 1000); 
   };
 
@@ -460,7 +449,6 @@ export default function PharmaLingoApp() {
           <h1 className="text-3xl md:text-5xl font-black text-white tracking-widest drop-shadow-md">Assistance Dispenser</h1>
           <p className="text-slate-400 mt-2 text-sm md:text-base font-bold tracking-widest uppercase">Tap to Select Patient Language</p>
           
-          {/* 🎙️ ปุ่มเลือกเพศของเสียงพูด */}
           <div className="flex items-center justify-center gap-4 mt-6">
             <button onClick={() => setVoiceGender('female')} className={`px-6 py-3 rounded-full font-black text-sm md:text-base transition-all border-2 ${voiceGender === 'female' ? 'bg-pink-600 text-white border-pink-400 shadow-[0_0_15px_rgba(219,39,119,0.5)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700'}`}>👩🏻 Female Voice</button>
             <button onClick={() => setVoiceGender('male')} className={`px-6 py-3 rounded-full font-black text-sm md:text-base transition-all border-2 ${voiceGender === 'male' ? 'bg-blue-600 text-white border-blue-400 shadow-[0_0_15px_rgba(37,99,235,0.5)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700'}`}>👨🏻 Male Voice</button>
@@ -501,8 +489,8 @@ export default function PharmaLingoApp() {
   // ==========================================
   const renderGuideCard = (guide: any) => {
     return (
-      <div className="w-full max-w-lg landscape:max-w-4xl h-full max-h-[85vh] landscape:max-h-screen bg-white rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden border-4 border-teal-200 relative" dir={isRTL ? 'rtl' : 'ltr'}>
-        <div className="bg-gradient-to-r from-teal-700 to-emerald-900 p-4 md:p-6 text-center relative shrink-0 flex justify-between items-center shadow-inner">
+      <div className="w-full h-full lg:h-[85vh] lg:max-w-4xl bg-white lg:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden border-0 lg:border-4 border-teal-200 relative transform-gpu" dir={isRTL ? 'rtl' : 'ltr'}>
+        <div className="bg-gradient-to-r from-teal-700 to-emerald-900 p-4 md:p-6 text-center relative shrink-0 flex justify-between items-center shadow-inner pt-12 lg:pt-6">
           <span className="text-3xl opacity-30">🪄</span>
           <div className="flex flex-col items-center">
             <h1 className="text-white font-black text-base md:text-xl tracking-widest uppercase leading-none">Bangkok Pattaya Hospital</h1>
@@ -513,12 +501,12 @@ export default function PharmaLingoApp() {
           </button>
         </div>
 
-        <div className="bg-teal-50/30 flex flex-col landscape:flex-row gap-3 flex-1 relative overflow-y-auto landscape:overflow-y-auto p-4 md:p-6 custom-scrollbar">
-          <div className="landscape:flex-1 bg-gradient-to-r from-teal-100 to-emerald-100 border-2 border-teal-400 rounded-3xl p-5 flex items-center justify-center gap-4 shadow-sm text-center shrink-0">
+        <div className="bg-teal-50/30 flex flex-col lg:flex-row gap-3 flex-1 relative overflow-y-auto p-4 md:p-6 custom-scrollbar scroll-smooth" style={{ WebkitOverflowScrolling: 'touch' }}>
+          <div className="lg:flex-1 bg-gradient-to-r from-teal-100 to-emerald-100 border-2 border-teal-400 rounded-3xl p-5 flex items-center justify-center gap-4 shadow-sm text-center shrink-0">
             <span className="text-5xl drop-shadow-md">{guide.icon}</span>
             <span className="text-teal-900 font-black text-2xl md:text-3xl leading-tight drop-shadow-sm">{guide.title[patientLang] || guide.title.en}</span>
           </div>
-          <div className="flex flex-col landscape:flex-1 landscape:grid landscape:grid-cols-2 gap-3 mt-3 landscape:mt-0">
+          <div className="flex flex-col lg:flex-1 lg:grid lg:grid-cols-2 gap-3 mt-3 lg:mt-0">
             {guide.steps.map((step: any, sIdx: number) => (
               <div key={sIdx} className="flex items-center gap-4 bg-white p-4 md:p-5 rounded-3xl shadow-sm border border-teal-100/50">
                 <div className="text-4xl md:text-5xl shrink-0 drop-shadow-sm">{step.icon}</div>
@@ -535,7 +523,7 @@ export default function PharmaLingoApp() {
   };
 
   // ==========================================
-  // Render Boarding Pass Component (ตะกร้าปกติ)
+  // 🎟️ Render Boarding Pass Component (แก้ปัญหาการแสดงผลมือถือ)
   // ==========================================
   const renderBoardingPass = (rx: Prescription, index: number) => {
     const displayDrugEn = rx.drugInput.trim();
@@ -554,11 +542,12 @@ export default function PharmaLingoApp() {
     const instTextSize = instCount >= 4 ? 'text-xs md:text-base' : 'text-sm md:text-xl';
 
     return (
-      <div key={index} className="w-full flex-shrink-0 snap-center flex justify-center items-center h-full px-4" dir={isRTL ? 'rtl' : 'ltr'}>
-        {/* 📱 1. ปรับปรุง Landscape เลเอาต์ให้ Scroll ได้และไม่ถูกตัดแหว่ง */}
-        <div className="flex flex-col lg:flex-row landscape:flex-row items-center landscape:items-stretch justify-center gap-4 md:gap-8 w-full max-w-6xl h-full max-h-[85vh] landscape:max-h-screen landscape:py-4">
+      // 📱 1. แกนตั้งของแต่ละยา: เปลี่ยนให้การ์ดเรียงซ้อนกันบนมือถือ และให้ลากนิ้วขึ้น-ลงได้อิสระ
+      <div key={index} className="w-full h-full flex-shrink-0 snap-center overflow-y-auto overflow-x-hidden hide-scrollbar px-4 pb-12 pt-4 transform-gpu" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
+        <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-start lg:justify-center gap-6 md:gap-8 w-full max-w-6xl py-4 lg:h-full lg:max-h-[85vh] mx-auto">
           
-          <div className="flex-1 w-full max-w-[500px] h-full bg-white rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-2 border-blue-100 min-h-0 landscape:overflow-y-auto">
+          {/* 🔵 ใบที่ 1: วิธีใช้ยา (Blue Card) */}
+          <div className="w-full max-w-[500px] flex-shrink-0 h-auto min-h-[70vh] lg:h-full lg:min-h-0 bg-white rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-2 border-blue-100">
             <div className="bg-gradient-to-r from-blue-900 to-indigo-900 p-3 md:p-4 text-center relative shadow-inner shrink-0 flex justify-between items-center">
               <span className="text-2xl opacity-20">🏥</span>
               <div className="flex flex-col items-center">
@@ -570,7 +559,7 @@ export default function PharmaLingoApp() {
               </button>
             </div>
 
-            <div className={`bg-blue-50/30 flex flex-col ${instGap} flex-1 relative overflow-y-auto justify-center p-3 md:p-6`}>
+            <div className={`bg-blue-50/30 flex flex-col ${instGap} flex-1 relative overflow-y-auto custom-scrollbar p-3 md:p-6`}>
               {(displayDrugEn || displayDrugLocal) && (
                 <div className="bg-gradient-to-r from-amber-100 to-yellow-200 border-2 border-yellow-400 rounded-[1.5rem] md:rounded-[2rem] py-3 md:py-5 flex flex-col items-center justify-center shadow-sm text-center relative shrink-0">
                   <span className="text-yellow-800 text-[10px] md:text-xs font-black uppercase mb-1 tracking-widest">💊 {p.drug_name}</span>
@@ -662,10 +651,15 @@ export default function PharmaLingoApp() {
                   )}
                 </div>
               )}
+              {/* ตัวบ่งชี้ให้เลื่อนลง (แสดงเฉพาะจอมือถือ) */}
+              <div className="block lg:hidden text-center text-blue-400 font-black text-xs mt-auto pt-2 animate-bounce opacity-70">
+                {p.scroll_down}
+              </div>
             </div>
           </div>
 
-          <div className="flex-1 w-full max-w-[500px] h-full bg-white rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-2 border-red-100 min-h-0 landscape:overflow-y-auto">
+          {/* 🔴 ใบที่ 2: คำเตือน (Red Card) */}
+          <div className="w-full max-w-[500px] flex-shrink-0 h-auto min-h-[70vh] lg:h-full lg:min-h-0 bg-white rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-2 border-red-100">
             <div className="bg-gradient-to-r from-red-800 to-rose-900 p-3 md:p-4 text-center relative shadow-inner shrink-0">
               <div className="absolute top-1/2 left-4 transform -translate-y-1/2 text-2xl opacity-20">⚠️</div>
               <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase">Bangkok Pattaya Hospital</h1>
@@ -673,7 +667,7 @@ export default function PharmaLingoApp() {
               <div className="absolute top-1/2 right-4 transform -translate-y-1/2 text-2xl opacity-20">🚨</div>
             </div>
 
-            <div className={`bg-red-50/50 flex flex-col flex-1 overflow-y-auto justify-center p-3 md:p-6`}>
+            <div className={`bg-red-50/50 flex flex-col flex-1 overflow-y-auto custom-scrollbar justify-center p-3 md:p-6`}>
               <h3 className="text-red-600 font-black text-xs md:text-sm uppercase tracking-widest mb-2 border-b-2 border-red-200 pb-2 shrink-0 text-center">⚠️ {p.warn_title}</h3>
               <div className={`flex-1 flex flex-col ${warnGap} justify-center overflow-y-auto min-h-[100px]`}>
                 {(rx.rxWarnings.length > 0 || rx.customWarnings.length > 0) ? (
@@ -710,7 +704,7 @@ export default function PharmaLingoApp() {
       
       {/* 👑 ฝั่งคนไข้ (ตีลังกากลับหัว) */}
       <div className={`w-full flex justify-center items-center rotate-180 transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)]
-        ${isFullscreen ? 'fixed inset-0 z-[100] bg-slate-900 p-4 h-full' : `bg-slate-100 ${patientHeightClass}`}`}>
+        ${isFullscreen ? 'fixed inset-0 z-[100] bg-slate-900 h-full' : `bg-slate-100 ${patientHeightClass}`}`}>
         
         {isFullscreen && (
           <div className="absolute top-4 right-4 z-50 flex gap-3">
@@ -721,27 +715,44 @@ export default function PharmaLingoApp() {
         )}
 
         {activeGuide ? (
-          renderGuideCard(activeGuide)
+          <div className="w-full h-full flex items-center justify-center p-4">
+             {renderGuideCard(activeGuide)}
+          </div>
         ) : dispenseState === 'present' ? (
           <div className="w-full h-full flex flex-col justify-center items-center relative" dir={isRTL ? 'rtl' : 'ltr'}>
+            
+            {/* Header / Camera Info */}
+            <div className="absolute top-6 left-0 w-full px-6 flex justify-between items-center z-50 pointer-events-none">
+              <div className="bg-blue-600 text-white font-black px-6 py-3 rounded-full shadow-lg border-4 border-blue-400 animate-pulse text-sm md:text-base text-center flex items-center gap-2 shrink-0 pointer-events-auto">
+                <span className="text-xl">📸</span> {p.photo_prompt}
+              </div>
+              {cart.length > 1 && (
+                <div className="flex items-center gap-4 bg-slate-900/80 px-6 py-2 rounded-full border border-slate-700 backdrop-blur-md pointer-events-auto">
+                  <button onClick={() => { setCurrentCardIndex(Math.max(0, currentCardIndex - 1)); setIsSpeaking(false); if(synthRef.current) synthRef.current.cancel(); }} disabled={currentCardIndex === 0} className="text-white text-2xl disabled:opacity-30">◀</button>
+                  <span className="text-white font-black text-lg">{currentCardIndex + 1} / {cart.length}</span>
+                  <button onClick={() => { setCurrentCardIndex(Math.min(cart.length - 1, currentCardIndex + 1)); setIsSpeaking(false); if(synthRef.current) synthRef.current.cancel(); }} disabled={currentCardIndex === cart.length - 1} className="text-white text-2xl disabled:opacity-30">▶</button>
+                </div>
+              )}
+            </div>
+
             {cart.length > 1 && (
-              <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-50 flex items-center gap-4 bg-slate-900/80 px-6 py-2 rounded-full border border-slate-700 backdrop-blur-md">
-                <button onClick={() => { setCurrentCardIndex(Math.max(0, currentCardIndex - 1)); setIsSpeaking(false); if(synthRef.current) synthRef.current.cancel(); }} disabled={currentCardIndex === 0} className="text-white text-2xl disabled:opacity-30">◀</button>
-                <span className="text-white font-black text-lg">{currentCardIndex + 1} / {cart.length}</span>
-                <button onClick={() => { setCurrentCardIndex(Math.min(cart.length - 1, currentCardIndex + 1)); setIsSpeaking(false); if(synthRef.current) synthRef.current.cancel(); }} disabled={currentCardIndex === cart.length - 1} className="text-white text-2xl disabled:opacity-30">▶</button>
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-50 text-slate-400 text-xs font-bold uppercase tracking-widest animate-bounce pointer-events-none">
+                {p.swipe_hint}
               </div>
             )}
-            <div className="bg-blue-600 text-white font-black px-6 py-3 rounded-full mb-4 shadow-lg border-4 border-blue-400 animate-pulse text-sm md:text-base text-center flex items-center gap-2 shrink-0">
-              <span className="text-xl">📸</span> {p.photo_prompt}
-            </div>
-            {cart.length > 1 && (
-              <div className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2 animate-bounce">{p.swipe_hint}</div>
-            )}
-            <div className="w-full flex-1 overflow-x-auto snap-x snap-mandatory flex hide-scrollbar items-center pb-8 landscape:pb-0" 
+
+            {/* 🚀 2. แกนปัดซ้าย-ขวา 60 FPS: ซ่อนแกนตั้งเพื่อไม่ให้ขัดแย้งการเลื่อน (Debounce scroll event) */}
+            <div className="w-full h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory flex hide-scrollbar items-center transform-gpu scroll-smooth" 
+                 style={{ WebkitOverflowScrolling: 'touch' }}
                  onScroll={(e) => {
-                   const scrollLeft = (e.target as HTMLElement).scrollLeft;
-                   const width = (e.target as HTMLElement).clientWidth;
-                   setCurrentCardIndex(Math.round(scrollLeft / width));
+                   const target = e.target as HTMLElement;
+                   const scrollLeft = target.scrollLeft;
+                   const width = target.clientWidth;
+                   const newIndex = Math.round(scrollLeft / width);
+                   // ล็อกไม่ให้อัปเดต State ถ้านิ้วยังถูอยู่ในหน้าเดิม ลดการกระตุกได้ 99%
+                   if (newIndex !== currentCardIndex) {
+                      setCurrentCardIndex(newIndex);
+                   }
                  }}>
               {cart.length > 0 ? (
                 cart.map((rx, idx) => renderBoardingPass(rx, idx))
@@ -889,9 +900,9 @@ export default function PharmaLingoApp() {
               </>
             )}
 
-            {/* 📱 2. เปลี่ยน padding-bottom จาก pb-24 เป็น pb-40 เพื่อกันขอบตกหลัง Sticky Bar */}
             {appMode === 'dispense' && dispenseState === 'input' && (
-              <div className="flex flex-col gap-6 pb-40 animate-in">
+              // 📱 3. ยืดระยะ padding-bottom ให้ลึกขึ้น เพื่อกันฟอร์มตกขอบหลังแถบ Sticky
+              <div className="flex flex-col gap-6 pb-[150px] md:pb-[100px] animate-in">
                 
                 <div className="bg-gradient-to-br from-blue-900/40 to-indigo-900/40 p-4 md:p-5 rounded-[2rem] border border-blue-800/50 flex flex-col gap-4 shadow-inner">
                   <div className="flex flex-col gap-2">
@@ -1087,7 +1098,7 @@ export default function PharmaLingoApp() {
             {appMode === 'specialty' && (
               <div className="flex flex-col gap-6 pb-24 animate-in">
                 <div className="bg-gradient-to-br from-teal-900/40 to-emerald-900/40 p-5 md:p-6 rounded-[2rem] border border-teal-800/50 shadow-inner">
-                  <h2 className="text-teal-300 font-black text-xl mb-4 flex items-center gap-2">🪄 เลือกอุปกรณ์เทคนิคพิเศษ</h2>
+                  <h2 className="text-teal-300 font-black text-xl mb-4 flex items-center gap-2">🪄 เลือกอุปกรณ์เทคนิคพิเศษ เพื่อแสดงคู่มือให้คนไข้ทันที</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {specialData.map(item => (
                       <button key={item.id} onClick={() => { setActiveGuide(item); setIsFullscreen(true); }} className="bg-slate-800 border-2 border-slate-700 hover:border-teal-400 hover:bg-slate-700 rounded-2xl p-4 flex items-center gap-4 transition-all active:scale-95 text-left group">
@@ -1101,8 +1112,9 @@ export default function PharmaLingoApp() {
             )}
           </div>
 
+          {/* แถบ Sticky Bottom สำหรับ Cart */}
           {appMode === 'dispense' && dispenseState === 'input' && (
-            <div className="absolute bottom-0 left-0 w-full p-4 bg-slate-900/95 backdrop-blur-md border-t border-slate-700 flex flex-col md:flex-row items-center gap-3 z-50">
+            <div className="absolute bottom-0 left-0 w-full p-4 bg-slate-900/95 backdrop-blur-md border-t border-slate-700 flex flex-col md:flex-row items-center gap-3 z-50 transform-gpu">
                <button onClick={addToCart} disabled={!drugInput && rxIndication === null} className="w-full md:w-auto bg-slate-800 border-2 border-slate-600 hover:border-cyan-500 text-white font-black px-6 py-4 rounded-2xl active:scale-95 disabled:opacity-30 transition-all flex items-center justify-center gap-2">
                  {th.add_to_cart}
                </button>
