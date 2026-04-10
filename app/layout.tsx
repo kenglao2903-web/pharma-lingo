@@ -28,10 +28,6 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
     title: "Pharma Lingo",
   },
-  // 👇 เพิ่มตรงนี้เพื่อให้ Next.js ส่งไอคอนให้ Apple โดยตรง
-  icons: {
-    apple: "/apple-icon.png", 
-  },
 };
 
 export default function RootLayout({
@@ -41,6 +37,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+      <head>
+        {/* 👇 คำสั่งที่ชัวร์ที่สุดสำหรับ iOS Safari: อ้างอิงไฟล์จาก public ตรงๆ 👇 */}
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body className="min-h-full flex flex-col overscroll-none">
         {children}
       </body>
