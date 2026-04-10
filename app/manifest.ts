@@ -6,14 +6,14 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: 'PharmaLingo',
     description: 'Assistance Dispenser App',
     start_url: '/',
-    display: 'standalone', // 👈 คำสั่งสวรรค์ที่บอกให้ซ่อนแถบ URL !
+    display: 'standalone',
     background_color: '#0f172a',
     theme_color: '#0f172a',
     icons: [
       {
-        src: '/favicon.ico',
-        sizes: 'any',
-        type: 'image/x-icon',
+        src: '/icon.png', // 👈 ชื่อไฟล์ต้องตรงกับที่วางในโฟลเดอร์ public
+        sizes: '512x512',
+        type: 'image/png',
       },
     ],
   }
