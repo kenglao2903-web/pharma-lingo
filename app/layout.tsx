@@ -12,7 +12,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// 🛠️ ตั้งค่าการแสดงผลหน้าจอ (ป้องกันการซูมและกำหนดสีธีม)
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -21,7 +20,6 @@ export const viewport: Viewport = {
   themeColor: "#0f172a",
 };
 
-// 🛠️ ตั้งค่าข้อมูลพื้นฐานของแอป
 export const metadata: Metadata = {
   title: "Pharma Lingo",
   description: "Assistance Dispenser App",
@@ -29,6 +27,10 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: "black-translucent",
     title: "Pharma Lingo",
+  },
+  // 👇 เพิ่มตรงนี้เพื่อให้ Next.js ส่งไอคอนให้ Apple โดยตรง
+  icons: {
+    apple: "/apple-icon.png", 
   },
 };
 
@@ -38,20 +40,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <head>
-        {/* 👇 คำสั่งบังคับ iPhone ให้ใช้ไอคอนที่เราเตรียมไว้ในโฟลเดอร์ public 👇 */}
-        <link rel="apple-touch-icon" href="/icon.png" />
-        {/* 👇 เชื่อมต่อไฟล์ manifest เพื่อพฤติกรรมแบบแอปแท้ 👇 */}
-        <link rel="manifest" href="/manifest.json" />
-        
-        {/* แท็กเสริมเพื่อความชัวร์สำหรับ iOS */}
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-      </head>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col overscroll-none">
         {children}
       </body>
