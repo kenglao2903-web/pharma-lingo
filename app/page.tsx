@@ -259,7 +259,6 @@ export default function PharmaLingoApp() {
     if (typeof window !== 'undefined') synthRef.current = window.speechSynthesis; 
   }, []);
 
-  // 🎙️ ระบบดึงเสียงอ่าน
   const speakText = (text: string, langCode: string, forceEnglish: boolean = false) => {
     if (!synthRef.current) return;
     synthRef.current.cancel();
@@ -592,7 +591,7 @@ export default function PharmaLingoApp() {
     const warnTextSize = totalW >= 5 ? 'text-sm md:text-base' : 'text-base md:text-lg';
 
     return (
-      <div key={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu print:h-auto print:overflow-visible print:break-inside-avoid print:mb-4 print:pb-4" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
+      <div key={index} data-index={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu print:h-auto print:overflow-visible print:break-inside-avoid print:mb-4" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
         
         {/* 🔵 การ์ดสีฟ้า (วิธีใช้) */}
         <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center pt-20 pb-20 print:p-0 print:min-h-0 print:block print:pt-0 print:pb-0">
@@ -620,7 +619,7 @@ export default function PharmaLingoApp() {
               )}
 
               {(rx.rxIndication !== null || rx.customIndication) && (
-                <div className="bg-blue-100 border-l-8 border-blue-500 rounded-r-xl p-3 flex items-center gap-3 shadow-sm print:bg-transparent print:border-black print:border">
+                <div className="bg-blue-100 border-l-8 border-blue-500 rounded-r-xl p-3 flex items-center gap-3 shadow-sm print:bg-transparent print:border-black">
                   <span className="text-3xl shrink-0">🎯</span>
                   <div className="flex flex-col">
                     <span className="text-blue-600 text-[10px] md:text-xs uppercase font-black print:text-black">{p.ind_title}</span>
@@ -872,10 +871,10 @@ export default function PharmaLingoApp() {
                       <div className="w-full max-w-xl mx-auto mt-2">
                         {!boolAnswer ? (
                           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                            <button onClick={() => setBoolAnswer('yes')} className="flex-1 py-4 md:py-6 rounded-[1.5rem] text-xl md:text-2xl font-black bg-red-50 text-red-600 border-2 border-red-200 shadow-sm">🚨 {p.yes}</button>
-                            <button onClick={() => setBoolAnswer('no')} className="flex-1 py-4 md:py-6 rounded-[1.5rem] text-xl md:text-2xl font-black bg-green-50 text-green-600 border-2 border-green-200 shadow-sm">✅ {p.no}</button>
+                            <button onClick={() => setBoolAnswer('yes')} className="flex-1 py-4 md:py-6 rounded-[1.5rem] text-xl md:text-2xl font-black bg-red-50 text-red-600 border-2 border-red-200 shadow-sm active:scale-95">🚨 {p.yes}</button>
+                            <button onClick={() => setBoolAnswer('no')} className="flex-1 py-4 md:py-6 rounded-[1.5rem] text-xl md:text-2xl font-black bg-green-50 text-green-600 border-2 border-green-200 shadow-sm active:scale-95">✅ {p.no}</button>
                             {activeQuestion === 'q_allergy' && (
-                              <button onClick={() => setBoolAnswer('dont_know')} className="flex-1 py-4 md:py-6 rounded-[1.5rem] text-xl md:text-2xl font-black bg-yellow-50 text-yellow-700 border-2 border-yellow-300 shadow-sm">🤷‍♂️ {p.dont_know}</button>
+                              <button onClick={() => setBoolAnswer('dont_know')} className="flex-1 py-4 md:py-6 rounded-[1.5rem] text-xl md:text-2xl font-black bg-yellow-50 text-yellow-700 border-2 border-yellow-300 shadow-sm active:scale-95">🤷‍♂️ {p.dont_know}</button>
                             )}
                           </div>
                         ) : boolAnswer === 'yes' ? (
@@ -924,11 +923,11 @@ export default function PharmaLingoApp() {
                   <div className="flex flex-col items-center justify-center h-full gap-4 animate-in">
                     <div className="text-cyan-400 font-bold text-lg md:text-xl flex items-center gap-3">
                       <span className="text-3xl animate-pulse">🗣️</span> ถาม: {th[activeQuestion as keyof typeof th]}
-                      <button onClick={toggleHistorySpeech} className={`p-3 rounded-full text-xl shadow-md flex items-center justify-center border ${isSpeaking ? 'bg-indigo-600 text-white border-indigo-400 animate-pulse' : 'bg-slate-800 text-slate-300 border-slate-600'}`}>
+                      <button onClick={toggleHistorySpeech} className={`p-3 rounded-full text-xl shadow-md flex items-center justify-center border active:scale-95 ${isSpeaking ? 'bg-indigo-600 text-white border-indigo-400 animate-pulse' : 'bg-slate-800 text-slate-300 border-slate-600'}`}>
                         {isSpeaking ? '🛑' : '🔊'}
                       </button>
                     </div>
-                    <button onClick={() => { setActiveQuestion(null); setBoolAnswer(null); }} className="bg-red-600 text-white font-black py-3 px-8 rounded-full text-base md:text-lg shadow-sm border border-red-400 mt-2">
+                    <button onClick={() => { setActiveQuestion(null); setBoolAnswer(null); }} className="bg-red-600 text-white font-black py-3 px-8 rounded-full text-base md:text-lg shadow-sm border border-red-400 mt-2 active:scale-95">
                       ❌ ปิดหน้าจอ
                     </button>
                   </div>
@@ -936,14 +935,14 @@ export default function PharmaLingoApp() {
                   <div className="flex flex-col gap-3 animate-in">
                     <div className="grid grid-cols-3 gap-3 mt-2">
                       {[{ id: 'q_name', icon: '👤', text: th.q_name, bg: 'bg-cyan-600' }, { id: 'q_dob', icon: '📅', text: th.q_dob, bg: 'bg-blue-600' }, { id: 'q_allergy', icon: '🚫', text: th.q_allergy, bg: 'bg-red-600' }].map(q => (
-                        <button key={q.id} onClick={() => askQuestion(q.id)} className={`flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border min-h-[100px] shadow-sm ${activeQuestion === q.id ? `${q.bg} border-transparent text-white ring-2 ring-white/20` : `bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700`}`}>
+                        <button key={q.id} onClick={() => askQuestion(q.id)} className={`flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border min-h-[100px] shadow-sm active:scale-95 ${activeQuestion === q.id ? `${q.bg} border-transparent text-white ring-2 ring-white/20` : `bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700`}`}>
                           <div className="text-3xl md:text-4xl">{q.icon}</div><span className="font-black text-xs md:text-sm text-center leading-tight">{q.text}</span>
                         </button>
                       ))}
                     </div>
                     <div className="grid grid-cols-2 gap-3 mt-1">
                       {[{ id: 'q_inj', icon: '💉', text: th.q_inj, bg: 'bg-purple-600' }, { id: 'q_med', icon: '💊', text: th.q_med, bg: 'bg-pink-600' }].map(q => (
-                        <button key={q.id} onClick={() => askQuestion(q.id)} className={`flex items-center justify-center gap-3 p-4 rounded-xl border shadow-sm ${activeQuestion === q.id ? `${q.bg} border-transparent text-white ring-2 ring-white/20` : `bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700`}`}>
+                        <button key={q.id} onClick={() => askQuestion(q.id)} className={`flex items-center justify-center gap-3 p-4 rounded-xl border shadow-sm active:scale-95 ${activeQuestion === q.id ? `${q.bg} border-transparent text-white ring-2 ring-white/20` : `bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700`}`}>
                           <div className="text-2xl md:text-3xl">{q.icon}</div><span className="font-black text-xs md:text-sm">{q.text}</span>
                         </button>
                       ))}
@@ -961,7 +960,7 @@ export default function PharmaLingoApp() {
                     <span className="text-blue-300 text-[10px] md:text-xs font-black uppercase tracking-widest">💊 {th.drug_name}</span>
                     <div className="flex gap-2">
                       <input type="text" value={drugInput} onChange={(e) => setDrugInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && translateDrugName()} placeholder="พิมพ์ชื่อยา..." className="flex-1 bg-slate-900/80 border border-slate-700 text-white rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 font-bold text-[16px] md:text-lg" />
-                      <button onClick={translateDrugName} disabled={!drugInput.trim() || isTranslatingDrug} className="bg-blue-600 text-white text-xs md:text-sm font-black px-4 py-2.5 rounded-xl disabled:opacity-50">
+                      <button onClick={translateDrugName} disabled={!drugInput.trim() || isTranslatingDrug} className="bg-blue-600 text-white text-xs md:text-sm font-black px-4 py-2.5 rounded-xl disabled:opacity-50 active:scale-95">
                         {isTranslatingDrug ? '⏳' : 'ตกลง'}
                       </button>
                     </div>
@@ -972,14 +971,14 @@ export default function PharmaLingoApp() {
                     <span className="text-blue-300 text-[10px] md:text-xs font-black uppercase tracking-widest">🎯 {th.ind_title}</span>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                       {th.indication.map((ind: string, i: number) => (
-                        <button key={i} onClick={() => { setRxIndication(rxIndication === i ? null : i); setCustomIndication(''); }} className={`px-2 py-2 rounded-lg text-[10px] md:text-xs font-black border flex items-center gap-1 ${rxIndication === i ? 'bg-blue-600 border-blue-400 text-white' : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700'}`}>
+                        <button key={i} onClick={() => { setRxIndication(rxIndication === i ? null : i); setCustomIndication(''); }} className={`px-2 py-2 rounded-lg text-[10px] md:text-xs font-black border flex items-center gap-1 active:scale-95 ${rxIndication === i ? 'bg-blue-600 border-blue-400 text-white' : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700'}`}>
                           <span className="text-sm md:text-base">{th.ind_icons[i]}</span> <span className="line-clamp-1">{ind}</span>
                         </button>
                       ))}
                     </div>
                     <div className="flex gap-2 mt-1">
                       <input type="text" value={indInput} onChange={(e) => setIndInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && translateIndication()} placeholder="ระบุข้อบ่งใช้อื่นๆ..." className="flex-1 bg-slate-900/80 border border-slate-700 text-white rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 text-[16px] md:text-sm" />
-                      <button onClick={translateIndication} disabled={!indInput.trim() || isTranslatingInd} className="bg-blue-600 text-white text-xs md:text-sm font-black px-4 py-2.5 rounded-xl disabled:opacity-50">แปล</button>
+                      <button onClick={translateIndication} disabled={!indInput.trim() || isTranslatingInd} className="bg-blue-600 text-white text-xs md:text-sm font-black px-4 py-2.5 rounded-xl disabled:opacity-50 active:scale-95">แปล</button>
                     </div>
                     {customIndication && <span className="text-emerald-400 text-[10px] md:text-xs font-black ml-1">✅ แปลแล้ว: {customIndication}</span>}
                   </div>
@@ -1005,17 +1004,17 @@ export default function PharmaLingoApp() {
                             <div className="flex-1 flex flex-col gap-1">
                                <span className="text-[9px] md:text-[10px] text-slate-500 uppercase font-bold">ระยะเวลา (วัน)</span>
                                <div className="flex bg-slate-800 p-1 rounded-lg border border-slate-600">
-                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].days = Math.max(1, ns[idx].days-1); setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-slate-700 text-white rounded font-black">-</button>
+                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].days = Math.max(1, ns[idx].days-1); setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-slate-700 text-white rounded font-black active:scale-90">-</button>
                                  <input type="text" value={step.days} onChange={(e) => { const val = e.target.value; if (/^\d*$/.test(val)) { const ns = [...taperSteps]; ns[idx].days = Number(val); setTaperSteps(ns); } }} className="flex-1 w-6 md:w-8 text-center font-black text-white bg-transparent outline-none text-[16px]" />
-                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].days++; setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-indigo-600 text-white rounded font-black">+</button>
+                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].days++; setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-indigo-600 text-white rounded font-black active:scale-90">+</button>
                                </div>
                             </div>
                             <div className="flex-1 flex flex-col gap-1">
                                <span className="text-[9px] md:text-[10px] text-slate-500 uppercase font-bold">ปริมาณ (เม็ด)</span>
                                <div className="flex bg-slate-800 p-1 rounded-lg border border-slate-600">
-                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].dose = Math.max(0.5, Number(ns[idx].dose)-0.5); setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-slate-700 text-white rounded font-black">-</button>
+                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].dose = Math.max(0.5, Number(ns[idx].dose)-0.5); setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-slate-700 text-white rounded font-black active:scale-90">-</button>
                                  <input type="text" value={step.dose} onChange={(e) => { const val = e.target.value; if (/^\d*\.?\d*$/.test(val)) { const ns = [...taperSteps]; ns[idx].dose = val; setTaperSteps(ns); } }} className="flex-1 w-6 md:w-8 text-center font-black text-white bg-transparent outline-none text-[16px]" />
-                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].dose = Number(ns[idx].dose) + 0.5; setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-indigo-600 text-white rounded font-black">+</button>
+                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].dose = Number(ns[idx].dose) + 0.5; setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-indigo-600 text-white rounded font-black active:scale-90">+</button>
                                </div>
                             </div>
                          </div>
@@ -1023,7 +1022,7 @@ export default function PharmaLingoApp() {
                             <span className="text-[9px] md:text-[10px] text-slate-500 uppercase font-bold">เวลาอาหาร</span>
                             <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
                               {th.time.map((tFood: string, tIdx: number) => (
-                                <button key={tIdx} onClick={() => { const ns = [...taperSteps]; ns[idx].time = ns[idx].time === tIdx ? null : tIdx; setTaperSteps(ns); }} className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-black border ${step.time === tIdx ? 'bg-teal-600 border-teal-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700'}`}>🍽️ {tFood}</button>
+                                <button key={tIdx} onClick={() => { const ns = [...taperSteps]; ns[idx].time = ns[idx].time === tIdx ? null : tIdx; setTaperSteps(ns); }} className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-black border active:scale-95 ${step.time === tIdx ? 'bg-teal-600 border-teal-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700'}`}>🍽️ {tFood}</button>
                               ))}
                             </div>
                          </div>
@@ -1031,7 +1030,7 @@ export default function PharmaLingoApp() {
                             <span className="text-[9px] md:text-[10px] text-slate-500 uppercase font-bold">ช่วงเวลา</span>
                             <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
                               {th.period.map((pr: string, pIdx: number) => (
-                                <button key={pIdx} onClick={() => { const ns = [...taperSteps]; if(ns[idx].periods.includes(pIdx)) ns[idx].periods = ns[idx].periods.filter(i => i !== pIdx); else ns[idx].periods.push(pIdx); ns[idx].periods.sort(); setTaperSteps(ns); }} className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-black border ${step.periods.includes(pIdx) ? 'bg-orange-500 border-orange-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700'}`}>{th.period_icons[pIdx]} {pr}</button>
+                                <button key={pIdx} onClick={() => { const ns = [...taperSteps]; if(ns[idx].periods.includes(pIdx)) ns[idx].periods = ns[idx].periods.filter(i => i !== pIdx); else ns[idx].periods.push(pIdx); ns[idx].periods.sort(); setTaperSteps(ns); }} className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-black border active:scale-95 ${step.periods.includes(pIdx) ? 'bg-orange-500 border-orange-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700'}`}>{th.period_icons[pIdx]} {pr}</button>
                               ))}
                             </div>
                          </div>
@@ -1044,7 +1043,7 @@ export default function PharmaLingoApp() {
                     <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar items-center">
                       <span className="text-slate-500 text-[10px] md:text-xs font-black uppercase w-12 shrink-0">ปริมาณ:</span>
                       {th.dose.map((item: string, i: number) => (
-                        <button key={i} onClick={() => { setRxDose(rxDose === i ? null : i); setCDose(0); }} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border ${rxDose === i ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
+                        <button key={i} onClick={() => { setRxDose(rxDose === i ? null : i); setCDose(0); }} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 ${rxDose === i ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           {i === 0 ? '🌗' : i > 4 ? (i > 6 ? '💧' : '💨') : '💊'} {item}
                         </button>
                       ))}
@@ -1053,7 +1052,7 @@ export default function PharmaLingoApp() {
                     <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar items-center">
                       <span className="text-slate-500 text-[10px] md:text-xs font-black uppercase w-12 shrink-0">ความถี่:</span>
                       {th.freq.map((item: string, i: number) => (
-                        <button key={i} onClick={() => { setRxFreq(rxFreq === i ? null : i); setCHour(0); setCApply(0); }} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border ${rxFreq === i ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
+                        <button key={i} onClick={() => { setRxFreq(rxFreq === i ? null : i); setCHour(0); setCApply(0); }} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 ${rxFreq === i ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           🔄 {item}
                         </button>
                       ))}
@@ -1061,7 +1060,7 @@ export default function PharmaLingoApp() {
                     <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar items-center">
                       <span className="text-slate-500 text-[10px] md:text-xs font-black uppercase w-12 shrink-0">อาหาร:</span>
                       {th.time.map((item: string, i: number) => (
-                        <button key={i} onClick={() => setRxTime(rxTime === i ? null : i)} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border ${rxTime === i ? 'bg-teal-600 border-teal-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
+                        <button key={i} onClick={() => setRxTime(rxTime === i ? null : i)} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 ${rxTime === i ? 'bg-teal-600 border-teal-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           🍽️ {item}
                         </button>
                       ))}
@@ -1069,7 +1068,7 @@ export default function PharmaLingoApp() {
                     <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar items-center">
                       <span className="text-slate-500 text-[10px] md:text-xs font-black uppercase w-12 shrink-0">เวลา:</span>
                       {th.period.map((pTime: string, i: number) => (
-                        <button key={i} onClick={() => togglePeriod(i)} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border ${rxPeriod.includes(i) ? 'bg-orange-500 border-orange-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
+                        <button key={i} onClick={() => togglePeriod(i)} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 ${rxPeriod.includes(i) ? 'bg-orange-500 border-orange-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           {th.period_icons[i]} {pTime}
                         </button>
                       ))}
@@ -1078,7 +1077,7 @@ export default function PharmaLingoApp() {
                     <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar items-center">
                       <span className="text-slate-500 text-[10px] md:text-xs font-black uppercase w-12 shrink-0">ข้าง:</span>
                       {th.side.map((item: string, i: number) => (
-                        <button key={i} onClick={() => setRxSide(rxSide === i ? null : i)} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border ${rxSide === i ? 'bg-purple-600 border-purple-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
+                        <button key={i} onClick={() => setRxSide(rxSide === i ? null : i)} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 ${rxSide === i ? 'bg-purple-600 border-purple-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           {th.side_icons[i]} {item}
                         </button>
                       ))}
@@ -1104,10 +1103,9 @@ export default function PharmaLingoApp() {
                             <span className="text-slate-300 text-[10px] md:text-xs font-black flex items-center gap-1">{input.icon} {input.label}</span>
                             <div className="flex flex-col xl:flex-row items-center gap-2 w-full">
                               <div className="flex items-center bg-slate-800 rounded-lg p-1 w-full justify-between">
-                                <button onClick={() => input.setVal(Math.max(0, Number(input.val) - input.step))} className="w-8 h-8 rounded bg-slate-700 text-white font-black text-lg">-</button>
-                                {/* แก้ซูม: บังคับ text-[16px] */}
+                                <button onClick={() => input.setVal(Math.max(0, Number(input.val) - input.step))} className="w-8 h-8 rounded bg-slate-700 text-white font-black text-lg active:scale-90">-</button>
                                 <input type="text" value={input.val} onChange={(e) => handleNumberInput(input.setVal, e.target.value)} className="font-black text-xl text-cyan-400 w-10 text-center bg-transparent outline-none text-[16px]" />
-                                <button onClick={() => { input.setVal(Number(input.val) + input.step); input.reset(); }} className="w-8 h-8 rounded bg-cyan-700 text-white font-black text-lg">+</button>
+                                <button onClick={() => { input.setVal(Number(input.val) + input.step); input.reset(); }} className="w-8 h-8 rounded bg-cyan-700 text-white font-black text-lg active:scale-90">+</button>
                               </div>
                               <select value={input.unit} onChange={(e) => input.setUnit(e.target.value)} className="bg-slate-800 text-slate-300 border border-slate-600 text-[16px] font-bold rounded-lg w-full xl:w-auto py-2 px-2 outline-none">
                                 {input.uOptions.map(u => <option key={u} value={u}>{unitDict[u].th}</option>)}
@@ -1124,15 +1122,14 @@ export default function PharmaLingoApp() {
                   <span className="text-red-400 text-[10px] md:text-xs font-black uppercase tracking-widest flex items-center gap-2">⚠️ คำเตือน (Warnings)</span>
                   <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
                     {th.warn.map((w: string, i: number) => (
-                      <button key={i} onClick={() => toggleWarning(i)} className={`px-2 py-3 rounded-xl text-[9px] md:text-[10px] font-black border flex items-center gap-2 ${rxWarnings.includes(i) ? 'bg-red-500 border-red-400 text-white shadow-sm' : 'bg-slate-900 border-slate-700 text-slate-400 hover:bg-slate-800'}`}>
+                      <button key={i} onClick={() => toggleWarning(i)} className={`px-2 py-3 rounded-xl text-[9px] md:text-[10px] font-black border flex items-center gap-2 active:scale-95 ${rxWarnings.includes(i) ? 'bg-red-500 border-red-400 text-white shadow-sm' : 'bg-slate-900 border-slate-700 text-slate-400 hover:bg-slate-800'}`}>
                         <span className="text-lg shrink-0">{th.warn_icons[i]}</span><span className="text-left line-clamp-2">{w}</span>
                       </button>
                     ))}
                   </div>
                   <div className="flex gap-2 border-t border-red-900/30 pt-3">
-                    {/* แก้ซูม: บังคับ text-[16px] */}
                     <input type="text" value={warnInput} onChange={(e) => setWarnInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && translateWarning()} placeholder="พิมพ์คำเตือนพิเศษ..." className="flex-1 bg-slate-900/80 border border-slate-700 text-white rounded-xl px-4 py-2.5 outline-none focus:border-red-500 font-bold text-[16px] md:text-sm" />
-                    <button onClick={translateWarning} disabled={!warnInput.trim() || isTranslatingWarn} className="bg-red-600 text-white text-xs md:text-sm font-black px-4 py-2.5 rounded-xl disabled:opacity-50">เพิ่ม</button>
+                    <button onClick={translateWarning} disabled={!warnInput.trim() || isTranslatingWarn} className="bg-red-600 text-white text-xs md:text-sm font-black px-4 py-2.5 rounded-xl disabled:opacity-50 active:scale-95">เพิ่ม</button>
                   </div>
                   {customWarnings.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-2">
@@ -1154,7 +1151,7 @@ export default function PharmaLingoApp() {
                   <h2 className="text-teal-300 font-black text-sm md:text-base mb-4 flex items-center gap-2">🪄 เลือกอุปกรณ์เทคนิคพิเศษ</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                     {specialData.map(item => (
-                      <button key={item.id} onClick={() => { setActiveGuide(item); setIsFullscreen(true); }} className="bg-slate-800 border border-slate-700 hover:border-teal-400 hover:bg-slate-700 rounded-xl p-4 flex items-center gap-4 shadow-sm">
+                      <button key={item.id} onClick={() => { setActiveGuide(item); setIsFullscreen(true); }} className="bg-slate-800 border border-slate-700 hover:border-teal-400 hover:bg-slate-700 rounded-xl p-4 flex items-center gap-4 shadow-sm active:scale-95">
                         <span className="text-3xl md:text-4xl">{item.icon}</span><span className="text-slate-200 font-black text-xs md:text-sm text-left">{item.title.th}</span>
                       </button>
                     ))}
@@ -1166,10 +1163,10 @@ export default function PharmaLingoApp() {
 
           {appMode === 'dispense' && dispenseState === 'input' && (
             <div className="absolute bottom-0 left-0 w-full p-3 md:p-4 bg-slate-900/95 backdrop-blur-md border-t border-slate-700 flex flex-col md:flex-row items-center gap-3 z-50">
-              <button onClick={addToCart} disabled={!drugInput && rxIndication === null} className="w-full md:w-auto bg-slate-800 border border-slate-600 text-white font-black px-6 py-3 md:py-4 rounded-xl disabled:opacity-30 text-xs md:text-sm">
+              <button onClick={addToCart} disabled={!drugInput && rxIndication === null} className="w-full md:w-auto bg-slate-800 border border-slate-600 text-white font-black px-6 py-3 md:py-4 rounded-xl disabled:opacity-30 text-xs md:text-sm active:scale-95">
                 {th.add_to_cart}
               </button>
-              <button onClick={showBoardingPass} disabled={cart.length === 0 && !drugInput} className="flex-1 w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black text-sm md:text-base py-3 md:py-4 rounded-xl shadow-md disabled:opacity-30 border border-indigo-400/50">
+              <button onClick={showBoardingPass} disabled={cart.length === 0 && !drugInput} className="flex-1 w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black text-sm md:text-base py-3 md:py-4 rounded-xl shadow-md disabled:opacity-30 border border-indigo-400/50 active:scale-95">
                 🚀 โชว์การ์ดทั้งหมด {cart.length > 0 ? `(${cart.length} ${th.items})` : ''}
               </button>
             </div>
@@ -1178,9 +1175,8 @@ export default function PharmaLingoApp() {
           {appMode === 'history' && !activeQuestion && (
             <div className="p-4 md:p-6 border-t border-slate-800 shrink-0 pb-safe bg-[#0f172a] relative z-50">
               <div className="flex gap-3 items-center">
-                {/* แก้ซูม: บังคับ text-[16px] */}
                 <input type="text" value={customText} onChange={(e) => setCustomText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleTranslate()} placeholder="พิมพ์สื่อสารทั่วไป..." className="flex-1 bg-slate-900 border border-slate-700 text-white rounded-xl px-4 py-3 outline-none font-bold text-[16px] md:text-sm" />
-                <button onClick={handleTranslate} disabled={!customText.trim() || isTranslating} className="bg-cyan-600 text-white font-black px-6 py-3 rounded-xl disabled:opacity-50 text-xs md:text-sm border border-cyan-400/50">
+                <button onClick={handleTranslate} disabled={!customText.trim() || isTranslating} className="bg-cyan-600 text-white font-black px-6 py-3 rounded-xl disabled:opacity-50 text-xs md:text-sm border border-cyan-400/50 active:scale-95">
                   ส่ง 💬
                 </button>
               </div>
@@ -1205,11 +1201,11 @@ export default function PharmaLingoApp() {
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; } 
         select { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>"); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; }
         
-        /* สไตล์พิเศษสำหรับเครื่องปริ้นเตอร์ Thermal 80mm */
+        @page { margin: 0; }
+        
         @media print {
-          @page { margin: 0; }
           body { 
-            width: 80mm !important; /* ล็อคความกว้างให้พอดีกระดาษสลิป */
+            width: 80mm !important; 
             margin: 0 auto !important; 
             background: white !important; 
             color: black !important; 
