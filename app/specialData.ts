@@ -34,21 +34,21 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
 };
 
 // ==========================================
-// 📚 ฐานข้อมูลคำศัพท์ & พจนานุกรมหน่วยวัด
+// 📚 ฐานข้อมูลคำศัพท์ (ปรับให้ UI สวย และ TTS อ่านลื่นหู)
 // ==========================================
 const unitDict: any = {
-  tab: { th: 'เม็ด', en: 'tablet(s)', de: 'Tablette(n)', zh: '粒/片', ja: '錠', ru: 'таб.', ar: 'حبة' },
-  cap: { th: 'แคปซูล', en: 'capsule(s)', de: 'Kapsel(n)', zh: '胶囊', ja: 'カプセル', ru: 'капс.', ar: 'كبسولة' },
-  tsp: { th: 'ช้อนชา', en: 'teaspoon(s)', de: 'Teelöffel', zh: '茶匙', ja: '小さじ', ru: 'ч.л.', ar: 'ملعقة صغيرة' },
-  tbsp: { th: 'ช้อนโต๊ะ', en: 'tablespoon(s)', de: 'Esslöffel', zh: '汤匙', ja: '大さじ', ru: 'ст.л.', ar: 'ملعقة كبيرة' },
+  tab: { th: 'เม็ด', en: 'tablet', de: 'Tablette', zh: '粒', ja: '錠', ru: 'табл.', ar: 'حبة' },
+  cap: { th: 'แคปซูล', en: 'capsule', de: 'Kapsel', zh: '胶囊', ja: 'カプセル', ru: 'капс.', ar: 'كبسولة' },
+  tsp: { th: 'ช้อนชา', en: 'teaspoon', de: 'Teelöffel', zh: '茶匙', ja: '小さじ', ru: 'ч.л.', ar: 'ملعقة صغيرة' },
+  tbsp: { th: 'ช้อนโต๊ะ', en: 'tablespoon', de: 'Esslöffel', zh: '汤匙', ja: '大さじ', ru: 'ст.л.', ar: 'ملعقة كبيرة' },
   ml: { th: 'มล. (ml)', en: 'ml', de: 'ml', zh: '毫升', ja: 'ml', ru: 'мл', ar: 'مل' },
   cc: { th: 'ซีซี (cc)', en: 'cc', de: 'cc', zh: 'cc', ja: 'cc', ru: 'куб.см', ar: 'سم مكعب' },
-  drop: { th: 'หยด', en: 'drop(s)', de: 'Tropfen', zh: '滴', ja: '滴', ru: 'кап.', ar: 'قطرة' },
-  puff: { th: 'กด/ปั๊ม', en: 'puff(s)', de: 'Sprühstoß', zh: '喷/揿', ja: 'プッシュ', ru: 'пшик.', ar: 'بخة/رشة' },
-  hr: { th: 'ชั่วโมง', en: 'hour(s)', de: 'Stunde(n)', zh: '小时', ja: '時間', ru: 'час(ов)', ar: 'ساعات' },
-  day: { th: 'วัน', en: 'day(s)', de: 'Tag(e)', zh: '天', ja: '日', ru: 'дней', ar: 'أيام' },
-  wk: { th: 'สัปดาห์', en: 'week(s)', de: 'Woche(n)', zh: '周', ja: '週間', ru: 'недель', ar: 'أسابيع' },
-  times: { th: 'ครั้ง', en: 'time(s)', de: 'Mal', zh: '次', ja: '回', ru: 'раз(а)', ar: 'مرات' }
+  drop: { th: 'หยด', en: 'drop', de: 'Tropfen', zh: '滴', ja: '滴', ru: 'кап.', ar: 'قطرة' },
+  puff: { th: 'กด/ปั๊ม', en: 'puff', de: 'Sprühstoß', zh: '喷', ja: 'プッシュ', ru: 'пшик', ar: 'بخة' },
+  hr: { th: 'ชั่วโมง', en: 'hour', de: 'Stunde', zh: '小时', ja: '時間', ru: 'час', ar: 'ساعات' },
+  day: { th: 'วัน', en: 'day', de: 'Tag', zh: '天', ja: '日', ru: 'дней', ar: 'أيام' },
+  wk: { th: 'สัปดาห์', en: 'week', de: 'Woche', zh: '周', ja: '週間', ru: 'недель', ar: 'أسابيع' },
+  times: { th: 'ครั้ง', en: 'time', de: 'Mal', zh: '次', ja: '回', ru: 'раз', ar: 'مرات' }
 };
 
 const dict = {
@@ -58,7 +58,7 @@ const dict = {
     ans_yes: 'ใช่', ans_no: 'ไม่ใช่', ans_dont_know: 'ไม่ทราบ', drug_name: 'ยา (Medicine):', ind_title: 'ข้อบ่งใช้:',
     indication: ['ลดไข้ / แก้ปวด', 'แก้แพ้ / ลดน้ำมูก', 'แก้ไอ / ละลายเสมหะ', 'ยาฆ่าเชื้อ', 'แก้ท้องเสีย', 'ลดกรด / ปวดท้อง', 'แก้คลื่นไส้ / อาเจียน', 'ลดอักเสบ / ปวด'],
     ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
-    dose: ['ครึ่งเม็ด (1/2)', '1 เม็ด', '2 เม็ด', '1 ช้อนชา', '1 ช้อนโต๊ะ', '1 กด/ปั๊ม', '1 หยด'],
+    dose: ['ครึ่งเม็ด', '1 เม็ด', '2 เม็ด', '1 ช้อนชา', '1 ช้อนโต๊ะ', '1 กด', '1 หยด'],
     side: ['ตาซ้าย', 'ตาขวา', 'ตาทั้งสองข้าง', 'หูซ้าย', 'หูขวา', 'หูทั้งสองข้าง'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['วันละ 1 ครั้ง', 'วันละ 2 ครั้ง', 'วันละ 3 ครั้ง', 'วันละ 4 ครั้ง', 'ทุก 4-6 ชม.', 'ทุก 6 ชม.', 'ทุก 8 ชม.'],
     time: ['ก่อนอาหาร', 'หลังอาหาร', 'หลังอาหารทันที', 'ก่อนหรือหลังอาหารก็ได้'],
@@ -76,7 +76,7 @@ const dict = {
     hello: 'Hello 👋', tap_to_select: '👆 Please tap an option', q_name: 'What is your full name?', q_dob: 'What is your date of birth?', q_allergy: 'Are you allergic to any medications?', yes: 'Yes', no: 'No', dont_know: 'Not sure', writePaper: 'Please write it down on paper.',
     q_inj: 'Did you receive any injections today?', q_med: 'Did you receive any oral medications today?', rx_title: 'Prescription Info', warn_title: 'Warnings', drug_name: 'Medicine:', ind_title: 'Indication:', 
     indication: ['Fever / Pain', 'Allergy / Runny nose', 'Cough', 'Antibiotic', 'Diarrhea', 'Stomachache', 'Nausea / Vomiting', 'Anti-inflammatory / Pain'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
-    dose: ['Half (1/2)', '1 Tab/Cap', '2 Tab/Cap', '1 Teaspoon', '1 Tablespoon', '1 Puff/Spray', '1 Drop'],
+    dose: ['Half tablet', '1 Tablet', '2 Tablets', '1 Teaspoon', '1 Tablespoon', '1 Puff', '1 Drop'],
     side: ['Left eye', 'Right eye', 'Both eyes', 'Left ear', 'Right ear', 'Both ears'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['Once daily', 'Twice daily', '3 times a day', '4 times a day', 'Every 4-6 hours', 'Every 6 hours', 'Every 8 hours'],
     time: ['Before meal', 'After meal', 'Immediately after meal', 'With/without food'],
@@ -93,7 +93,7 @@ const dict = {
     hello: 'Hallo 👋', tap_to_select: '👆 Bitte tippen', q_name: 'Wie lautet Ihr vollständiger Name?', q_dob: 'Wann ist Ihr Geburtsdatum?', q_allergy: 'Haben Sie Allergien gegen Medikamente?', yes: 'Ja', no: 'Nein', dont_know: 'Weiß nicht', writePaper: 'Bitte aufschreiben.',
     q_inj: 'Haben Sie heute Injektionen erhalten?', q_med: 'Haben Sie heute Medikamente eingenommen?', rx_title: 'Einnahme', warn_title: 'Warnhinweise', drug_name: 'Medikament:', ind_title: 'Anwendung:', 
     indication: ['Fieber / Schmerzen', 'Allergie / Nase', 'Husten', 'Antibiotikum', 'Durchfall', 'Magen', 'Übelkeit', 'Entzündung / Schmerzen'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
-    dose: ['Halbe (1/2)', '1 Tab/Kap', '2 Tab/Kap', '1 TL', '1 EL', '1 Sprühstoß', '1 Tropfen'],
+    dose: ['Halbe Tablette', '1 Tablette', '2 Tabletten', '1 Teelöffel', '1 Esslöffel', '1 Sprühstoß', '1 Tropfen'],
     side: ['Linkes Auge', 'Rechtes Auge', 'Beide Augen', 'Linkes Ohr', 'Rechtes Ohr', 'Beide Ohren'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['1x täglich', '2x täglich', '3x täglich', '4x täglich', 'Alle 4-6 Std', 'Alle 6 Std', 'Alle 8 Std'],
     time: ['Vor dem Essen', 'Nach dem Essen', 'Direkt nach Essen', 'Vor/nach Essen'],
@@ -110,7 +110,7 @@ const dict = {
     hello: '你好 👋', tap_to_select: '👆 请点击', q_name: '请问您的全名是什么？', q_dob: '您的出生日期是哪天？', q_allergy: '您对任何药物过敏吗？', yes: '是', no: '否', dont_know: '不清楚', writePaper: '请写下。',
     q_inj: '您今天接受过注射吗？', q_med: '您今天服用过口服药吗？', rx_title: '服药方法', warn_title: '注意事项', drug_name: '药物：', ind_title: '主治：', 
     indication: ['退烧 / 止痛', '过敏 / 流鼻涕', '咳嗽', '抗生素', '腹泻', '胃痛', '恶心', '消炎 / 止痛'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
-    dose: ['半 (1/2)', '1 粒/片', '2 粒/片', '1 茶匙', '1 汤匙', '1 喷', '1 滴'],
+    dose: ['半粒', '1 粒', '2 粒', '1 茶匙', '1 汤匙', '1 喷', '1 滴'],
     side: ['左眼', '右眼', '双眼', '左耳', '右耳', '双耳'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['每天 1 次', '每天 2 次', '每天 3 次', '每天 4 次', '每 4-6 小时', '每 6 小时', '每 8 小时'],
     time: ['饭前', '饭后', '饭后立即', '饭前/饭后'],
@@ -127,7 +127,7 @@ const dict = {
     hello: 'こんにちは 👋', tap_to_select: '👆 選択してください', q_name: 'フルネームを教えてください。', q_dob: '生年月日はいつですか？', q_allergy: '薬のアレルギーはありますか？', yes: 'はい', no: 'いいえ', dont_know: '不明', writePaper: '紙に書いてください。',
     q_inj: '今日、注射を受けましたか？', q_med: '今日、飲み薬を服用しましたか？', rx_title: '服用方法', warn_title: '注意事項', drug_name: '薬：', ind_title: '効能：', 
     indication: ['解熱 / 鎮痛', 'アレルギー', '咳', '抗生物質', '下痢', '胃痛', '吐き気', '抗炎症 / 痛み'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
-    dose: ['半 (1/2)', '1 錠/Cap', '2 錠/Cap', '小さじ 1', '大さじ 1', '1 プッシュ', '1 滴'],
+    dose: ['半分', '1 錠', '2 錠', '小さじ 1', '大さじ 1', '1 プッシュ', '1 滴'],
     side: ['左目', '右目', '両目', '左耳', '右耳', '両耳'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['1日 1回', '1日 2回', '1日 3回', '1日 4回', '4-6 時間ごと', '6 時間ごと', '8 時間ごと'],
     time: ['食前', '食後', '食直後', '食前/食後'],
@@ -144,7 +144,7 @@ const dict = {
     hello: 'Привет 👋', tap_to_select: '👆 Выберите', q_name: 'Как ваше полное имя?', q_dob: 'Какова ваша дата рождения?', q_allergy: 'Есть ли у вас аллергия на лекарства?', yes: 'Да', no: 'Нет', dont_know: 'Не знаю', writePaper: 'Напишите на бумаге.',
     q_inj: 'Вам сегодня делали уколы?', q_med: 'Принимали ли вы сегодня лекарства внутрь?', rx_title: 'Применение', warn_title: 'Внимание', drug_name: 'Лекарство:', ind_title: 'Показания:', 
     indication: ['Жар / Боль', 'Аллергия', 'Кашель', 'Антибиотик', 'Диарея', 'Боль в животе', 'Тошнота', 'Воспаление / Боль'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
-    dose: ['Половина (1/2)', '1 таб/кап', '2 таб/кап', '1 ч.л.', '1 ст.л.', '1 пшик', '1 капля'],
+    dose: ['Половина', '1 табл.', '2 табл.', '1 ч.л.', '1 ст.л.', '1 пшик', '1 капля'],
     side: ['Левый глаз', 'Правый глаз', 'Оба глаза', 'Левое ухо', 'Правое ухо', 'Оба уха'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['1 раз в день', '2 раза в день', '3 раза в день', '4 раза в день', 'Каждые 4-6 ч', 'Каждые 6 ч', 'Каждые 8 ч'],
     time: ['До еды', 'После еды', 'Сразу после', 'Независимо'],
@@ -161,7 +161,7 @@ const dict = {
     hello: 'مرحباً 👋', tap_to_select: '👆 اختر', q_name: 'ما هو اسمك الكامل؟', q_dob: 'ما هو تاريخ ميلادك؟', q_allergy: 'هل تعاني من حساسية تجاه أي أدوية؟', yes: 'نعم', no: 'لا', dont_know: 'لا أعرف', writePaper: 'اكتب على ورقة.',
     q_inj: 'هل تلقيت أي حقن اليوم؟', q_med: 'هل تلقيت أي أدوية عن طريق الفم اليوم؟', rx_title: 'الاستخدام', warn_title: 'تحذيرات', drug_name: 'الدواء:', ind_title: 'دواعي:', 
     indication: ['حمى / ألم', 'حساسية', 'سعال', 'مضاد حيوي', 'إسهال', 'معدة', 'غثيان', 'التهاب / ألم'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
-    dose: ['نصف (1/2)', '1 حبة', '2 حبة', '1 ملعقة صغيرة', '1 ملعقة كبيرة', '1 بخة', '1 قطرة'],
+    dose: ['نصف', '1 حبة', '2 حبة', '1 ملعقة صغيرة', '1 ملعقة كبيرة', '1 بخة', '1 قطرة'],
     side: ['يسرى', 'يمنى', 'كلتيهما', 'يسرى', 'يمنى', 'كلتيهما'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['1 يومياً', '2 يومياً', '3 يومياً', '4 يومياً', 'كل 4-6 س', 'كل 6 س', 'كل 8 س'],
     time: ['قبل الأكل', 'بعد الأكل', 'مباشرة بعد الأكل', 'قبل/بعد الأكل'],
@@ -255,28 +255,43 @@ export default function PharmaLingoApp() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const synthRef = useRef<SpeechSynthesis | null>(null);
 
+  // 🛠️ โหลดเสียงเก็บไว้ในแคชทันทีที่เปิดแอป
   useEffect(() => { 
-    if (typeof window !== 'undefined') synthRef.current = window.speechSynthesis; 
+    if (typeof window !== 'undefined') {
+      synthRef.current = window.speechSynthesis; 
+      synthRef.current.getVoices(); 
+      window.speechSynthesis.onvoiceschanged = () => {
+        synthRef.current?.getVoices();
+      };
+    }
   }, []);
 
-  // 🎙️ ระบบดึงเสียงอ่าน
+  // 🎙️ ระบบดึงเสียงอ่าน (ปรับใหม่ให้อ่านเนียนระดับ Native)
   const speakText = (text: string, langCode: string, forceEnglish: boolean = false) => {
     if (!synthRef.current) return;
     synthRef.current.cancel();
     
-    const utterance = new SpeechSynthesisUtterance(text);
+    // กรองคำย่อและสัญลักษณ์แปลกๆ ทิ้งก่อนส่งให้บอทอ่าน
+    let cleanText = text.replace(/ч\.л\./g, 'чайная ложка')
+                        .replace(/ст\.л\./g, 'столовая ложка')
+                        .replace(/табл\./g, 'таблетка')
+                        .replace(/капс\./g, 'капсула')
+                        .replace(/\(s\)/g, '')
+                        .replace(/\(n\)/g, '');
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
     const voices = synthRef.current.getVoices();
     const targetLangMatch = forceEnglish ? 'en' : langCode;
     
-    let filteredVoices = voices.filter(v => v.lang.startsWith(targetLangMatch));
+    let filteredVoices = voices.filter(v => v.lang.toLowerCase().startsWith(targetLangMatch.toLowerCase()));
 
-    const fNames = ['female', 'siri female', 'kyoko', 'samantha', 'laila', 'ting', 'meijia', 'sin-ji', 'anna', 'helena', 'milena', 'karen', 'amelie', 'yuna'];
-    const mNames = ['male', 'siri male', 'otoya', 'aaron', 'maged', 'tarik', 'yushu', 'daniel', 'arthur', 'martin', 'yuri'];
+    const fNames = ['female', 'siri', 'kyoko', 'samantha', 'laila', 'ting', 'meijia', 'sin-ji', 'anna', 'helena', 'milena', 'karen', 'amelie', 'yuna', 'monica', 'katya'];
+    const mNames = ['male', 'siri', 'otoya', 'aaron', 'maged', 'tarik', 'yushu', 'daniel', 'arthur', 'martin', 'yuri', 'pavel'];
 
     const findVoice = (isPremiumOnly: boolean) => {
       return filteredVoices.find(v => {
         const name = v.name.toLowerCase();
-        const isPremium = name.includes('siri') || name.includes('premium') || name.includes('enhanced');
+        const isPremium = name.includes('siri') || name.includes('premium') || name.includes('enhanced') || name.includes('natural');
         if (isPremiumOnly && !isPremium) return false;
 
         const isFemale = fNames.some(f => name.includes(f));
@@ -291,10 +306,15 @@ export default function PharmaLingoApp() {
     if (!preferredVoice) preferredVoice = findVoice(false); 
     if (!preferredVoice && filteredVoices.length > 0) preferredVoice = filteredVoices[0]; 
 
-    if (preferredVoice) utterance.voice = preferredVoice;
+    if (preferredVoice) {
+      utterance.voice = preferredVoice;
+      // 👈 บังคับใช้รหัสภาษาของเสียงเป๊ะๆ เพื่อป้องกันสำเนียงไทยแทรก
+      utterance.lang = preferredVoice.lang; 
+    } else {
+      const voiceLangMap: any = { ar: 'ar-SA', de: 'de-DE', en: 'en-US', zh: 'zh-CN', ja: 'ja-JP', ru: 'ru-RU' };
+      utterance.lang = voiceLangMap[targetLangMatch] || targetLangMatch;
+    }
 
-    const voiceLangMap: any = { ar: 'ar-SA', de: 'de-DE', en: 'en-US', zh: 'zh-CN', ja: 'ja-JP', ru: 'ru-RU' };
-    utterance.lang = voiceLangMap[targetLangMatch] || targetLangMatch;
     utterance.rate = 0.85; 
     utterance.onend = () => setIsSpeaking(false);
     
@@ -326,6 +346,7 @@ export default function PharmaLingoApp() {
   const speakSpecificRx = (rx: Prescription) => {
     if (!synthRef.current) return;
     const text = generateSpeechText(rx);
+    // เปลี่ยน | เป็น , เพื่อเว้นจังหวะหายใจธรรมชาติ
     if (text) speakText(text.replace(/\|/g, ','), patientLang);
   };
 
