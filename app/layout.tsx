@@ -41,7 +41,7 @@ export default function RootLayout({
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <head>
         {/* 👇 1. บังคับ iPhone เรียกใช้ไอคอนจาก public/apple-touch-icon.png 👇 */}
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-iconv2" href="/apple-touch-icon.png" />
         
         {/* 👇 2. เชื่อมต่อไฟล์ manifest.json จาก public 👇 */}
         <link rel="manifest" href="/manifest.json" />
@@ -49,7 +49,7 @@ export default function RootLayout({
         {/* 👇 3. แท็กเสริมความชัวร์สำหรับ iOS PWA 👇 */}
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <link rel="icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/apple-touch-iconv2.png" />
       </head>
       <body className="min-h-full flex flex-col overscroll-none">
         {children}
