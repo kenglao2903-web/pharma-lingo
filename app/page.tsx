@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 
 // ==========================================
-// 🪄 ฐานข้อมูลเทคนิคพิเศษ (รวมไว้ในไฟล์เดียว ป้องกัน Vercel Error)
+// 🪄 ฐานข้อมูลเทคนิคพิเศษ
 // ==========================================
 const specialData = [
   {
@@ -223,7 +223,6 @@ type Prescription = {
   cApply: string | number; cApplyUnit: string; cDays: string | number; cDaysUnit: string;
 };
 
-// 🇩🇪 มีครบ 6 ภาษาแล้วครับ!
 const LANGUAGES = [
   { code: 'en', flag: '🇬🇧', label: 'United Kingdom' }, 
   { code: 'de', flag: '🇩🇪', label: 'Germany' },
@@ -232,6 +231,20 @@ const LANGUAGES = [
   { code: 'ja', flag: '🇯🇵', label: 'Japan' }, 
   { code: 'ar', flag: '🇦🇪', label: 'UAE' },
 ];
+
+// แปลงข้อมูลเป็น Base64
+const encodeData = (data: any) => {
+    return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+};
+
+// แปลงข้อมูลกลับจาก Base64
+const decodeData = (str: string) => {
+    try {
+        return JSON.parse(decodeURIComponent(escape(atob(str))));
+    } catch(e) {
+        return null;
+    }
+};
 
 export default function PharmaLingoApp() {
   const [hasStarted, setHasStarted] = useState(false);
@@ -288,6 +301,12 @@ export default function PharmaLingoApp() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const synthRef = useRef<SpeechSynthesis | null>(null);
 
+  // 🔗 สถานะสำหรับการสร้างลิ้งก์ปริ้นท์
+  const [shortLink, setShortLink] = useState('');
+  const [isGeneratingLink, setIsGeneratingLink] = useState(false);
+  const [showLinkModal, setShowLinkModal] = useState(false);
+
+  // ตรวจสอบว่ามีข้อมูลจาก Link หรือไม่ตอนโหลดเว็บ
   useEffect(() => { 
     if (typeof window !== 'undefined') {
       synthRef.current = window.speechSynthesis; 
@@ -295,8 +314,48 @@ export default function PharmaLingoApp() {
       window.speechSynthesis.onvoiceschanged = () => {
         synthRef.current?.getVoices();
       };
+
+      // อ่านค่าจาก URL Param
+      const params = new URLSearchParams(window.location.search);
+      const rxData = params.get('rx');
+      if (rxData) {
+        const decoded = decodeData(rxData);
+        if (decoded && decoded.cart) {
+          setCart(decoded.cart);
+          if (decoded.lang) setPatientLang(decoded.lang);
+          setHasStarted(true);
+          setDispenseState('present');
+          setIsFullscreen(true);
+        }
+      }
     }
   }, []);
+
+  // 🔗 ฟังก์ชันสร้างลิ้งก์ผ่าน is.gd API
+  const generatePrintLink = async () => {
+    setIsGeneratingLink(true);
+    setShowLinkModal(true);
+    try {
+      const payload = { cart, lang: patientLang };
+      const encodedUrl = encodeData(payload);
+      // สร้าง URL เต็ม
+      const longUrl = window.location.origin + '?rx=' + encodedUrl;
+      
+      // ส่งไปย่อลิ้งก์ที่ is.gd
+      const res = await fetch(`https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`);
+      const data = await res.json();
+      
+      if (data.shorturl) {
+        // เอาแค่ชื่อหลัง is.gd/ มาโชว์ จะได้สั้นๆ พิมพ์ง่ายๆ
+        setShortLink(data.shorturl.replace('https://', ''));
+      } else {
+        setShortLink('Error: ไม่สามารถสร้างลิ้งก์ได้');
+      }
+    } catch (err) {
+      setShortLink('Error: การเชื่อมต่อล้มเหลว');
+    }
+    setIsGeneratingLink(false);
+  };
 
   const speakText = (text: string, langCode: string, forceEnglish: boolean = false) => {
     if (!synthRef.current) return;
@@ -622,7 +681,7 @@ export default function PharmaLingoApp() {
   };
 
   // ==========================================
-  // 🎟️ Render Boarding Pass: จัดหน้าจอแบบ Fit & ปริ้นท์ A5 แนวนอน
+  // 🎟️ Render Boarding Pass
   // ==========================================
   const renderBoardingPass = (rx: Prescription, index: number) => {
     const displayDrugEn = rx.drugInput.trim();
@@ -635,7 +694,6 @@ export default function PharmaLingoApp() {
     if (rx.rxPeriod.length > 0) instCount++;
     if (rx.rxSide !== null) instCount++;
     
-    // ⚖️ ระบบยืดหยุ่นขนาด (Dynamic Size) เพื่อให้การ์ดพอดี 1 หน้าจอ
     const instPadding = instCount >= 5 ? 'p-2 md:p-3' : instCount >= 3 ? 'p-3 md:p-4' : 'p-4 md:p-5'; 
     const instGap = instCount >= 5 ? 'gap-1.5 md:gap-2' : instCount >= 3 ? 'gap-2 md:gap-3' : 'gap-4 md:gap-5';
     const instTextSize = instCount >= 5 ? 'text-sm md:text-base' : instCount >= 3 ? 'text-base md:text-lg' : 'text-xl md:text-2xl';
@@ -666,6 +724,7 @@ export default function PharmaLingoApp() {
                 </button>
               </div>
 
+              {/* 💡 ลบ print:flex-1 และ print:justify-center ออกแล้ว ข้อมูลจะเรียงชิดกันสวยงาม ไม่โหว่! */}
               <div className={`bg-blue-50/40 flex flex-col ${instGap} p-3 md:p-5 overflow-y-auto custom-scrollbar flex-1 print:overflow-hidden print:bg-transparent print:p-2 print:gap-1.5`}>
                 {(displayDrugEn || displayDrugLocal) && (
                   <div className="bg-gradient-to-r from-amber-100 to-yellow-200 border-2 border-yellow-400 rounded-2xl py-3 px-2 flex flex-col items-center justify-center shadow-sm text-center print:py-1.5 print:rounded-lg">
@@ -715,7 +774,7 @@ export default function PharmaLingoApp() {
                     </div>
                   </div>
                 ) : (
-                  <div className={`flex flex-col ${instGap} print:flex-1 print:justify-center`}>
+                  <div className={`flex flex-col ${instGap}`}>
                     {(rx.rxDose !== null || Number(rx.cDose) > 0) && (
                       <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:p-1.5 print:rounded-lg print:border-blue-200`}>
                         <span className="text-3xl md:text-4xl print:text-xl">💊</span>
@@ -757,7 +816,7 @@ export default function PharmaLingoApp() {
                     )}
 
                     {rx.rxSide !== null && (
-                      <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:p-1.5 print:rounded-lg print:border-blue-200 print:mt-auto`}>
+                      <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:p-1.5 print:rounded-lg print:border-blue-200`}>
                         <span className="text-3xl md:text-4xl print:text-xl">🧭</span>
                         <span className={`font-black text-purple-600 bg-purple-50 px-2 py-1 rounded-lg border border-purple-200 ${instTextSize} print:text-[9px] print:px-1.5 print:py-0.5`}>
                           {p.side_icons[rx.rxSide]} {p.side[rx.rxSide]}
@@ -766,9 +825,6 @@ export default function PharmaLingoApp() {
                     )}
                   </div>
                 )}
-                <div className="text-center pt-2 text-blue-500 font-bold text-xs md:text-sm mt-auto opacity-80 animate-bounce print:hidden">
-                    {p.scroll_down}
-                </div>
               </div>
             </div>
           </div>
@@ -790,7 +846,7 @@ export default function PharmaLingoApp() {
 
               <div className={`bg-red-50/60 flex flex-col ${warnGap} p-3 md:p-5 overflow-y-auto custom-scrollbar flex-1 print:overflow-hidden print:bg-transparent print:p-2 print:gap-1.5`}>
                 <h3 className="text-red-600 font-black text-[11px] md:text-sm uppercase tracking-widest border-b-2 border-red-200 pb-1 mb-1 text-center print:text-[10px] print:mb-0">⚠️ {p.warn_title}</h3>
-                <div className={`flex flex-col ${warnGap} print:gap-1 print:flex-1 print:justify-center`}>
+                <div className={`flex flex-col ${warnGap} print:gap-1`}>
                   {(rx.rxWarnings.length > 0 || rx.customWarnings.length > 0) ? (
                     <>
                       {rx.rxWarnings.map((wIdx: number) => (
@@ -832,10 +888,34 @@ export default function PharmaLingoApp() {
         {dispenseState === 'present' && !activeGuide ? (
           <div className="w-full h-full flex flex-col bg-slate-900 relative print:bg-white print:h-auto print:block print:w-full print:mx-auto" dir={isRTL ? 'rtl' : 'ltr'}>
             
-            {/* 📸 กล่องบอกให้ถ่ายรูป มุมซ้ายบน ขนาดย่อมเยาแต่เห็นชัด! */}
+            {/* 📸 กล่องบอกให้ถ่ายรูป */}
             <div className="absolute top-6 left-6 bg-blue-600 text-white font-black px-4 py-2 md:px-6 md:py-3 rounded-full shadow-2xl border-2 border-blue-400 animate-pulse flex items-center gap-2 z-50 print:hidden pointer-events-auto">
                <span className="text-2xl md:text-3xl">📸</span> <span className="text-xs md:text-base">{p.photo_prompt}</span>
             </div>
+
+            {/* 🔗 ปุ่มขอ Link พิเศษ (พิมพ์คอมพิวเตอร์) */}
+            <div className="absolute top-6 right-[140px] md:right-[160px] z-50 print:hidden">
+               <button onClick={generatePrintLink} disabled={isGeneratingLink} className="bg-indigo-500 hover:bg-indigo-400 text-white px-4 py-2 md:px-6 md:py-3 h-12 md:h-14 rounded-full font-black shadow-2xl flex items-center gap-2 border-2 border-indigo-300 pointer-events-auto active:scale-95 disabled:opacity-50">
+                 {isGeneratingLink ? '⏳ รอแป๊บ..' : '🔗 ลิ้งก์ปริ้นท์'}
+               </button>
+            </div>
+
+            {/* Popup Modal โชว์ Short Link */}
+            {showLinkModal && (
+              <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[100] print:hidden">
+                <div className="bg-white rounded-3xl p-6 md:p-8 flex flex-col items-center max-w-sm w-[90%] shadow-[0_0_50px_rgba(79,70,229,0.5)] animate-in">
+                   <div className="text-5xl mb-4">💻</div>
+                   <h3 className="text-slate-800 font-black text-lg md:text-xl text-center mb-2">พิมพ์ลิ้งก์นี้ที่คอมพิวเตอร์เพื่อปริ้นท์</h3>
+                   <div className="bg-indigo-50 border-2 border-indigo-200 text-indigo-700 font-black text-3xl md:text-4xl py-4 px-8 rounded-2xl tracking-widest my-4 w-full text-center">
+                     {shortLink || 'กำลังสร้าง...'}
+                   </div>
+                   <p className="text-slate-400 text-xs text-center mb-6">⚠️ ลิ้งก์นี้เป็นความลับและจะใช้งานได้ชั่วคราวเท่านั้น</p>
+                   <button onClick={() => setShowLinkModal(false)} className="bg-slate-800 text-white font-black px-8 py-3 rounded-full hover:bg-slate-700 active:scale-95 w-full">
+                     ปิดหน้าต่าง
+                   </button>
+                </div>
+              </div>
+            )}
 
             {/* ปุ่มปิดและปุ่มปริ้นท์ มุมขวาบน */}
             <div className="absolute top-6 right-6 flex items-center gap-2 z-50 pointer-events-none print:hidden">
