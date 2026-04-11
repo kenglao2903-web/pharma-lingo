@@ -297,6 +297,7 @@ export default function PharmaLingoApp() {
     synthRef.current.speak(utterance);
   };
 
+  // ✅ ZERO REGEX: แก้ไขให้เช็คตัวเลขโดยไม่ใช้สัญลักษณ์ Regex ป้องกันบั๊ก Vercel แตก
   const checkIsNumber = (val: string) => {
       if (val === '') return true;
       return !isNaN(Number(val)) && !val.includes('.');
@@ -515,35 +516,35 @@ export default function PharmaLingoApp() {
 
   if (!hasStarted) {
     return (
-      <div className="min-h-[100dvh] w-full bg-[#0f172a] flex flex-col items-center justify-center relative overflow-hidden font-sans print-force-white-bg">
-        <div className={`absolute top-10 md:top-20 text-center z-20 transition-opacity duration-300 ${animatingLang ? "opacity-0" : "opacity-100"}`}>
+      <div className="min-h-[100dvh] w-full bg-[#0f172a] flex flex-col items-center justify-center relative overflow-hidden font-sans">
+        <div className={"absolute top-10 md:top-20 text-center z-20 transition-opacity duration-300 " + (animatingLang ? "opacity-0" : "opacity-100")}>
           <h1 className="text-3xl md:text-5xl font-black text-white tracking-widest drop-shadow-md">ASSISTANCE DISPENSER</h1>
           <p className="text-slate-400 mt-2 text-sm md:text-base font-bold tracking-widest uppercase">Tap to Select Patient Language</p>
         </div>
 
         <div className="relative w-[300px] h-[300px] flex items-center justify-center mt-12 md:mt-20">
-          <div className={`absolute w-full h-full rounded-full border-[4px] border-slate-800 transition-opacity duration-300 ${animatingLang ? "opacity-0" : "opacity-100"}`}></div>
+          <div className={"absolute w-full h-full rounded-full border-[4px] border-slate-800 transition-opacity duration-300 " + (animatingLang ? "opacity-0" : "opacity-100")}></div>
           {LANGUAGES.map((l, index) => {
             const rotation = index * 60; 
             const isAnimating = animatingLang === l.code;
             const isOther = animatingLang && animatingLang !== l.code;
             return (
               <button key={l.code} onClick={() => handleLangSelect(l.code, l.label)}
-                className={`absolute top-1/2 left-1/2 w-20 h-20 -ml-10 -mt-10 flex flex-col items-center justify-center outline-none transition-all duration-[800ms] ease-[cubic-bezier(0.8,0,0.2,1)] ${isOther ? "opacity-0 scale-0 " : " "} ${isAnimating ? "z-50" : "z-10 hover:scale-110 cursor-pointer"}`}
+                className={"absolute top-1/2 left-1/2 w-20 h-20 -ml-10 -mt-10 flex flex-col items-center justify-center outline-none transition-all duration-[800ms] ease-[cubic-bezier(0.8,0,0.2,1)] " + (isOther ? "opacity-0 scale-0 " : " ") + (isAnimating ? "z-50" : "z-10 hover:scale-110 cursor-pointer")}
                 style={isAnimating ? { transform: 'translate(0px, 0px) scale(80)' } : { transform: "rotate(" + rotation + "deg) translateY(-150px)" }}
               >
-                <div className={`flex flex-col items-center justify-center w-full h-full rounded-full transition-all duration-300 ${isAnimating ? "bg-slate-50" : ""}`} style={{ transform: "rotate(" + (-rotation) + "deg)" }}>
-                  <div className={`transition-all duration-[800ms] ${isAnimating ? "text-[1px] opacity-0" : "text-5xl"}`}>{l.flag}</div>
-                  <span className={`mt-2 font-black text-[10px] md:text-xs bg-slate-900/80 px-3 py-1 rounded-md border text-slate-300 border-slate-700 whitespace-nowrap ${isAnimating ? "opacity-0" : "opacity-100"}`}>{l.label}</span>
+                <div className={"flex flex-col items-center justify-center w-full h-full rounded-full transition-all duration-300 " + (isAnimating ? "bg-slate-50" : "")} style={{ transform: "rotate(" + (-rotation) + "deg)" }}>
+                  <div className={"transition-all duration-[800ms] " + (isAnimating ? "text-[1px] opacity-0" : "text-5xl")}>{l.flag}</div>
+                  <span className={"mt-2 font-black text-[10px] md:text-xs bg-slate-900/80 px-3 py-1 rounded-md border text-slate-300 border-slate-700 whitespace-nowrap " + (isAnimating ? "opacity-0" : "opacity-100")}>{l.label}</span>
                 </div>
               </button>
             );
           })}
         </div>
         
-        <div className={`absolute bottom-10 z-20 flex gap-4 transition-opacity duration-300 ${animatingLang ? "opacity-0" : "opacity-100"}`}>
-            <button onClick={() => setVoiceGender('female')} className={`px-6 py-3 rounded-full font-black text-sm md:text-base transition-colors duration-100 border-2 ${voiceGender === 'female' ? "bg-pink-600 text-white border-pink-400 shadow-[0_0_15px_rgba(219,39,119,0.5)]" : "bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700"}`}>👩🏻 Female Voice</button>
-            <button onClick={() => setVoiceGender('male')} className={`px-6 py-3 rounded-full font-black text-sm md:text-base transition-colors duration-100 border-2 ${voiceGender === 'male' ? "bg-blue-600 text-white border-blue-400 shadow-[0_0_15px_rgba(37,99,235,0.5)]" : "bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700"}`}>👨🏻 Male Voice</button>
+        <div className={"absolute bottom-10 z-20 flex gap-4 transition-opacity duration-300 " + (animatingLang ? "opacity-0" : "opacity-100")}>
+            <button onClick={() => setVoiceGender('female')} className={"px-6 py-3 rounded-full font-black text-sm md:text-base transition-colors duration-100 border-2 " + (voiceGender === 'female' ? "bg-pink-600 text-white border-pink-400 shadow-[0_0_15px_rgba(219,39,119,0.5)]" : "bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700")}>👩🏻 Female Voice</button>
+            <button onClick={() => setVoiceGender('male')} className={"px-6 py-3 rounded-full font-black text-sm md:text-base transition-colors duration-100 border-2 " + (voiceGender === 'male' ? "bg-blue-600 text-white border-blue-400 shadow-[0_0_15px_rgba(37,99,235,0.5)]" : "bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700")}>👨🏻 Male Voice</button>
         </div>
       </div>
     );
@@ -553,19 +554,16 @@ export default function PharmaLingoApp() {
   if (appMode === 'history' && activeQuestion) patientHeightClass = 'h-[75dvh] p-6 print-hidden'; 
   if (appMode === 'dispense' && dispenseState === 'input') patientHeightClass = 'h-[8dvh] p-2 print-hidden'; 
 
-  // ==========================================
-  // Render Guide Card
-  // ==========================================
   const renderGuideCard = (guide: any) => {
     return (
       <div className="w-full h-fit max-h-[85dvh] lg:max-w-4xl bg-white lg:rounded-[2rem] rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-4 border-teal-200 print-max-h-none" dir={isRTL ? 'rtl' : 'ltr'}>
         <div className="bg-gradient-to-r from-teal-700 to-emerald-900 p-4 md:p-6 text-center relative shrink-0 flex justify-between items-center shadow-inner print-bg-teal-800 print-border-b-2 print-border-teal-800">
-          <span className="text-4xl opacity-30 print-text-white">🪄</span>
+          <span className="text-4xl opacity-30 print-icon print-text-white">🪄</span>
           <div className="flex flex-col items-center">
             <h1 className="text-white font-black text-lg md:text-xl tracking-widest uppercase print-text-white">Bangkok Pattaya Hospital</h1>
             <p className="text-teal-200 text-sm md:text-base font-bold mt-1 tracking-widest print-text-white">{p.spec_guide}</p>
           </div>
-          <button onClick={() => speakGuide(guide)} className={`w-12 h-12 md:w-14 md:h-14 rounded-full text-2xl shadow-lg flex items-center justify-center print-hidden ${isSpeaking ? "bg-white text-teal-600 animate-pulse" : "bg-teal-800 text-white border-2 border-teal-400 hover:bg-teal-700"}`}>
+          <button onClick={() => speakGuide(guide)} className={"w-12 h-12 md:w-14 md:h-14 rounded-full text-2xl shadow-lg flex items-center justify-center print-hidden " + (isSpeaking ? "bg-white text-teal-600 animate-pulse" : "bg-teal-800 text-white border-2 border-teal-400 hover:bg-teal-700")}>
             {isSpeaking ? '🛑' : '🔊'}
           </button>
         </div>
@@ -590,9 +588,6 @@ export default function PharmaLingoApp() {
     );
   };
 
-  // ==========================================
-  // Render Boarding Pass
-  // ==========================================
   const renderBoardingPass = (rx: Prescription, index: number) => {
     const displayDrugEn = rx.drugInput.trim();
     const displayDrugLocal = rx.drugName && rx.drugName.toLowerCase() !== rx.drugInput.toLowerCase() ? rx.drugName : '';
@@ -604,7 +599,7 @@ export default function PharmaLingoApp() {
     if (rx.rxPeriod.length > 0) instCount++;
     if (rx.rxSide !== null) instCount++;
     
-    // 🎯 อัปเกรดความเบิ้มของตัวอักษรบนหน้าจอโทรศัพท์ (ไม่กระทบ Print)
+    // 🎯 จัดการความหนาของกรอบเพื่อป้องกันการตกขอบตอนปริ้นท์ (A5)
     const isCrowded = instCount >= 4;
     const instPadding = isCrowded ? "p-3 md:p-4 print-p-1" : "p-4 md:p-5 print-p-2"; 
     const instGap = isCrowded ? "gap-2 md:gap-3 print-gap-1" : "gap-3 md:gap-4 print-gap-1-5";
@@ -634,15 +629,15 @@ export default function PharmaLingoApp() {
                   <h1 className="text-white font-black text-base md:text-xl tracking-widest uppercase print-text-white print-text-1rem leading-tight">Bangkok Pattaya Hospital</h1>
                   <p className="text-blue-200 text-xs md:text-sm font-bold mt-0.5 tracking-widest print-text-white print-text-07rem">{p.rx_title}</p>
                 </div>
-                <button onClick={() => speakSpecificRx(rx)} className={`w-12 h-12 md:w-14 md:h-14 rounded-full text-xl md:text-2xl shadow-md flex items-center justify-center print-hidden ${isSpeaking ? "bg-white text-blue-600 animate-pulse" : "bg-blue-800 text-white border border-blue-400 hover:bg-blue-700"}`}>
+                <button onClick={() => speakSpecificRx(rx)} className={"w-12 h-12 md:w-14 md:h-14 rounded-full text-xl md:text-2xl shadow-md flex items-center justify-center print-hidden " + (isSpeaking ? "bg-white text-blue-600 animate-pulse" : "bg-blue-800 text-white border border-blue-400 hover:bg-blue-700")}>
                   {isSpeaking ? '🛑' : '🔊'}
                 </button>
               </div>
 
-              <div className={`bg-blue-50/40 flex flex-col ${instGap} p-4 md:p-6 min-h-0 overflow-y-auto custom-scrollbar flex-1 print-overflow-hidden print-bg-transparent print-p-2`}>
+              <div className={"bg-blue-50/40 flex flex-col " + instGap + " p-4 md:p-6 min-h-0 overflow-y-auto custom-scrollbar flex-1 print-overflow-hidden print-bg-transparent print-p-2"}>
                 {(displayDrugEn || displayDrugLocal) && (
-                  <div className={`bg-gradient-to-r from-amber-100 to-yellow-200 border-2 border-yellow-400 rounded-2xl ${isCrowded ? "py-2 px-2 print-py-1" : "py-4 px-3 print-py-1.5"} flex flex-col items-center justify-center shadow-sm text-center shrink-0 print-box print-bg-yellow-50`}>
-                    <span className={`text-yellow-800 font-black uppercase mb-1 tracking-widest ${isCrowded ? "text-xs md:text-sm print-text-06rem" : "text-sm md:text-base print-text-07rem"}`}>💊 {p.drug_name}</span>
+                  <div className={"bg-gradient-to-r from-amber-100 to-yellow-200 border-2 border-yellow-400 rounded-2xl " + (isCrowded ? "py-2 px-2 print-py-1" : "py-4 px-3 print-py-1-5") + " flex flex-col items-center justify-center shadow-sm text-center shrink-0 print-box print-bg-yellow-50"}>
+                    <span className={"text-yellow-800 font-black uppercase mb-1 tracking-widest " + (isCrowded ? "text-xs md:text-sm print-text-06rem" : "text-sm md:text-base print-text-07rem")}>💊 {p.drug_name}</span>
                     <div className="flex flex-col items-center justify-center w-full px-1 gap-1 print-gap-1">
                       {displayDrugLocal && <FittedText text={displayDrugLocal} isMain={true} />}
                       {displayDrugEn && <FittedText text={displayDrugLocal ? "(" + displayDrugEn + ")" : displayDrugEn} isMain={!displayDrugLocal} />}
@@ -651,11 +646,11 @@ export default function PharmaLingoApp() {
                 )}
 
                 {(rx.rxIndication !== null || rx.customIndication) && (
-                  <div className={`bg-blue-100 border-l-8 border-blue-500 rounded-r-xl ${isCrowded ? "p-3 print-p-1" : "p-4 md:p-5 print-p-1.5"} flex items-center gap-3 shadow-sm shrink-0 print-box print-bg-blue-50`}>
-                    <span className={`${iconSizeClass} shrink-0`}>🎯</span>
+                  <div className={"bg-blue-100 border-l-8 border-blue-500 rounded-r-xl " + (isCrowded ? "p-3 print-p-1" : "p-4 md:p-5 print-p-1-5") + " flex items-center gap-3 shadow-sm shrink-0 print-box print-bg-blue-50"}>
+                    <span className={iconSizeClass + " shrink-0"}>🎯</span>
                     <div className="flex flex-col">
-                      <span className={`text-blue-600 uppercase font-black ${isCrowded ? "text-xs md:text-sm print-text-055rem" : "text-sm md:text-base print-text-065rem"}`}>{p.ind_title}</span>
-                      <span className={`text-blue-900 font-black mt-1 leading-tight ${isCrowded ? "text-xl md:text-2xl print-text-sm" : "text-2xl md:text-3xl print-text-base"}`}>{rx.rxIndication !== null ? p.indication[rx.rxIndication] : rx.customIndication}</span>
+                      <span className={"text-blue-600 uppercase font-black " + (isCrowded ? "text-xs md:text-sm print-text-055rem" : "text-sm md:text-base print-text-065rem")}>{p.ind_title}</span>
+                      <span className={"text-blue-900 font-black mt-1 leading-tight " + (isCrowded ? "text-xl md:text-2xl print-text-sm" : "text-2xl md:text-3xl print-text-md")}>{rx.rxIndication !== null ? p.indication[rx.rxIndication] : rx.customIndication}</span>
                     </div>
                   </div>
                 )}
@@ -688,20 +683,20 @@ export default function PharmaLingoApp() {
                     </div>
                   </div>
                 ) : (
-                  <div className={`flex flex-col ${instGap} print-flex-1 print-justify-center`}>
+                  <div className={"flex flex-col " + instGap + " print-flex-1 print-justify-center"}>
                     {(rx.rxDose !== null || Number(rx.cDose) > 0) && (
-                      <div className={`flex items-center gap-4 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box print-bg-white`}>
+                      <div className={"flex items-center gap-4 bg-white rounded-xl shadow-sm border border-slate-100 " + instPadding + " print-box print-bg-white"}>
                         <span className={iconSizeClass}>💊</span>
-                        <div className={`flex flex-wrap items-center gap-2 font-black text-slate-800 ${instTextSize} leading-tight`}>
+                        <div className={"flex flex-wrap items-center gap-2 font-black text-slate-800 " + instTextSize + " leading-tight"}>
                           <span>{rx.rxDose !== null ? p.dose[rx.rxDose] : parseSmartText(p.smart_dose, rx.cDose, rx.cDoseUnit)}</span>
                         </div>
                       </div>
                     )}
                     
                     {(rx.rxFreq !== null || Number(rx.cHour) > 0 || Number(rx.cApply) > 0) && (
-                      <div className={`flex items-center gap-4 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box print-bg-white`}>
+                      <div className={"flex items-center gap-4 bg-white rounded-xl shadow-sm border border-slate-100 " + instPadding + " print-box print-bg-white"}>
                         <span className={iconSizeClass}>🔄</span>
-                        <span className={`font-black text-slate-800 ${instTextSize} leading-tight`}>
+                        <span className={"font-black text-slate-800 " + instTextSize + " leading-tight"}>
                           {rx.rxFreq !== null && <div>{p.freq[rx.rxFreq]}</div>}
                           {Number(rx.cHour) > 0 && <div className="text-indigo-600">{parseSmartText(p.smart_hour, rx.cHour, rx.cHourUnit)}</div>}
                           {Number(rx.cApply) > 0 && <div className="text-indigo-600">{parseSmartText(p.smart_apply, rx.cApply, rx.cApplyUnit)}</div>}
@@ -710,11 +705,11 @@ export default function PharmaLingoApp() {
                     )}
 
                     {(rx.rxTime !== null || Number(rx.cDays) > 0) && (
-                      <div className={`flex items-center gap-4 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box print-bg-white`}>
+                      <div className={"flex items-center gap-4 bg-white rounded-xl shadow-sm border border-slate-100 " + instPadding + " print-box print-bg-white"}>
                         <span className={iconSizeClass}>🍽️</span>
-                        <span className={`font-black text-slate-800 ${instTextSize} leading-tight`}>
+                        <span className={"font-black text-slate-800 " + instTextSize + " leading-tight"}>
                           {rx.rxTime !== null && <div>{p.time[rx.rxTime]}</div>}
-                          {Number(rx.cDays) > 0 && <div className="text-emerald-600 mt-0.5 print-mt-0 print-text-065rem">{parseSmartText(p.smart_days, rx.cDays, rx.cDaysUnit)}</div>}
+                          {Number(rx.cDays) > 0 && <div className="text-emerald-600 mt-1 print-mt-0 print-text-065rem">{parseSmartText(p.smart_days, rx.cDays, rx.cDaysUnit)}</div>}
                         </span>
                       </div>
                     )}
@@ -722,7 +717,7 @@ export default function PharmaLingoApp() {
                     {rx.rxPeriod.length > 0 && (
                       <div className="flex flex-wrap gap-2 print-gap-1 print-box print-bg-transparent print-border-none print-p-0">
                         {rx.rxPeriod.map((i: number) => (
-                          <span key={i} className={`bg-orange-50 text-orange-600 px-4 py-2 rounded-xl font-black border border-orange-200 shadow-sm print-px-1-5 print-py-0-5 print-rounded-md print-border ${isCrowded ? "text-base md:text-lg print-text-07rem" : "text-lg md:text-xl print-text-09rem"}`}>
+                          <span key={i} className={"bg-orange-50 text-orange-600 px-4 py-2 rounded-xl font-black border border-orange-200 shadow-sm print-px-1-5 print-py-0-5 print-rounded-md print-border " + (isCrowded ? "text-base md:text-lg print-text-07rem" : "text-lg md:text-xl print-text-09rem")}>
                             {p.period_icons[i]} {p.period[i]}
                           </span>
                         ))}
@@ -730,9 +725,9 @@ export default function PharmaLingoApp() {
                     )}
 
                     {rx.rxSide !== null && (
-                      <div className={`flex items-center gap-4 bg-white rounded-xl shadow-sm border border-slate-100 print-box print-bg-white print-mt-auto ${instPadding}`}>
+                      <div className={"flex items-center gap-4 bg-white rounded-xl shadow-sm border border-slate-100 print-box print-bg-white print-mt-auto " + instPadding}>
                         <span className={iconSizeClass}>🧭</span>
-                        <span className={`font-black text-purple-600 bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200 print-px-1-5 print-py-0-5 ${isCrowded ? "text-base md:text-lg print-text-07rem" : "text-lg md:text-xl print-text-09rem"}`}>
+                        <span className={"font-black text-purple-600 bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200 print-px-1-5 print-py-0-5 " + (isCrowded ? "text-base md:text-lg print-text-07rem" : "text-lg md:text-xl print-text-09rem")}>
                           {p.side_icons[rx.rxSide]} {p.side[rx.rxSide]}
                         </span>
                       </div>
@@ -753,27 +748,27 @@ export default function PharmaLingoApp() {
                   <h1 className="text-white font-black text-base md:text-xl tracking-widest uppercase print-text-white print-text-1rem leading-tight">Bangkok Pattaya Hospital</h1>
                   <p className="text-red-200 text-xs md:text-sm font-bold mt-0.5 tracking-widest print-text-white print-text-08rem">{p.warn_title}</p>
                 </div>
-                <button onClick={() => speakSpecificWarnings(rx)} className={`w-12 h-12 md:w-14 md:h-14 rounded-full text-xl md:text-2xl shadow-md flex items-center justify-center print-hidden ${isSpeaking ? "bg-white text-red-600 animate-pulse" : "bg-red-800 text-white border border-red-400 hover:bg-red-700"}`}>
+                <button onClick={() => speakSpecificWarnings(rx)} className={"w-12 h-12 md:w-14 md:h-14 rounded-full text-xl md:text-2xl shadow-md flex items-center justify-center print-hidden " + (isSpeaking ? "bg-white text-red-600 animate-pulse" : "bg-red-800 text-white border border-red-400 hover:bg-red-700")}>
                   {isSpeaking ? '🛑' : '🔊'}
                 </button>
               </div>
 
-              <div className={`bg-red-50/60 flex flex-col ${warnGap} p-4 md:p-6 min-h-0 overflow-y-auto custom-scrollbar flex-1 print-overflow-hidden print-bg-transparent print-p-2`}>
+              <div className={"bg-red-50/60 flex flex-col " + warnGap + " p-4 md:p-6 min-h-0 overflow-y-auto custom-scrollbar flex-1 print-overflow-hidden print-bg-transparent print-p-2"}>
                 <h3 className="text-red-600 font-black text-xs md:text-base uppercase tracking-widest border-b-2 border-red-200 pb-2 mb-2 text-center print-text-09rem print-mb-0">⚠️ {p.warn_title}</h3>
                 
-                <div className={`flex flex-col ${warnGap} print-flex-1 print-justify-center`}>
+                <div className={"flex flex-col " + warnGap + " print-flex-1 print-justify-center"}>
                   {(rx.rxWarnings.length > 0 || rx.customWarnings.length > 0) ? (
                     <>
                       {rx.rxWarnings.map((wIdx: number) => (
-                        <div key={wIdx} className={`flex items-center bg-white rounded-xl shadow-sm border border-red-100 print-box print-bg-white ${warnPadding}`}>
-                          <span className={`${warnIconClass} shrink-0 mr-3 print-icon print-mr-1-5`}>{th.warn_icons[wIdx]}</span>
-                          <span className={`text-red-700 font-black leading-snug print-text-md ${warnTextSize}`}>{p.warn[wIdx]}</span>
+                        <div key={wIdx} className={"flex items-center bg-white rounded-xl shadow-sm border border-red-100 print-box print-bg-white " + warnPadding}>
+                          <span className={warnIconClass + " shrink-0 mr-3 print-icon print-mr-1-5"}>{th.warn_icons[wIdx]}</span>
+                          <span className={"text-red-700 font-black leading-snug print-text-md " + warnTextSize}>{p.warn[wIdx]}</span>
                         </div>
                       ))}
                       {rx.customWarnings.map((cw: string, i: number) => (
-                        <div key={i} className={`flex items-center bg-red-100 rounded-xl shadow-sm border border-red-300 print-box print-bg-red-50 ${warnPadding}`}>
-                          <span className={`${warnIconClass} shrink-0 mr-3 print-icon print-mr-1-5`}>🚨</span>
-                          <span className={`text-red-800 font-black leading-snug print-text-md ${warnTextSize}`}>{cw}</span>
+                        <div key={i} className={"flex items-center bg-red-100 rounded-xl shadow-sm border border-red-300 print-box print-bg-red-50 " + warnPadding}>
+                          <span className={warnIconClass + " shrink-0 mr-3 print-icon print-mr-1-5"}>🚨</span>
+                          <span className={"text-red-800 font-black leading-snug print-text-md " + warnTextSize}>{cw}</span>
                         </div>
                       ))}
                     </>
@@ -782,10 +777,9 @@ export default function PharmaLingoApp() {
                   )}
                 </div>
                 
-                {/* Allergy Alert */}
-                <div className={`bg-red-600 text-white rounded-xl flex items-center gap-3 shadow-md border border-red-400 mt-3 print-box print-mt-auto print-bg-red ${isWarnCrowded ? "p-3 print-p-1-5" : "p-4 print-p-2"}`}>
-                   <span className={`shrink-0 print-icon print-text-white ${isWarnCrowded ? "text-3xl md:text-4xl print-text-xl" : "text-4xl md:text-5xl print-text-2xl"}`}>🛑</span>
-                   <span className={`font-black leading-snug print-text-white ${isWarnCrowded ? "text-sm md:text-base print-text-065rem" : "text-base md:text-lg print-text-08rem"}`}>{p.allergy_alert}</span>
+                <div className={"bg-red-600 text-white rounded-xl flex items-center gap-3 shadow-md border border-red-400 mt-3 print-box print-mt-auto print-bg-red " + (isWarnCrowded ? "p-3 print-p-1-5" : "p-4 print-p-2")}>
+                   <span className={"shrink-0 print-icon print-text-white " + (isWarnCrowded ? "text-3xl md:text-4xl print-text-xl" : "text-4xl md:text-5xl print-text-2xl")}>🛑</span>
+                   <span className={"font-black leading-snug print-text-white " + (isWarnCrowded ? "text-sm md:text-base print-text-065rem" : "text-base md:text-lg print-text-08rem")}>{p.allergy_alert}</span>
                 </div>
               </div>
             </div>
@@ -797,13 +791,13 @@ export default function PharmaLingoApp() {
   };
 
   return (
-    <div className="h-[100dvh] w-full bg-[#0f172a] font-sans flex flex-col overflow-hidden relative print-h-auto print-overflow-visible print-force-white-bg">
+    <div className="h-[100dvh] w-full bg-[#0f172a] font-sans flex flex-col overflow-hidden relative print-h-auto print-bg-white print-overflow-visible">
       
       {/* Patient View Area */}
-      <div className={`w-full flex justify-center items-center transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] print-rotate-0 print-block print-force-white-bg ${isSharedLink ? 'rotate-0 ' : 'rotate-180 '} ${isFullscreen ? 'fixed inset-0 z-[100] bg-slate-900 h-full print-relative print-z-0 print-force-white-bg' : 'bg-slate-100 ' + patientHeightClass}`}>
+      <div className={`w-full flex justify-center items-center transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] print-rotate-0 print-block ${isSharedLink ? 'rotate-0 ' : 'rotate-180 '} ${isFullscreen ? 'fixed inset-0 z-[100] bg-slate-900 h-full print-relative print-bg-white print-z-0' : 'bg-slate-100 ' + patientHeightClass}`}>
         
         {dispenseState === 'present' && !activeGuide ? (
-          <div className="w-full h-full flex flex-col bg-slate-900 relative print-h-auto print-block print-w-full print-mx-auto print-force-white-bg" dir={isRTL ? 'rtl' : 'ltr'}>
+          <div className="w-full h-full flex flex-col bg-slate-900 relative print-bg-white print-h-auto print-block print-w-full print-mx-auto" dir={isRTL ? 'rtl' : 'ltr'}>
             <div className="absolute top-6 left-6 bg-blue-600 text-white font-black px-4 py-2 md:px-5 md:py-3 rounded-full shadow-xl border-2 border-blue-400 animate-pulse flex items-center gap-2 z-50 print-hidden pointer-events-auto">
                <span className="text-xl md:text-2xl">📸</span> <span className="text-[10px] md:text-sm">{p.photo_prompt}</span>
             </div>
@@ -859,7 +853,7 @@ export default function PharmaLingoApp() {
                         <div className="flex items-center justify-center gap-4 mb-4">
                            <h2 className="text-2xl md:text-4xl font-black text-slate-800">{activeQuestion ? p[activeQuestion] : ''}</h2>
                            {activeQuestion && (
-                             <button onClick={toggleHistorySpeech} className={`w-12 h-12 rounded-full text-xl shadow-md flex items-center justify-center border ${isSpeaking ? "bg-blue-600 text-white border-blue-400 animate-pulse" : "bg-slate-100 text-slate-500 border-slate-300"}`}>
+                             <button onClick={toggleHistorySpeech} className={"w-12 h-12 rounded-full text-xl shadow-md flex items-center justify-center border " + (isSpeaking ? "bg-blue-600 text-white border-blue-400 animate-pulse" : "bg-slate-100 text-slate-500 border-slate-300")}>
                                {isSpeaking ? '🛑' : '🔊'}
                              </button>
                            )}
@@ -936,7 +930,7 @@ export default function PharmaLingoApp() {
                   <div className="flex flex-col items-center justify-center h-full gap-4 animate-in">
                     <div className="text-cyan-400 font-bold text-lg md:text-xl flex items-center gap-3">
                       <span className="text-3xl animate-pulse">🗣️</span> ถาม: {th[activeQuestion as keyof typeof th]}
-                      <button onClick={toggleHistorySpeech} className={`p-3 rounded-full text-xl shadow-md flex items-center justify-center border active:scale-95 ${isSpeaking ? "bg-indigo-600 text-white border-indigo-400 animate-pulse" : "bg-slate-800 text-slate-300 border-slate-600"}`}>
+                      <button onClick={toggleHistorySpeech} className={"p-3 rounded-full text-xl shadow-md flex items-center justify-center border active:scale-95 " + (isSpeaking ? "bg-indigo-600 text-white border-indigo-400 animate-pulse" : "bg-slate-800 text-slate-300 border-slate-600")}>
                         {isSpeaking ? '🛑' : '🔊'}
                       </button>
                     </div>
@@ -1209,7 +1203,7 @@ export default function PharmaLingoApp() {
         </div>
       )}
 
-      {/* Print CSS - Structure and Layout */}
+      {/* ควบคุมการแสดงผลสำหรับการปริ้นท์ A5 ซ้าย-ขวา เป๊ะๆ */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@700;900&display=swap'); 
         .font-arabic { font-family: 'Noto Sans Arabic', sans-serif !important; } 
@@ -1228,9 +1222,7 @@ export default function PharmaLingoApp() {
         @media print {
           @page { size: A5 landscape; margin: 0; }
           body, html { width: 100vw !important; height: 100vh !important; margin: 0 !important; padding: 0 !important; background: white !important; color: black !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; font-size: 14px !important; }
-          
-          .print-force-white-bg { background-color: white !important; background: white !important; }
-          
+          .print-hidden { display: none !important; }
           .print-rx-layout { display: flex !important; flex-direction: row !important; justify-content: center !important; align-items: stretch !important; gap: 4% !important; width: 100vw !important; height: 100vh !important; overflow: hidden !important; page-break-inside: avoid !important; page-break-after: always !important; padding: 5mm !important; box-sizing: border-box !important; }
           .print-card-wrapper { width: 48% !important; height: 100% !important; padding: 0 !important; }
           .print-rx-card { border: 2px solid #ccc !important; height: 100% !important; border-radius: 10px !important; display: flex !important; flex-direction: column !important; }
