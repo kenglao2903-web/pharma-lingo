@@ -302,7 +302,6 @@ export default function PharmaLingoApp() {
     synthRef.current.speak(utterance);
   };
 
-  // UI Helper Functions (Instant updates, no delay logic)
   const togglePeriod = (index: number) => setRxPeriod(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index].sort());
   const toggleWarning = (index: number) => setRxWarnings(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]);
   const handleNumberInput = (setter: any, value: string) => { if (value === '' || /^\d*\.?\d*$/.test(value)) setter(value); };
@@ -468,7 +467,7 @@ export default function PharmaLingoApp() {
       if (rx.rxTime !== null) parts.push(p.time[rx.rxTime]); 
       if (rx.rxPeriod.length > 0) parts.push(rx.rxPeriod.map(i => p.period[i]).join(', '));
       if (Number(rx.cDays) > 0) parts.push(parseSmartText(p.smart_days, rx.cDays, rx.cDaysUnit));
-      if (rx.rxSide !== null) parts.push(p.side[rx.rxSide]);
+      if (rx.rxSide !== null) parts.push(p.side[rx.rxSide]); // ย้ายข้างมาอยู่ท้ายสุด
     }
     return drugText + indText + (parts.length > 0 ? parts.join(' | ') + '.\n' : '');
   };
@@ -527,10 +526,10 @@ export default function PharmaLingoApp() {
     );
   }
 
-  let patientHeightClass = 'h-[25dvh] p-6'; 
-  if (appMode === 'history' && activeQuestion) patientHeightClass = 'h-[75dvh] p-6'; 
-  if (appMode === 'dispense' && dispenseState === 'input') patientHeightClass = 'h-[8dvh] p-2'; 
-  if (appMode === 'dispense' && dispenseState === 'present') patientHeightClass = 'h-[100dvh]'; 
+  let patientHeightClass = 'h-[25dvh] p-6 print:hidden'; 
+  if (appMode === 'history' && activeQuestion) patientHeightClass = 'h-[75dvh] p-6 print:hidden'; 
+  if (appMode === 'dispense' && dispenseState === 'input') patientHeightClass = 'h-[8dvh] p-2 print:hidden'; 
+  if (appMode === 'dispense' && dispenseState === 'present') patientHeightClass = 'h-[100dvh] print:h-auto'; 
 
   // ==========================================
   // 🪄 Render ฟังก์ชัน: การ์ด Instant Guide (ยาเทคนิคพิเศษ)
@@ -570,7 +569,7 @@ export default function PharmaLingoApp() {
   };
 
   // ==========================================
-  // 🎟️ Render Boarding Pass: จัดหน้าจอ Auto-Height & Centered
+  // 🎟️ Render Boarding Pass: จัดหน้าจอ Auto-Height & รองรับ Print 80mm
   // ==========================================
   const renderBoardingPass = (rx: Prescription, index: number) => {
     const displayDrugEn = rx.drugInput.trim();
@@ -593,27 +592,27 @@ export default function PharmaLingoApp() {
     const warnTextSize = totalW >= 5 ? 'text-sm md:text-base' : 'text-base md:text-lg';
 
     return (
-      <div key={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
+      <div key={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu print:h-auto print:overflow-visible print:break-inside-avoid print:mb-4 print:pb-4" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
         
         {/* 🔵 การ์ดสีฟ้า (วิธีใช้) */}
-        <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center pt-20 pb-20">
-          <div className="w-full max-w-md md:max-w-2xl h-fit max-h-full flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-blue-100 overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-900 to-indigo-900 p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner">
-              <span className="text-3xl opacity-20">🏥</span>
+        <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center pt-20 pb-20 print:p-0 print:min-h-0 print:block print:pt-0 print:pb-0">
+          <div className="w-full max-w-md md:max-w-2xl h-fit max-h-full flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-blue-100 overflow-hidden print:max-w-full print:w-full print:shadow-none print:border-black print:border print:rounded-none">
+            <div className="bg-gradient-to-r from-blue-900 to-indigo-900 p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print:bg-none print:bg-white print:border-b print:border-black">
+              <span className="text-3xl opacity-20 print:opacity-100 print:text-black">🏥</span>
               <div className="flex flex-col items-center">
-                <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase">Bangkok Pattaya Hospital</h1>
-                <p className="text-blue-200 text-xs md:text-sm font-bold mt-1 tracking-widest">{p.rx_title}</p>
+                <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase print:text-black">Bangkok Pattaya Hospital</h1>
+                <p className="text-blue-200 text-xs md:text-sm font-bold mt-1 tracking-widest print:text-black">{p.rx_title}</p>
               </div>
-              <button onClick={() => speakSpecificRx(rx)} className={`w-10 h-10 md:w-12 md:h-12 rounded-full text-lg md:text-xl shadow-md flex items-center justify-center ${isSpeaking ? 'bg-white text-blue-600 animate-pulse' : 'bg-blue-800 text-white border border-blue-400 hover:bg-blue-700'}`}>
+              <button onClick={() => speakSpecificRx(rx)} className={`w-10 h-10 md:w-12 md:h-12 rounded-full text-lg md:text-xl shadow-md flex items-center justify-center print:hidden ${isSpeaking ? 'bg-white text-blue-600 animate-pulse' : 'bg-blue-800 text-white border border-blue-400 hover:bg-blue-700'}`}>
                 {isSpeaking ? '🛑' : '🔊'}
               </button>
             </div>
 
-            <div className={`bg-blue-50/40 flex flex-col ${instGap} p-4 md:p-6 overflow-y-auto custom-scrollbar`}>
+            <div className={`bg-blue-50/40 flex flex-col ${instGap} p-4 md:p-6 overflow-y-auto custom-scrollbar print:bg-transparent print:overflow-visible`}>
               {(displayDrugEn || displayDrugLocal) && (
-                <div className="bg-gradient-to-r from-amber-100 to-yellow-200 border-2 border-yellow-400 rounded-2xl py-4 flex flex-col items-center justify-center shadow-sm text-center">
-                  <span className="text-yellow-800 text-xs md:text-sm font-black uppercase mb-1 tracking-widest">💊 {p.drug_name}</span>
-                  <div className="flex flex-col items-center justify-center w-full px-2 gap-1">
+                <div className="bg-gradient-to-r from-amber-100 to-yellow-200 border-2 border-yellow-400 rounded-2xl py-4 flex flex-col items-center justify-center shadow-sm text-center print:bg-transparent print:border-black print:border-2">
+                  <span className="text-yellow-800 text-xs md:text-sm font-black uppercase mb-1 tracking-widest print:text-black">💊 {p.drug_name}</span>
+                  <div className="flex flex-col items-center justify-center w-full px-2 gap-1 print:text-black">
                     {displayDrugLocal && <FittedText text={displayDrugLocal} isMain={true} />}
                     {displayDrugEn && <FittedText text={displayDrugLocal ? `(${displayDrugEn})` : displayDrugEn} isMain={!displayDrugLocal} />}
                   </div>
@@ -621,22 +620,22 @@ export default function PharmaLingoApp() {
               )}
 
               {(rx.rxIndication !== null || rx.customIndication) && (
-                <div className="bg-blue-100 border-l-8 border-blue-500 rounded-r-xl p-3 flex items-center gap-3 shadow-sm">
+                <div className="bg-blue-100 border-l-8 border-blue-500 rounded-r-xl p-3 flex items-center gap-3 shadow-sm print:bg-transparent print:border-black print:border">
                   <span className="text-3xl shrink-0">🎯</span>
                   <div className="flex flex-col">
-                    <span className="text-blue-600 text-[10px] md:text-xs uppercase font-black">{p.ind_title}</span>
-                    <span className="text-blue-900 font-black text-lg md:text-xl mt-0.5 leading-tight">{rx.rxIndication !== null ? p.indication[rx.rxIndication] : rx.customIndication}</span>
+                    <span className="text-blue-600 text-[10px] md:text-xs uppercase font-black print:text-black">{p.ind_title}</span>
+                    <span className="text-blue-900 font-black text-lg md:text-xl mt-0.5 leading-tight print:text-black">{rx.rxIndication !== null ? p.indication[rx.rxIndication] : rx.customIndication}</span>
                   </div>
                 </div>
               )}
 
               {rx.isTapering ? (
-                <div className="bg-white rounded-xl p-3 shadow-sm border border-slate-100 flex-1">
-                  <div className="text-indigo-600 font-black text-xs md:text-sm uppercase mb-2 text-center border-b pb-1">📉 {p.taper_mode}</div>
-                  <div className="flex-1 overflow-x-auto">
+                <div className="bg-white rounded-xl p-3 shadow-sm border border-slate-100 flex-1 print:border-black print:shadow-none">
+                  <div className="text-indigo-600 font-black text-xs md:text-sm uppercase mb-2 text-center border-b pb-1 print:text-black print:border-black">📉 {p.taper_mode}</div>
+                  <div className="flex-1 overflow-x-auto print:overflow-visible">
                     <table className="w-full text-center border-collapse">
                       <thead>
-                        <tr className="text-slate-400 text-[10px] md:text-xs uppercase border-b-2">
+                        <tr className="text-slate-400 text-[10px] md:text-xs uppercase border-b-2 print:text-black print:border-black">
                           <th className="pb-1 text-left">💊 {p.dosage}</th>
                           <th className="pb-1">🍽️ {p.time_col}</th>
                           <th className="pb-1 text-right">🗓️ {p.duration}</th>
@@ -644,13 +643,13 @@ export default function PharmaLingoApp() {
                       </thead>
                       <tbody>
                         {rx.taperSteps.map((step, idx) => (
-                          <tr key={idx} className="border-b border-slate-50 last:border-0">
-                            <td className="py-2 font-black text-sm md:text-base text-blue-600 text-left">{step.dose} {unitDict[step.unit][patientLang]}</td>
+                          <tr key={idx} className="border-b border-slate-50 last:border-0 print:border-black print:border-b-0">
+                            <td className="py-2 font-black text-sm md:text-base text-blue-600 text-left print:text-black">{step.dose} {unitDict[step.unit][patientLang]}</td>
                             <td className="py-2 text-xs md:text-sm">
-                               <div className="text-teal-600 font-bold">{step.time !== null && p.time[step.time]}</div>
-                               <div className="text-orange-600 font-bold">{step.periods.map(i => `${p.period_icons[i]} ${p.period[i]}`).join(', ')}</div>
+                               <div className="text-teal-600 font-bold print:text-black">{step.time !== null && p.time[step.time]}</div>
+                               <div className="text-orange-600 font-bold print:text-black">{step.periods.map(i => `${p.period_icons[i]} ${p.period[i]}`).join(', ')}</div>
                             </td>
-                            <td className="py-2 font-black text-sm md:text-base text-slate-700 text-right">{step.days} {p.day}</td>
+                            <td className="py-2 font-black text-sm md:text-base text-slate-700 text-right print:text-black">{step.days} {p.day}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -660,31 +659,31 @@ export default function PharmaLingoApp() {
               ) : (
                 <div className={`flex flex-col ${instGap}`}>
                   {(rx.rxDose !== null || Number(rx.cDose) > 0) && (
-                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding}`}>
+                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:border-black print:shadow-none`}>
                       <span className="text-3xl md:text-4xl">💊</span>
-                      <div className={`flex flex-wrap items-center gap-2 font-black text-slate-800 ${instTextSize}`}>
+                      <div className={`flex flex-wrap items-center gap-2 font-black text-slate-800 ${instTextSize} print:text-black`}>
                         <span>{rx.rxDose !== null ? p.dose[rx.rxDose] : parseSmartText(p.smart_dose, rx.cDose, rx.cDoseUnit)}</span>
                       </div>
                     </div>
                   )}
                   
                   {(rx.rxFreq !== null || Number(rx.cHour) > 0 || Number(rx.cApply) > 0) && (
-                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding}`}>
+                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:border-black print:shadow-none`}>
                       <span className="text-3xl md:text-4xl">🔄</span>
-                      <span className={`font-black text-slate-800 ${instTextSize}`}>
+                      <span className={`font-black text-slate-800 ${instTextSize} print:text-black`}>
                         {rx.rxFreq !== null && <div>{p.freq[rx.rxFreq]}</div>}
-                        {Number(rx.cHour) > 0 && <div className="text-indigo-600">{parseSmartText(p.smart_hour, rx.cHour, rx.cHourUnit)}</div>}
-                        {Number(rx.cApply) > 0 && <div className="text-indigo-600">{parseSmartText(p.smart_apply, rx.cApply, rx.cApplyUnit)}</div>}
+                        {Number(rx.cHour) > 0 && <div className="text-indigo-600 print:text-black">{parseSmartText(p.smart_hour, rx.cHour, rx.cHourUnit)}</div>}
+                        {Number(rx.cApply) > 0 && <div className="text-indigo-600 print:text-black">{parseSmartText(p.smart_apply, rx.cApply, rx.cApplyUnit)}</div>}
                       </span>
                     </div>
                   )}
 
                   {(rx.rxTime !== null || Number(rx.cDays) > 0) && (
-                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding}`}>
+                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:border-black print:shadow-none`}>
                       <span className="text-3xl md:text-4xl">🍽️</span>
-                      <span className={`font-black text-slate-800 ${instTextSize}`}>
+                      <span className={`font-black text-slate-800 ${instTextSize} print:text-black`}>
                         {rx.rxTime !== null && <div>{p.time[rx.rxTime]}</div>}
-                        {Number(rx.cDays) > 0 && <div className="text-emerald-600 mt-1">{parseSmartText(p.smart_days, rx.cDays, rx.cDaysUnit)}</div>}
+                        {Number(rx.cDays) > 0 && <div className="text-emerald-600 mt-1 print:text-black">{parseSmartText(p.smart_days, rx.cDays, rx.cDaysUnit)}</div>}
                       </span>
                     </div>
                   )}
@@ -692,7 +691,7 @@ export default function PharmaLingoApp() {
                   {rx.rxPeriod.length > 0 && (
                     <div className="flex flex-wrap gap-2">
                       {rx.rxPeriod.map((i: number) => (
-                        <span key={i} className={`bg-orange-50 text-orange-600 px-3 py-1.5 rounded-lg font-black border border-orange-200 shadow-sm ${instTextSize}`}>
+                        <span key={i} className={`bg-orange-50 text-orange-600 px-3 py-1.5 rounded-lg font-black border border-orange-200 shadow-sm ${instTextSize} print:border-black print:text-black print:bg-transparent print:shadow-none`}>
                           {p.period_icons[i]} {p.period[i]}
                         </span>
                       ))}
@@ -701,16 +700,16 @@ export default function PharmaLingoApp() {
 
                   {/* ข้างอยู่ล่างสุด */}
                   {rx.rxSide !== null && (
-                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding}`}>
+                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:border-black print:shadow-none`}>
                       <span className="text-3xl md:text-4xl">🧭</span>
-                      <span className={`font-black text-purple-600 bg-purple-50 px-3 py-1 rounded-lg border border-purple-200 ${instTextSize}`}>
+                      <span className={`font-black text-purple-600 bg-purple-50 px-3 py-1 rounded-lg border border-purple-200 ${instTextSize} print:bg-transparent print:text-black print:border-black`}>
                         {p.side_icons[rx.rxSide]} {p.side[rx.rxSide]}
                       </span>
                     </div>
                   )}
                 </div>
               )}
-              <div className="text-center pt-2 text-blue-500 font-bold text-sm mt-auto opacity-80 animate-bounce">
+              <div className="text-center pt-2 text-blue-500 font-bold text-sm mt-auto opacity-80 animate-bounce print:hidden">
                   {p.scroll_down}
               </div>
             </div>
@@ -718,86 +717,93 @@ export default function PharmaLingoApp() {
         </div>
 
         {/* 🔴 การ์ดสีแดง (คำเตือน) */}
-        <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center pt-20 pb-20">
-          <div className="w-full max-w-md md:max-w-2xl h-fit max-h-full flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-red-200 overflow-hidden">
-            <div className="bg-gradient-to-r from-red-800 to-rose-900 p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner">
-              <span className="text-3xl opacity-20">⚠️</span>
+        <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center pt-20 pb-20 print:p-0 print:min-h-0 print:block print:pt-4 print:pb-0">
+          <div className="w-full max-w-md md:max-w-2xl h-fit max-h-full flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-red-200 overflow-hidden print:max-w-full print:w-full print:shadow-none print:border-black print:border print:rounded-none">
+            <div className="bg-gradient-to-r from-red-800 to-rose-900 p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print:bg-none print:bg-white print:border-b print:border-black">
+              <span className="text-3xl opacity-20 print:opacity-100 print:text-black">⚠️</span>
               <div className="flex flex-col items-center">
-                <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase">Bangkok Pattaya Hospital</h1>
-                <p className="text-red-200 text-[10px] md:text-xs font-bold mt-1 tracking-widest">{p.warn_title}</p>
+                <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase print:text-black">Bangkok Pattaya Hospital</h1>
+                <p className="text-red-200 text-[10px] md:text-xs font-bold mt-1 tracking-widest print:text-black">{p.warn_title}</p>
               </div>
-              <button onClick={() => speakSpecificWarnings(rx)} className={`w-10 h-10 md:w-12 md:h-12 rounded-full text-lg md:text-xl shadow-md flex items-center justify-center ${isSpeaking ? 'bg-white text-red-600 animate-pulse' : 'bg-red-800 text-white border border-red-400 hover:bg-red-700'}`}>
+              <button onClick={() => speakSpecificWarnings(rx)} className={`w-10 h-10 md:w-12 md:h-12 rounded-full text-lg md:text-xl shadow-md flex items-center justify-center print:hidden ${isSpeaking ? 'bg-white text-red-600 animate-pulse' : 'bg-red-800 text-white border border-red-400 hover:bg-red-700'}`}>
                 {isSpeaking ? '🛑' : '🔊'}
               </button>
             </div>
 
-            <div className={`bg-red-50/60 flex flex-col p-4 md:p-6 overflow-y-auto custom-scrollbar`}>
-              <h3 className="text-red-600 font-black text-sm md:text-base uppercase tracking-widest mb-3 border-b-2 border-red-200 pb-2 text-center">⚠️ {p.warn_title}</h3>
+            <div className={`bg-red-50/60 flex flex-col p-4 md:p-6 overflow-y-auto custom-scrollbar print:bg-transparent print:overflow-visible`}>
+              <h3 className="text-red-600 font-black text-sm md:text-base uppercase tracking-widest mb-3 border-b-2 border-red-200 pb-2 text-center print:text-black print:border-black">⚠️ {p.warn_title}</h3>
               <div className={`flex flex-col ${warnGap}`}>
                 {(rx.rxWarnings.length > 0 || rx.customWarnings.length > 0) ? (
                   <>
                     {rx.rxWarnings.map((wIdx: number) => (
-                      <div key={wIdx} className={`flex items-center bg-white rounded-xl shadow-sm border border-red-100 ${warnPadding}`}>
+                      <div key={wIdx} className={`flex items-center bg-white rounded-xl shadow-sm border border-red-100 ${warnPadding} print:border-black print:shadow-none`}>
                         <span className={`shrink-0 text-3xl md:text-4xl mr-3`}>{th.warn_icons[wIdx]}</span>
-                        <span className={`text-red-700 font-black leading-snug ${warnTextSize}`}>{p.warn[wIdx]}</span>
+                        <span className={`text-red-700 font-black leading-snug ${warnTextSize} print:text-black`}>{p.warn[wIdx]}</span>
                       </div>
                     ))}
                     {rx.customWarnings.map((cw: string, i: number) => (
-                      <div key={i} className={`flex items-center bg-red-100 rounded-xl shadow-sm border border-red-300 ${warnPadding}`}>
+                      <div key={i} className={`flex items-center bg-red-100 rounded-xl shadow-sm border border-red-300 ${warnPadding} print:border-black print:shadow-none print:bg-transparent`}>
                         <span className={`shrink-0 text-3xl md:text-4xl mr-3`}>🚨</span>
-                        <span className={`text-red-800 font-black leading-snug ${warnTextSize}`}>{cw}</span>
+                        <span className={`text-red-800 font-black leading-snug ${warnTextSize} print:text-black`}>{cw}</span>
                       </div>
                     ))}
                   </>
                 ) : (
-                  <div className="flex flex-col items-center justify-center py-6 text-slate-300 opacity-60"><span className="text-5xl mb-2">✅</span><span className="font-black text-sm">No special warnings</span></div>
+                  <div className="flex flex-col items-center justify-center py-6 text-slate-300 opacity-60 print:text-black"><span className="text-5xl mb-2">✅</span><span className="font-black text-sm">No special warnings</span></div>
                 )}
               </div>
-              <div className="mt-4 bg-red-600 text-white rounded-xl p-4 flex items-center gap-3 shadow-md border border-red-400">
-                 <span className="text-3xl shrink-0">🛑</span><span className="font-black text-sm md:text-base leading-snug">{p.allergy_alert}</span>
+              <div className="mt-4 bg-red-600 text-white rounded-xl p-4 flex items-center gap-3 shadow-md border border-red-400 print:bg-transparent print:border-black print:shadow-none print:text-black">
+                 <span className="text-3xl shrink-0">🛑</span><span className="font-black text-sm md:text-base leading-snug print:text-black">{p.allergy_alert}</span>
               </div>
             </div>
           </div>
         </div>
+
+        {/* เส้นประคั่นระหว่างยาแต่ละตัว (แสดงเฉพาะตอนปริ้นท์) */}
+        <div className="hidden print:block w-full border-b-2 border-dashed border-black my-8"></div>
 
       </div>
     );
   };
 
   return (
-    <div className="h-[100dvh] w-full bg-[#0f172a] font-sans flex flex-col overflow-hidden relative">
+    <div className="h-[100dvh] w-full bg-[#0f172a] font-sans flex flex-col overflow-hidden relative print:h-auto print:bg-white print:overflow-visible">
       
-      {/* 👑 ฝั่งคนไข้ (ตีลังกากลับหัว) */}
-      <div className={`w-full flex justify-center items-center rotate-180 transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)]
-        ${isFullscreen ? 'fixed inset-0 z-[100] bg-slate-900 h-full' : `bg-slate-100 ${patientHeightClass}`}`}>
+      {/* 👑 ฝั่งคนไข้ */}
+      <div className={`w-full flex justify-center items-center rotate-180 transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] print:rotate-0 print:block
+        ${isFullscreen ? 'fixed inset-0 z-[100] bg-slate-900 h-full print:relative print:bg-white print:z-0' : `bg-slate-100 ${patientHeightClass}`}`}>
         
         {dispenseState === 'present' && !activeGuide ? (
-          <div className="w-full h-full flex flex-col bg-slate-900 relative" dir={isRTL ? 'rtl' : 'ltr'}>
+          <div className="w-full h-full flex flex-col bg-slate-900 relative print:bg-white print:h-auto print:block print:w-full print:mx-auto" dir={isRTL ? 'rtl' : 'ltr'}>
             
-            {/* 📸 Top Alert Bar (ลอยอยู่ด้านบนสุด ตรงกลาง) */}
-            <div className="absolute top-0 left-0 w-full pt-6 pb-2 flex flex-col items-center z-50 pointer-events-none">
+            {/* 📸 Top Alert Bar (ซ่อนตอนปริ้นท์) */}
+            <div className="absolute top-0 left-0 w-full pt-6 pb-2 flex flex-col items-center z-50 pointer-events-none print:hidden">
                <div className="bg-blue-600 text-white font-black px-4 py-2 rounded-full shadow-lg border-2 border-blue-400 animate-pulse flex items-center gap-2 pointer-events-auto">
                  <span className="text-lg md:text-xl">📸</span> <span className="text-xs md:text-sm">{p.photo_prompt}</span>
                </div>
             </div>
 
-            {/* ปุ่มปิด */}
-            <div className="absolute top-6 right-4 flex items-center z-50 pointer-events-none">
-              <button onClick={() => { setIsFullscreen(false); setDispenseState('input'); if(synthRef.current) synthRef.current.cancel(); setIsSpeaking(false); }} className="bg-red-500 hover:bg-red-400 text-white w-10 h-10 rounded-full text-xl font-black shadow-md flex items-center justify-center active:scale-95 border border-red-300 pointer-events-auto">
+            {/* ปุ่มปิดและปุ่มปริ้นท์ (มุมขวาบน - ซ่อนตอนปริ้นท์) */}
+            <div className="absolute top-6 right-4 flex items-center gap-2 z-50 pointer-events-none print:hidden">
+              <button onClick={() => window.print()} className="bg-emerald-500 hover:bg-emerald-400 text-white w-10 h-10 rounded-full text-xl font-black shadow-md flex items-center justify-center border border-emerald-300 pointer-events-auto">
+                 🖨️
+              </button>
+              <button onClick={() => { setIsFullscreen(false); setDispenseState('input'); if(synthRef.current) synthRef.current.cancel(); setIsSpeaking(false); }} className="bg-red-500 hover:bg-red-400 text-white w-10 h-10 rounded-full text-xl font-black shadow-md flex items-center justify-center border border-red-300 pointer-events-auto">
                  ✕
               </button>
             </div>
 
-            {/* ตัวเลขจำนวนยารวมที่มุมซ้ายล่าง */}
+            {/* ตัวเลขจำนวนยารวมที่มุมซ้ายล่าง (ซ่อนตอนปริ้นท์) */}
             {cart.length > 1 && (
-              <div className="absolute bottom-6 left-6 bg-slate-800/80 text-white font-black text-2xl w-12 h-12 flex items-center justify-center rounded-full border-2 border-slate-600 shadow-2xl z-50 pointer-events-none">
+              <div className="absolute bottom-6 left-6 bg-slate-800/80 text-white font-black text-2xl w-12 h-12 flex items-center justify-center rounded-full border-2 border-slate-600 shadow-2xl z-50 pointer-events-none print:hidden">
                 {cart.length}
               </div>
             )}
 
-            {/* Slider แนวนอนแบบไม่หน่วง ไม่มี Observer */}
-            <div className="flex-1 w-full h-full relative">
-               <div id="horizontal-scroll-container" className="w-full h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory flex hide-scrollbar scroll-smooth transform-gpu" style={{ WebkitOverflowScrolling: 'touch' }}>
+            {/* Slider แนวนอน -> กลายเป็นแนวตั้งตอนปริ้นท์ */}
+            <div className="flex-1 w-full h-full relative print:h-auto print:overflow-visible">
+               {cart.length > 1 && <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-slate-400 text-[10px] font-bold uppercase tracking-widest animate-bounce z-50 pointer-events-none bg-slate-900/80 px-4 py-1.5 rounded-full border border-slate-700 print:hidden">{p.swipe_hint}</div>}
+               <div id="horizontal-scroll-container" className="w-full h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory flex hide-scrollbar scroll-smooth transform-gpu print:flex-col print:overflow-visible print:h-auto print:snap-none" style={{ WebkitOverflowScrolling: 'touch' }}>
                    {cart.length > 0 ? (
                      cart.map((rx, idx) => renderBoardingPass(rx, idx))
                    ) : (
@@ -813,12 +819,12 @@ export default function PharmaLingoApp() {
         ) : (
           <div dir={isRTL ? 'rtl' : 'ltr'} 
             className={`relative transition-all duration-500 flex flex-col w-full h-full bg-white rounded-[2rem] shadow-xl overflow-hidden
-            ${activeQuestion || activeGuide ? 'opacity-100 p-4 md:p-6 pt-12 md:pt-10' : 'opacity-0'}`}>
+            ${activeQuestion || activeGuide ? 'opacity-100 p-4 md:p-6 pt-12 md:pt-10' : 'opacity-0'} print:hidden`}>
             
             {activeGuide ? (
               <div className="w-full h-full flex flex-col relative">
                 <div className="w-full shrink-0 flex items-center justify-end z-50 absolute top-0 right-0 pointer-events-none">
-                  <button onClick={() => { setIsFullscreen(false); setDispenseState('input'); setActiveGuide(null); if(synthRef.current) synthRef.current.cancel(); setIsSpeaking(false); }} className="bg-red-500 hover:bg-red-400 text-white w-10 h-10 md:w-12 md:h-12 rounded-full text-xl font-black shadow-md flex items-center justify-center active:scale-95 border border-red-300 pointer-events-auto">
+                  <button onClick={() => { setIsFullscreen(false); setDispenseState('input'); setActiveGuide(null); if(synthRef.current) synthRef.current.cancel(); setIsSpeaking(false); }} className="bg-red-500 hover:bg-red-400 text-white w-10 h-10 md:w-12 md:h-12 rounded-full text-xl font-black shadow-md flex items-center justify-center border border-red-300 pointer-events-auto">
                     ✕
                   </button>
                 </div>
@@ -866,10 +872,10 @@ export default function PharmaLingoApp() {
                       <div className="w-full max-w-xl mx-auto mt-2">
                         {!boolAnswer ? (
                           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                            <button onClick={() => setBoolAnswer('yes')} className="flex-1 py-4 md:py-6 rounded-[1.5rem] text-xl md:text-2xl font-black bg-red-50 text-red-600 border-2 border-red-200 shadow-sm active:scale-95">🚨 {p.yes}</button>
-                            <button onClick={() => setBoolAnswer('no')} className="flex-1 py-4 md:py-6 rounded-[1.5rem] text-xl md:text-2xl font-black bg-green-50 text-green-600 border-2 border-green-200 shadow-sm active:scale-95">✅ {p.no}</button>
+                            <button onClick={() => setBoolAnswer('yes')} className="flex-1 py-4 md:py-6 rounded-[1.5rem] text-xl md:text-2xl font-black bg-red-50 text-red-600 border-2 border-red-200 shadow-sm">🚨 {p.yes}</button>
+                            <button onClick={() => setBoolAnswer('no')} className="flex-1 py-4 md:py-6 rounded-[1.5rem] text-xl md:text-2xl font-black bg-green-50 text-green-600 border-2 border-green-200 shadow-sm">✅ {p.no}</button>
                             {activeQuestion === 'q_allergy' && (
-                              <button onClick={() => setBoolAnswer('dont_know')} className="flex-1 py-4 md:py-6 rounded-[1.5rem] text-xl md:text-2xl font-black bg-yellow-50 text-yellow-700 border-2 border-yellow-300 shadow-sm active:scale-95">🤷‍♂️ {p.dont_know}</button>
+                              <button onClick={() => setBoolAnswer('dont_know')} className="flex-1 py-4 md:py-6 rounded-[1.5rem] text-xl md:text-2xl font-black bg-yellow-50 text-yellow-700 border-2 border-yellow-300 shadow-sm">🤷‍♂️ {p.dont_know}</button>
                             )}
                           </div>
                         ) : boolAnswer === 'yes' ? (
@@ -890,9 +896,9 @@ export default function PharmaLingoApp() {
         )}
       </div>
 
-      {/* 👨‍⚕️ ฝั่งเภสัชกร */}
+      {/* 👨‍⚕️ ฝั่งเภสัชกร (ซ่อนตอนปริ้นท์) */}
       {!isFullscreen && (
-        <div className="flex-1 bg-[#0f172a] rounded-t-[2.5rem] shadow-[0_-20px_50px_rgba(0,0,0,0.5)] relative z-10 flex flex-col min-h-0 border-t border-slate-700/50">
+        <div className="flex-1 bg-[#0f172a] rounded-t-[2.5rem] shadow-[0_-20px_50px_rgba(0,0,0,0.5)] relative z-10 flex flex-col min-h-0 border-t border-slate-700/50 print:hidden">
           
           <div className="flex justify-between items-center p-4 md:p-6 pb-2 shrink-0">
             <div className="flex bg-slate-800 rounded-xl p-1 border border-slate-700">
@@ -930,14 +936,14 @@ export default function PharmaLingoApp() {
                   <div className="flex flex-col gap-3 animate-in">
                     <div className="grid grid-cols-3 gap-3 mt-2">
                       {[{ id: 'q_name', icon: '👤', text: th.q_name, bg: 'bg-cyan-600' }, { id: 'q_dob', icon: '📅', text: th.q_dob, bg: 'bg-blue-600' }, { id: 'q_allergy', icon: '🚫', text: th.q_allergy, bg: 'bg-red-600' }].map(q => (
-                        <button key={q.id} onClick={() => askQuestion(q.id)} className={`flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border min-h-[100px] shadow-sm active:scale-95 ${activeQuestion === q.id ? `${q.bg} border-transparent text-white ring-2 ring-white/20` : `bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700`}`}>
+                        <button key={q.id} onClick={() => askQuestion(q.id)} className={`flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border min-h-[100px] shadow-sm ${activeQuestion === q.id ? `${q.bg} border-transparent text-white ring-2 ring-white/20` : `bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700`}`}>
                           <div className="text-3xl md:text-4xl">{q.icon}</div><span className="font-black text-xs md:text-sm text-center leading-tight">{q.text}</span>
                         </button>
                       ))}
                     </div>
                     <div className="grid grid-cols-2 gap-3 mt-1">
                       {[{ id: 'q_inj', icon: '💉', text: th.q_inj, bg: 'bg-purple-600' }, { id: 'q_med', icon: '💊', text: th.q_med, bg: 'bg-pink-600' }].map(q => (
-                        <button key={q.id} onClick={() => askQuestion(q.id)} className={`flex items-center justify-center gap-3 p-4 rounded-xl border shadow-sm active:scale-95 ${activeQuestion === q.id ? `${q.bg} border-transparent text-white ring-2 ring-white/20` : `bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700`}`}>
+                        <button key={q.id} onClick={() => askQuestion(q.id)} className={`flex items-center justify-center gap-3 p-4 rounded-xl border shadow-sm ${activeQuestion === q.id ? `${q.bg} border-transparent text-white ring-2 ring-white/20` : `bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700`}`}>
                           <div className="text-2xl md:text-3xl">{q.icon}</div><span className="font-black text-xs md:text-sm">{q.text}</span>
                         </button>
                       ))}
@@ -954,9 +960,8 @@ export default function PharmaLingoApp() {
                   <div className="flex flex-col gap-2">
                     <span className="text-blue-300 text-[10px] md:text-xs font-black uppercase tracking-widest">💊 {th.drug_name}</span>
                     <div className="flex gap-2">
-                      {/* แก้ซูม: บังคับ text-[16px] ในทุก input */}
                       <input type="text" value={drugInput} onChange={(e) => setDrugInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && translateDrugName()} placeholder="พิมพ์ชื่อยา..." className="flex-1 bg-slate-900/80 border border-slate-700 text-white rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 font-bold text-[16px] md:text-lg" />
-                      <button onClick={translateDrugName} disabled={!drugInput.trim() || isTranslatingDrug} className="bg-blue-600 text-white text-xs md:text-sm font-black px-4 py-2.5 rounded-xl disabled:opacity-50 active:scale-95">
+                      <button onClick={translateDrugName} disabled={!drugInput.trim() || isTranslatingDrug} className="bg-blue-600 text-white text-xs md:text-sm font-black px-4 py-2.5 rounded-xl disabled:opacity-50">
                         {isTranslatingDrug ? '⏳' : 'ตกลง'}
                       </button>
                     </div>
@@ -967,15 +972,14 @@ export default function PharmaLingoApp() {
                     <span className="text-blue-300 text-[10px] md:text-xs font-black uppercase tracking-widest">🎯 {th.ind_title}</span>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                       {th.indication.map((ind: string, i: number) => (
-                        <button key={i} onClick={() => { setRxIndication(rxIndication === i ? null : i); setCustomIndication(''); }} className={`px-2 py-2 rounded-lg text-[10px] md:text-xs font-black border flex items-center gap-1 active:scale-95 ${rxIndication === i ? 'bg-blue-600 border-blue-400 text-white' : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700'}`}>
+                        <button key={i} onClick={() => { setRxIndication(rxIndication === i ? null : i); setCustomIndication(''); }} className={`px-2 py-2 rounded-lg text-[10px] md:text-xs font-black border flex items-center gap-1 ${rxIndication === i ? 'bg-blue-600 border-blue-400 text-white' : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700'}`}>
                           <span className="text-sm md:text-base">{th.ind_icons[i]}</span> <span className="line-clamp-1">{ind}</span>
                         </button>
                       ))}
                     </div>
                     <div className="flex gap-2 mt-1">
-                      {/* แก้ซูม: บังคับ text-[16px] */}
                       <input type="text" value={indInput} onChange={(e) => setIndInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && translateIndication()} placeholder="ระบุข้อบ่งใช้อื่นๆ..." className="flex-1 bg-slate-900/80 border border-slate-700 text-white rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 text-[16px] md:text-sm" />
-                      <button onClick={translateIndication} disabled={!indInput.trim() || isTranslatingInd} className="bg-blue-600 text-white text-xs md:text-sm font-black px-4 py-2.5 rounded-xl disabled:opacity-50 active:scale-95">แปล</button>
+                      <button onClick={translateIndication} disabled={!indInput.trim() || isTranslatingInd} className="bg-blue-600 text-white text-xs md:text-sm font-black px-4 py-2.5 rounded-xl disabled:opacity-50">แปล</button>
                     </div>
                     {customIndication && <span className="text-emerald-400 text-[10px] md:text-xs font-black ml-1">✅ แปลแล้ว: {customIndication}</span>}
                   </div>
@@ -1001,17 +1005,17 @@ export default function PharmaLingoApp() {
                             <div className="flex-1 flex flex-col gap-1">
                                <span className="text-[9px] md:text-[10px] text-slate-500 uppercase font-bold">ระยะเวลา (วัน)</span>
                                <div className="flex bg-slate-800 p-1 rounded-lg border border-slate-600">
-                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].days = Math.max(1, ns[idx].days-1); setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-slate-700 text-white rounded font-black active:scale-90">-</button>
+                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].days = Math.max(1, ns[idx].days-1); setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-slate-700 text-white rounded font-black">-</button>
                                  <input type="text" value={step.days} onChange={(e) => { const val = e.target.value; if (/^\d*$/.test(val)) { const ns = [...taperSteps]; ns[idx].days = Number(val); setTaperSteps(ns); } }} className="flex-1 w-6 md:w-8 text-center font-black text-white bg-transparent outline-none text-[16px]" />
-                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].days++; setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-indigo-600 text-white rounded font-black active:scale-90">+</button>
+                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].days++; setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-indigo-600 text-white rounded font-black">+</button>
                                </div>
                             </div>
                             <div className="flex-1 flex flex-col gap-1">
                                <span className="text-[9px] md:text-[10px] text-slate-500 uppercase font-bold">ปริมาณ (เม็ด)</span>
                                <div className="flex bg-slate-800 p-1 rounded-lg border border-slate-600">
-                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].dose = Math.max(0.5, Number(ns[idx].dose)-0.5); setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-slate-700 text-white rounded font-black active:scale-90">-</button>
+                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].dose = Math.max(0.5, Number(ns[idx].dose)-0.5); setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-slate-700 text-white rounded font-black">-</button>
                                  <input type="text" value={step.dose} onChange={(e) => { const val = e.target.value; if (/^\d*\.?\d*$/.test(val)) { const ns = [...taperSteps]; ns[idx].dose = val; setTaperSteps(ns); } }} className="flex-1 w-6 md:w-8 text-center font-black text-white bg-transparent outline-none text-[16px]" />
-                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].dose = Number(ns[idx].dose) + 0.5; setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-indigo-600 text-white rounded font-black active:scale-90">+</button>
+                                 <button onClick={() => { const ns = [...taperSteps]; ns[idx].dose = Number(ns[idx].dose) + 0.5; setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-indigo-600 text-white rounded font-black">+</button>
                                </div>
                             </div>
                          </div>
@@ -1019,7 +1023,7 @@ export default function PharmaLingoApp() {
                             <span className="text-[9px] md:text-[10px] text-slate-500 uppercase font-bold">เวลาอาหาร</span>
                             <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
                               {th.time.map((tFood: string, tIdx: number) => (
-                                <button key={tIdx} onClick={() => { const ns = [...taperSteps]; ns[idx].time = ns[idx].time === tIdx ? null : tIdx; setTaperSteps(ns); }} className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-black border active:scale-95 ${step.time === tIdx ? 'bg-teal-600 border-teal-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700'}`}>🍽️ {tFood}</button>
+                                <button key={tIdx} onClick={() => { const ns = [...taperSteps]; ns[idx].time = ns[idx].time === tIdx ? null : tIdx; setTaperSteps(ns); }} className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-black border ${step.time === tIdx ? 'bg-teal-600 border-teal-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700'}`}>🍽️ {tFood}</button>
                               ))}
                             </div>
                          </div>
@@ -1027,7 +1031,7 @@ export default function PharmaLingoApp() {
                             <span className="text-[9px] md:text-[10px] text-slate-500 uppercase font-bold">ช่วงเวลา</span>
                             <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
                               {th.period.map((pr: string, pIdx: number) => (
-                                <button key={pIdx} onClick={() => { const ns = [...taperSteps]; if(ns[idx].periods.includes(pIdx)) ns[idx].periods = ns[idx].periods.filter(i => i !== pIdx); else ns[idx].periods.push(pIdx); ns[idx].periods.sort(); setTaperSteps(ns); }} className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-black border active:scale-95 ${step.periods.includes(pIdx) ? 'bg-orange-500 border-orange-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700'}`}>{th.period_icons[pIdx]} {pr}</button>
+                                <button key={pIdx} onClick={() => { const ns = [...taperSteps]; if(ns[idx].periods.includes(pIdx)) ns[idx].periods = ns[idx].periods.filter(i => i !== pIdx); else ns[idx].periods.push(pIdx); ns[idx].periods.sort(); setTaperSteps(ns); }} className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-black border ${step.periods.includes(pIdx) ? 'bg-orange-500 border-orange-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700'}`}>{th.period_icons[pIdx]} {pr}</button>
                               ))}
                             </div>
                          </div>
@@ -1040,7 +1044,7 @@ export default function PharmaLingoApp() {
                     <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar items-center">
                       <span className="text-slate-500 text-[10px] md:text-xs font-black uppercase w-12 shrink-0">ปริมาณ:</span>
                       {th.dose.map((item: string, i: number) => (
-                        <button key={i} onClick={() => { setRxDose(rxDose === i ? null : i); setCDose(0); }} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 ${rxDose === i ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
+                        <button key={i} onClick={() => { setRxDose(rxDose === i ? null : i); setCDose(0); }} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border ${rxDose === i ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           {i === 0 ? '🌗' : i > 4 ? (i > 6 ? '💧' : '💨') : '💊'} {item}
                         </button>
                       ))}
@@ -1049,7 +1053,7 @@ export default function PharmaLingoApp() {
                     <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar items-center">
                       <span className="text-slate-500 text-[10px] md:text-xs font-black uppercase w-12 shrink-0">ความถี่:</span>
                       {th.freq.map((item: string, i: number) => (
-                        <button key={i} onClick={() => { setRxFreq(rxFreq === i ? null : i); setCHour(0); setCApply(0); }} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 ${rxFreq === i ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
+                        <button key={i} onClick={() => { setRxFreq(rxFreq === i ? null : i); setCHour(0); setCApply(0); }} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border ${rxFreq === i ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           🔄 {item}
                         </button>
                       ))}
@@ -1057,7 +1061,7 @@ export default function PharmaLingoApp() {
                     <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar items-center">
                       <span className="text-slate-500 text-[10px] md:text-xs font-black uppercase w-12 shrink-0">อาหาร:</span>
                       {th.time.map((item: string, i: number) => (
-                        <button key={i} onClick={() => setRxTime(rxTime === i ? null : i)} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 ${rxTime === i ? 'bg-teal-600 border-teal-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
+                        <button key={i} onClick={() => setRxTime(rxTime === i ? null : i)} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border ${rxTime === i ? 'bg-teal-600 border-teal-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           🍽️ {item}
                         </button>
                       ))}
@@ -1065,17 +1069,16 @@ export default function PharmaLingoApp() {
                     <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar items-center">
                       <span className="text-slate-500 text-[10px] md:text-xs font-black uppercase w-12 shrink-0">เวลา:</span>
                       {th.period.map((pTime: string, i: number) => (
-                        <button key={i} onClick={() => togglePeriod(i)} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 ${rxPeriod.includes(i) ? 'bg-orange-500 border-orange-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
+                        <button key={i} onClick={() => togglePeriod(i)} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border ${rxPeriod.includes(i) ? 'bg-orange-500 border-orange-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           {th.period_icons[i]} {pTime}
                         </button>
                       ))}
                     </div>
 
-                    {/* เอาไว้ข้างล่างสุด */}
                     <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar items-center">
                       <span className="text-slate-500 text-[10px] md:text-xs font-black uppercase w-12 shrink-0">ข้าง:</span>
                       {th.side.map((item: string, i: number) => (
-                        <button key={i} onClick={() => setRxSide(rxSide === i ? null : i)} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 ${rxSide === i ? 'bg-purple-600 border-purple-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
+                        <button key={i} onClick={() => setRxSide(rxSide === i ? null : i)} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border ${rxSide === i ? 'bg-purple-600 border-purple-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           {th.side_icons[i]} {item}
                         </button>
                       ))}
@@ -1101,10 +1104,10 @@ export default function PharmaLingoApp() {
                             <span className="text-slate-300 text-[10px] md:text-xs font-black flex items-center gap-1">{input.icon} {input.label}</span>
                             <div className="flex flex-col xl:flex-row items-center gap-2 w-full">
                               <div className="flex items-center bg-slate-800 rounded-lg p-1 w-full justify-between">
-                                <button onClick={() => input.setVal(Math.max(0, Number(input.val) - input.step))} className="w-8 h-8 rounded bg-slate-700 text-white font-black text-lg active:scale-90">-</button>
+                                <button onClick={() => input.setVal(Math.max(0, Number(input.val) - input.step))} className="w-8 h-8 rounded bg-slate-700 text-white font-black text-lg">-</button>
                                 {/* แก้ซูม: บังคับ text-[16px] */}
                                 <input type="text" value={input.val} onChange={(e) => handleNumberInput(input.setVal, e.target.value)} className="font-black text-xl text-cyan-400 w-10 text-center bg-transparent outline-none text-[16px]" />
-                                <button onClick={() => { input.setVal(Number(input.val) + input.step); input.reset(); }} className="w-8 h-8 rounded bg-cyan-700 text-white font-black text-lg active:scale-90">+</button>
+                                <button onClick={() => { input.setVal(Number(input.val) + input.step); input.reset(); }} className="w-8 h-8 rounded bg-cyan-700 text-white font-black text-lg">+</button>
                               </div>
                               <select value={input.unit} onChange={(e) => input.setUnit(e.target.value)} className="bg-slate-800 text-slate-300 border border-slate-600 text-[16px] font-bold rounded-lg w-full xl:w-auto py-2 px-2 outline-none">
                                 {input.uOptions.map(u => <option key={u} value={u}>{unitDict[u].th}</option>)}
@@ -1121,7 +1124,7 @@ export default function PharmaLingoApp() {
                   <span className="text-red-400 text-[10px] md:text-xs font-black uppercase tracking-widest flex items-center gap-2">⚠️ คำเตือน (Warnings)</span>
                   <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
                     {th.warn.map((w: string, i: number) => (
-                      <button key={i} onClick={() => toggleWarning(i)} className={`px-2 py-3 rounded-xl text-[9px] md:text-[10px] font-black border flex items-center gap-2 active:scale-95 ${rxWarnings.includes(i) ? 'bg-red-500 border-red-400 text-white shadow-sm' : 'bg-slate-900 border-slate-700 text-slate-400 hover:bg-slate-800'}`}>
+                      <button key={i} onClick={() => toggleWarning(i)} className={`px-2 py-3 rounded-xl text-[9px] md:text-[10px] font-black border flex items-center gap-2 ${rxWarnings.includes(i) ? 'bg-red-500 border-red-400 text-white shadow-sm' : 'bg-slate-900 border-slate-700 text-slate-400 hover:bg-slate-800'}`}>
                         <span className="text-lg shrink-0">{th.warn_icons[i]}</span><span className="text-left line-clamp-2">{w}</span>
                       </button>
                     ))}
@@ -1129,13 +1132,13 @@ export default function PharmaLingoApp() {
                   <div className="flex gap-2 border-t border-red-900/30 pt-3">
                     {/* แก้ซูม: บังคับ text-[16px] */}
                     <input type="text" value={warnInput} onChange={(e) => setWarnInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && translateWarning()} placeholder="พิมพ์คำเตือนพิเศษ..." className="flex-1 bg-slate-900/80 border border-slate-700 text-white rounded-xl px-4 py-2.5 outline-none focus:border-red-500 font-bold text-[16px] md:text-sm" />
-                    <button onClick={translateWarning} disabled={!warnInput.trim() || isTranslatingWarn} className="bg-red-600 text-white text-xs md:text-sm font-black px-4 py-2.5 rounded-xl disabled:opacity-50 active:scale-95">เพิ่ม</button>
+                    <button onClick={translateWarning} disabled={!warnInput.trim() || isTranslatingWarn} className="bg-red-600 text-white text-xs md:text-sm font-black px-4 py-2.5 rounded-xl disabled:opacity-50">เพิ่ม</button>
                   </div>
                   {customWarnings.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-2">
                       {customWarnings.map((cw, i) => (
                         <div key={i} className="bg-red-500/20 text-red-200 border border-red-500/50 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-2">
-                          🚨 {cw} <button onClick={() => removeCustomWarning(i)} className="text-red-400 font-black text-lg">&times;</button>
+                          🚨 {cw} <button onClick={() => removeCustomWarning(i)} className="text-red-400 font-black text-lg hover:text-red-300">&times;</button>
                         </div>
                       ))}
                     </div>
@@ -1151,7 +1154,7 @@ export default function PharmaLingoApp() {
                   <h2 className="text-teal-300 font-black text-sm md:text-base mb-4 flex items-center gap-2">🪄 เลือกอุปกรณ์เทคนิคพิเศษ</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                     {specialData.map(item => (
-                      <button key={item.id} onClick={() => { setActiveGuide(item); setIsFullscreen(true); }} className="bg-slate-800 border border-slate-700 hover:border-teal-400 hover:bg-slate-700 rounded-xl p-4 flex items-center gap-4 shadow-sm active:scale-95">
+                      <button key={item.id} onClick={() => { setActiveGuide(item); setIsFullscreen(true); }} className="bg-slate-800 border border-slate-700 hover:border-teal-400 hover:bg-slate-700 rounded-xl p-4 flex items-center gap-4 shadow-sm">
                         <span className="text-3xl md:text-4xl">{item.icon}</span><span className="text-slate-200 font-black text-xs md:text-sm text-left">{item.title.th}</span>
                       </button>
                     ))}
@@ -1163,10 +1166,10 @@ export default function PharmaLingoApp() {
 
           {appMode === 'dispense' && dispenseState === 'input' && (
             <div className="absolute bottom-0 left-0 w-full p-3 md:p-4 bg-slate-900/95 backdrop-blur-md border-t border-slate-700 flex flex-col md:flex-row items-center gap-3 z-50">
-              <button onClick={addToCart} disabled={!drugInput && rxIndication === null} className="w-full md:w-auto bg-slate-800 border border-slate-600 text-white font-black px-6 py-3 md:py-4 rounded-xl disabled:opacity-30 text-xs md:text-sm active:scale-95">
+              <button onClick={addToCart} disabled={!drugInput && rxIndication === null} className="w-full md:w-auto bg-slate-800 border border-slate-600 text-white font-black px-6 py-3 md:py-4 rounded-xl disabled:opacity-30 text-xs md:text-sm">
                 {th.add_to_cart}
               </button>
-              <button onClick={showBoardingPass} disabled={cart.length === 0 && !drugInput} className="flex-1 w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black text-sm md:text-base py-3 md:py-4 rounded-xl shadow-md disabled:opacity-30 border border-indigo-400/50 active:scale-95">
+              <button onClick={showBoardingPass} disabled={cart.length === 0 && !drugInput} className="flex-1 w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black text-sm md:text-base py-3 md:py-4 rounded-xl shadow-md disabled:opacity-30 border border-indigo-400/50">
                 🚀 โชว์การ์ดทั้งหมด {cart.length > 0 ? `(${cart.length} ${th.items})` : ''}
               </button>
             </div>
@@ -1177,7 +1180,7 @@ export default function PharmaLingoApp() {
               <div className="flex gap-3 items-center">
                 {/* แก้ซูม: บังคับ text-[16px] */}
                 <input type="text" value={customText} onChange={(e) => setCustomText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleTranslate()} placeholder="พิมพ์สื่อสารทั่วไป..." className="flex-1 bg-slate-900 border border-slate-700 text-white rounded-xl px-4 py-3 outline-none font-bold text-[16px] md:text-sm" />
-                <button onClick={handleTranslate} disabled={!customText.trim() || isTranslating} className="bg-cyan-600 text-white font-black px-6 py-3 rounded-xl disabled:opacity-50 text-xs md:text-sm border border-cyan-400/50 active:scale-95">
+                <button onClick={handleTranslate} disabled={!customText.trim() || isTranslating} className="bg-cyan-600 text-white font-black px-6 py-3 rounded-xl disabled:opacity-50 text-xs md:text-sm border border-cyan-400/50">
                   ส่ง 💬
                 </button>
               </div>
@@ -1185,7 +1188,36 @@ export default function PharmaLingoApp() {
           )}
         </div>
       )}
-      <style jsx global>{`@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@700;900&display=swap'); .font-arabic { font-family: 'Noto Sans Arabic', sans-serif !important; } .pb-safe { padding-bottom: env(safe-area-inset-bottom, 24px); } .animate-in { animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; } .fade-in { animation: fadeIn 0.3s ease-in-out forwards; } @keyframes popIn { from { opacity: 0; transform: translateY(15px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } } @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } .hide-scrollbar::-webkit-scrollbar { display: none; } .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } .custom-scrollbar::-webkit-scrollbar { width: 6px; } .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; } .custom-scrollbar::-webkit-scrollbar-track { background: transparent; } select { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>"); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; }`}</style>
+
+      {/* ควบคุมการแสดงผลสำหรับการปริ้นท์โดยเฉพาะ ด้วยวิธีที่ Vercel ไม่บัคแน่นอน */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@700;900&display=swap'); 
+        .font-arabic { font-family: 'Noto Sans Arabic', sans-serif !important; } 
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 24px); } 
+        .animate-in { animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; } 
+        .fade-in { animation: fadeIn 0.3s ease-in-out forwards; } 
+        @keyframes popIn { from { opacity: 0; transform: translateY(15px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } } 
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } 
+        .hide-scrollbar::-webkit-scrollbar { display: none; } 
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } 
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; } 
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; } 
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; } 
+        select { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>"); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; }
+        
+        /* สไตล์พิเศษสำหรับเครื่องปริ้นเตอร์ Thermal 80mm */
+        @media print {
+          @page { margin: 0; }
+          body { 
+            width: 80mm !important; /* ล็อคความกว้างให้พอดีกระดาษสลิป */
+            margin: 0 auto !important; 
+            background: white !important; 
+            color: black !important; 
+            -webkit-print-color-adjust: exact !important; 
+            print-color-adjust: exact !important;
+          }
+        }
+      `}} />
     </div>
   );
 }
