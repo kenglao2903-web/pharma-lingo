@@ -26,7 +26,7 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
 
   return (
     <div ref={containerRef} className="w-full flex items-center justify-center overflow-visible px-2 relative z-10 print:overflow-visible">
-      <span ref={textRef} className={`inline-block font-black whitespace-nowrap origin-center ${isMain ? 'text-4xl md:text-5xl lg:text-6xl text-slate-900 drop-shadow-sm' : 'text-xl md:text-3xl text-yellow-900 opacity-80'}`} style={{ transform: `scale(${scale})` }}>
+      <span ref={textRef} className={`inline-block font-black whitespace-nowrap origin-center ${isMain ? 'text-4xl md:text-5xl lg:text-6xl text-slate-900 drop-shadow-sm print:text-2xl' : 'text-xl md:text-3xl text-yellow-900 opacity-80 print:text-lg'}`} style={{ transform: `scale(${scale})` }}>
         {text.toUpperCase()}
       </span>
     </div>
@@ -195,9 +195,11 @@ type Prescription = {
 };
 
 const LANGUAGES = [
-  { code: 'en', flag: '🇬🇧', label: 'United Kingdom' }, { code: 'de', flag: '🇩🇪', label: 'Germany' },
-  { code: 'ru', flag: '🇷🇺', label: 'Russia' }, { code: 'zh', flag: '🇨🇳', label: 'China' },
-  { code: 'ja', flag: '🇯🇵', label: 'Japan' }, { code: 'ar', flag: '🇦🇪', label: 'United Arab Emirates' }
+  { code: 'en', flag: '🇬🇧', label: 'United Kingdom' }, 
+  { code: 'ar', flag: '🇦🇪', label: 'United Arab Emirates' },
+  { code: 'ja', flag: '🇯🇵', label: 'Japan' }, 
+  { code: 'zh', flag: '🇨🇳', label: 'China' },
+  { code: 'ru', flag: '🇷🇺', label: 'Russia' }, 
 ];
 
 export default function PharmaLingoApp() {
@@ -265,7 +267,6 @@ export default function PharmaLingoApp() {
     }
   }, []);
 
-  // 🎙️ ระบบดึงเสียงอ่าน (ล็อกจีนกลาง zh-CN)
   const speakText = (text: string, langCode: string, forceEnglish: boolean = false) => {
     if (!synthRef.current) return;
     synthRef.current.cancel();
@@ -515,34 +516,33 @@ export default function PharmaLingoApp() {
     return (
       <div className="min-h-[100dvh] w-full bg-[#0f172a] flex flex-col items-center justify-center relative overflow-hidden font-sans">
         <div className={`absolute top-10 md:top-20 text-center z-20 transition-opacity duration-300 ${animatingLang ? 'opacity-0' : 'opacity-100'}`}>
-          <h1 className="text-3xl md:text-4xl font-black text-white tracking-widest drop-shadow-md">Assistance Dispenser</h1>
+          <h1 className="text-3xl md:text-5xl font-black text-white tracking-widest drop-shadow-md">ASSISTANCE DISPENSER</h1>
           <p className="text-slate-400 mt-2 text-sm md:text-base font-bold tracking-widest uppercase">Tap to Select Patient Language</p>
-          
-          <div className="flex items-center justify-center gap-4 mt-6">
-            <button onClick={() => setVoiceGender('female')} className={`px-6 py-3 rounded-full font-black text-sm md:text-base transition-colors duration-100 border-2 ${voiceGender === 'female' ? 'bg-pink-600 text-white border-pink-400 shadow-[0_0_15px_rgba(219,39,119,0.5)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700'}`}>👩🏻 Female Voice</button>
-            <button onClick={() => setVoiceGender('male')} className={`px-6 py-3 rounded-full font-black text-sm md:text-base transition-colors duration-100 border-2 ${voiceGender === 'male' ? 'bg-blue-600 text-white border-blue-400 shadow-[0_0_15px_rgba(37,99,235,0.5)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700'}`}>👨🏻 Male Voice</button>
-          </div>
         </div>
 
         <div className="relative w-[300px] h-[300px] flex items-center justify-center mt-12 md:mt-20">
           <div className={`absolute w-full h-full rounded-full border-[4px] border-slate-800 transition-opacity duration-300 ${animatingLang ? 'opacity-0' : 'opacity-100'}`}></div>
-          <div className={`absolute text-slate-600 text-4xl animate-pulse transition-opacity duration-300 ${animatingLang ? 'opacity-0' : 'opacity-100'}`}>👆</div>
           {LANGUAGES.map((l, index) => {
-            const rotation = index * 60; 
+            const rotation = index * 72; 
             const isAnimating = animatingLang === l.code;
             const isOther = animatingLang && animatingLang !== l.code;
             return (
               <button key={l.code} onClick={() => handleLangSelect(l.code, l.label)}
-                className={`absolute top-1/2 left-1/2 w-16 h-16 -ml-8 -mt-8 flex flex-col items-center justify-center outline-none transition-all duration-[800ms] ease-[cubic-bezier(0.8,0,0.2,1)] ${isOther ? 'opacity-0 scale-0' : ''} ${isAnimating ? 'z-50' : 'z-10 hover:scale-110 cursor-pointer'}`}
+                className={`absolute top-1/2 left-1/2 w-20 h-20 -ml-10 -mt-10 flex flex-col items-center justify-center outline-none transition-all duration-[800ms] ease-[cubic-bezier(0.8,0,0.2,1)] ${isOther ? 'opacity-0 scale-0' : ''} ${isAnimating ? 'z-50' : 'z-10 hover:scale-110 cursor-pointer'}`}
                 style={isAnimating ? { transform: 'translate(0px, 0px) scale(80)' } : { transform: `rotate(${rotation}deg) translateY(-150px)` }}
               >
                 <div className={`flex flex-col items-center justify-center w-full h-full rounded-full transition-all duration-300 ${isAnimating ? 'bg-slate-50' : ''}`} style={{ transform: `rotate(${-rotation}deg)` }}>
-                  <div className={`transition-all duration-[800ms] ${isAnimating ? 'text-[1px] opacity-0' : 'text-4xl'}`}>{l.flag}</div>
-                  <span className={`mt-1 font-black text-[10px] md:text-xs bg-slate-900/80 px-2 py-0.5 rounded-md border text-slate-300 border-slate-700 whitespace-nowrap ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>{l.label}</span>
+                  <div className={`transition-all duration-[800ms] ${isAnimating ? 'text-[1px] opacity-0' : 'text-5xl'}`}>{l.flag}</div>
+                  <span className={`mt-2 font-black text-[10px] md:text-xs bg-slate-900/80 px-3 py-1 rounded-md border text-slate-300 border-slate-700 whitespace-nowrap ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>{l.label}</span>
                 </div>
               </button>
             );
           })}
+        </div>
+        
+        <div className={`absolute bottom-10 z-20 flex gap-4 transition-opacity duration-300 ${animatingLang ? 'opacity-0' : 'opacity-100'}`}>
+            <button onClick={() => setVoiceGender('female')} className={`px-6 py-3 rounded-full font-black text-sm md:text-base transition-colors duration-100 border-2 ${voiceGender === 'female' ? 'bg-pink-600 text-white border-pink-400 shadow-[0_0_15px_rgba(219,39,119,0.5)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700'}`}>👩🏻 Female Voice</button>
+            <button onClick={() => setVoiceGender('male')} className={`px-6 py-3 rounded-full font-black text-sm md:text-base transition-colors duration-100 border-2 ${voiceGender === 'male' ? 'bg-blue-600 text-white border-blue-400 shadow-[0_0_15px_rgba(37,99,235,0.5)]' : 'bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700'}`}>👨🏻 Male Voice</button>
         </div>
       </div>
     );
@@ -558,28 +558,28 @@ export default function PharmaLingoApp() {
   // ==========================================
   const renderGuideCard = (guide: any) => {
     return (
-      <div className="w-full h-fit max-h-[90dvh] lg:max-w-4xl bg-white lg:rounded-[2rem] rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-4 border-teal-200" dir={isRTL ? 'rtl' : 'ltr'}>
-        <div className="bg-gradient-to-r from-teal-700 to-emerald-900 p-4 md:p-6 text-center relative shrink-0 flex justify-between items-center shadow-inner">
+      <div className="w-full h-fit max-h-[90dvh] lg:max-w-4xl bg-white lg:rounded-[2rem] rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-4 border-teal-200 print:max-h-none" dir={isRTL ? 'rtl' : 'ltr'}>
+        <div className="bg-gradient-to-r from-teal-700 to-emerald-900 p-4 md:p-6 text-center relative shrink-0 flex justify-between items-center shadow-inner print:border-b-2 print:border-teal-800">
           <span className="text-4xl opacity-30">🪄</span>
           <div className="flex flex-col items-center">
-            <h1 className="text-white font-black text-lg md:text-xl tracking-widest uppercase">Bangkok Pattaya Hospital</h1>
-            <p className="text-teal-200 text-sm md:text-base font-bold mt-1 tracking-widest">{p.spec_guide}</p>
+            <h1 className="text-white font-black text-lg md:text-xl tracking-widest uppercase print:text-teal-900">Bangkok Pattaya Hospital</h1>
+            <p className="text-teal-200 text-sm md:text-base font-bold mt-1 tracking-widest print:text-teal-700">{p.spec_guide}</p>
           </div>
-          <button onClick={() => speakGuide(guide)} className={`w-12 h-12 md:w-14 md:h-14 rounded-full text-2xl shadow-lg flex items-center justify-center ${isSpeaking ? 'bg-white text-teal-600 animate-pulse' : 'bg-teal-800 text-white border-2 border-teal-400 hover:bg-teal-700'}`}>
+          <button onClick={() => speakGuide(guide)} className={`w-12 h-12 md:w-14 md:h-14 rounded-full text-2xl shadow-lg flex items-center justify-center print:hidden ${isSpeaking ? 'bg-white text-teal-600 animate-pulse' : 'bg-teal-800 text-white border-2 border-teal-400 hover:bg-teal-700'}`}>
             {isSpeaking ? '🛑' : '🔊'}
           </button>
         </div>
-        <div className="bg-teal-50/30 flex flex-col lg:flex-row gap-4 flex-1 overflow-y-auto p-4 md:p-6 custom-scrollbar">
-          <div className="lg:flex-1 bg-gradient-to-r from-teal-100 to-emerald-100 border-2 border-teal-400 rounded-3xl p-5 flex items-center justify-center gap-4 shadow-sm">
+        <div className="bg-teal-50/30 flex flex-col lg:flex-row gap-4 flex-1 overflow-y-auto p-4 md:p-6 custom-scrollbar print:overflow-visible">
+          <div className="lg:flex-1 bg-gradient-to-r from-teal-100 to-emerald-100 border-2 border-teal-400 rounded-3xl p-5 flex items-center justify-center gap-4 shadow-sm print:border-teal-800 print:border-2">
             <span className="text-6xl md:text-7xl drop-shadow-md">{guide.icon}</span>
             <span className="text-teal-900 font-black text-2xl md:text-3xl leading-tight">{guide.title[patientLang] || guide.title.en}</span>
           </div>
           <div className="flex flex-col lg:flex-1 lg:grid lg:grid-cols-2 gap-3 mt-2 lg:mt-0">
             {guide.steps.map((step: any, sIdx: number) => (
-              <div key={sIdx} className="flex items-center gap-4 bg-white p-4 md:p-5 rounded-2xl shadow-sm border border-teal-100/50">
+              <div key={sIdx} className="flex items-center gap-4 bg-white p-4 md:p-5 rounded-2xl shadow-sm border border-teal-100/50 print:border-teal-200 print:border">
                 <div className="text-4xl md:text-5xl shrink-0 drop-shadow-sm">{step.icon}</div>
                 <div className="flex flex-col leading-tight">
-                  <span className="text-teal-500 text-xs font-black uppercase tracking-widest mb-1">Step {sIdx + 1}</span>
+                  <span className="text-teal-500 text-xs font-black uppercase tracking-widest mb-1 print:text-teal-700">Step {sIdx + 1}</span>
                   <span className="font-black text-base md:text-lg text-slate-800">{step.desc[patientLang] || step.desc.en}</span>
                 </div>
               </div>
@@ -591,7 +591,7 @@ export default function PharmaLingoApp() {
   };
 
   // ==========================================
-  // 🎟️ Render Boarding Pass: จัดหน้าจอ Auto-Height & รองรับ Print 80mm
+  // 🎟️ Render Boarding Pass: จัดการ A5 Print
   // ==========================================
   const renderBoardingPass = (rx: Prescription, index: number) => {
     const displayDrugEn = rx.drugInput.trim();
@@ -614,27 +614,27 @@ export default function PharmaLingoApp() {
     const warnTextSize = totalW >= 5 ? 'text-sm md:text-base' : 'text-base md:text-lg';
 
     return (
-      <div key={index} data-index={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu print:h-auto print:overflow-visible print:break-inside-avoid print:mb-8" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
+      <div key={index} data-index={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu print-card-container print:h-auto print:overflow-hidden print:flex-row print:items-start print:justify-center print:gap-2 print:break-inside-avoid print:mb-0" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
         
-        {/* 🔵 การ์ดสีฟ้า (วิธีใช้) - แก้ไข max-h-[90dvh] เพื่อไม่ให้ล้นหน้าจอ */}
-        <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center print:p-0 print:min-h-0 print:block print:pb-4">
-          <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-fit max-h-[90dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-blue-100 overflow-hidden print:max-w-full print:w-full print:break-inside-avoid print:shadow-none print:border-none print:rounded-none">
-            <div className="bg-gradient-to-r from-blue-900 to-indigo-900 p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print:rounded-t-xl print:border print:border-blue-900 print:border-b-0">
-              <span className="text-3xl opacity-20">🏥</span>
+        {/* 🔵 การ์ดสีฟ้า (วิธีใช้) - ปรับ print-half ให้กว้างครึ่งนึงพอดี */}
+        <div className="w-full h-[100dvh] flex items-center justify-center p-4 snap-center print:p-0 print:h-full print:w-1/2 print:block print-half">
+          <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-fit max-h-[82dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-blue-100 overflow-hidden print:max-h-full print:w-full print:break-inside-avoid print:shadow-none print:border-none print:rounded-none print:h-full">
+            <div className="bg-gradient-to-r from-blue-900 to-indigo-900 p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print:rounded-t-xl print:border print:border-blue-900 print:border-b-0 print:p-3">
+              <span className="text-3xl opacity-20 print:text-2xl">🏥</span>
               <div className="flex flex-col items-center">
-                <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase">Bangkok Pattaya Hospital</h1>
-                <p className="text-blue-200 text-xs md:text-sm font-bold mt-1 tracking-widest">{p.rx_title}</p>
+                <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase print:text-blue-900">Bangkok Pattaya Hospital</h1>
+                <p className="text-blue-200 text-xs md:text-sm font-bold mt-1 tracking-widest print:text-blue-700 print:text-[10px]">{p.rx_title}</p>
               </div>
               <button onClick={() => speakSpecificRx(rx)} className={`w-10 h-10 md:w-12 md:h-12 rounded-full text-lg md:text-xl shadow-md flex items-center justify-center print:hidden ${isSpeaking ? 'bg-white text-blue-600 animate-pulse' : 'bg-blue-800 text-white border border-blue-400 hover:bg-blue-700'}`}>
                 {isSpeaking ? '🛑' : '🔊'}
               </button>
             </div>
 
-            <div className={`bg-blue-50/40 flex flex-col ${instGap} p-4 md:p-6 overflow-y-auto custom-scrollbar print:overflow-visible print:border print:border-blue-900 print:rounded-b-xl print:border-t-0`}>
+            <div className={`bg-blue-50/40 flex flex-col ${instGap} p-4 md:p-6 overflow-y-auto custom-scrollbar print:overflow-visible print:border print:border-blue-900 print:rounded-b-xl print:border-t-0 print:p-3 print:gap-2 print:flex-1`}>
               {(displayDrugEn || displayDrugLocal) && (
-                <div className="bg-gradient-to-r from-amber-100 to-yellow-200 border-2 border-yellow-400 rounded-2xl py-4 flex flex-col items-center justify-center shadow-sm text-center">
-                  <span className="text-yellow-800 text-xs md:text-sm font-black uppercase mb-1 tracking-widest">💊 {p.drug_name}</span>
-                  <div className="flex flex-col items-center justify-center w-full px-2 gap-1">
+                <div className="bg-gradient-to-r from-amber-100 to-yellow-200 border-2 border-yellow-400 rounded-2xl py-4 flex flex-col items-center justify-center shadow-sm text-center print:py-2 print:rounded-lg">
+                  <span className="text-yellow-800 text-xs md:text-sm font-black uppercase mb-1 tracking-widest print:text-[10px]">💊 {p.drug_name}</span>
+                  <div className="flex flex-col items-center justify-center w-full px-2 gap-1 print:gap-0">
                     {displayDrugLocal && <FittedText text={displayDrugLocal} isMain={true} />}
                     {displayDrugEn && <FittedText text={displayDrugLocal ? `(${displayDrugEn})` : displayDrugEn} isMain={!displayDrugLocal} />}
                   </div>
@@ -642,11 +642,11 @@ export default function PharmaLingoApp() {
               )}
 
               {(rx.rxIndication !== null || rx.customIndication) && (
-                <div className="bg-blue-100 border-l-8 border-blue-500 rounded-r-xl p-3 flex items-center gap-3 shadow-sm">
-                  <span className="text-3xl shrink-0">🎯</span>
+                <div className="bg-blue-100 border-l-8 border-blue-500 rounded-r-xl p-3 flex items-center gap-3 shadow-sm print:p-2 print:rounded-r-lg">
+                  <span className="text-3xl shrink-0 print:text-2xl">🎯</span>
                   <div className="flex flex-col">
-                    <span className="text-blue-600 text-[10px] md:text-xs uppercase font-black">{p.ind_title}</span>
-                    <span className="text-blue-900 font-black text-lg md:text-xl mt-0.5 leading-tight">{rx.rxIndication !== null ? p.indication[rx.rxIndication] : rx.customIndication}</span>
+                    <span className="text-blue-600 text-[10px] md:text-xs uppercase font-black print:text-[9px]">{p.ind_title}</span>
+                    <span className="text-blue-900 font-black text-lg md:text-xl mt-0.5 leading-tight print:text-sm">{rx.rxIndication !== null ? p.indication[rx.rxIndication] : rx.customIndication}</span>
                   </div>
                 </div>
               )}
@@ -665,13 +665,13 @@ export default function PharmaLingoApp() {
                       </thead>
                       <tbody>
                         {rx.taperSteps.map((step, idx) => (
-                          <tr key={idx} className="border-b border-slate-50 last:border-0">
-                            <td className="py-2 font-black text-sm md:text-base text-blue-600 text-left">{step.dose} {unitDict[step.unit][patientLang]}</td>
-                            <td className="py-2 text-xs md:text-sm">
+                          <tr key={idx} className="border-b border-slate-50 last:border-0 print:border-slate-200">
+                            <td className="py-2 font-black text-sm md:text-base text-blue-600 text-left print:text-xs">{step.dose} {unitDict[step.unit][patientLang]}</td>
+                            <td className="py-2 text-xs md:text-sm print:text-[10px]">
                                <div className="text-teal-600 font-bold">{step.time !== null && p.time[step.time]}</div>
-                               <div className="text-orange-600 font-bold">{step.periods.map(i => `${p.period_icons[i]} ${p.period[i]}`).join(', ')}</div>
+                               <div className="text-orange-600 font-bold">{step.periods.map(i => `${th.period_icons[i]} ${p.period[i]}`).join(', ')}</div>
                             </td>
-                            <td className="py-2 font-black text-sm md:text-base text-slate-700 text-right">{step.days} {p.day}</td>
+                            <td className="py-2 font-black text-sm md:text-base text-slate-700 text-right print:text-xs">{step.days} {p.day}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -679,20 +679,20 @@ export default function PharmaLingoApp() {
                   </div>
                 </div>
               ) : (
-                <div className={`flex flex-col ${instGap}`}>
+                <div className={`flex flex-col ${instGap} print:gap-2 print:flex-1`}>
                   {(rx.rxDose !== null || Number(rx.cDose) > 0) && (
-                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:border-blue-200`}>
-                      <span className="text-3xl md:text-4xl">💊</span>
-                      <div className={`flex flex-wrap items-center gap-2 font-black text-slate-800 ${instTextSize}`}>
+                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:p-2 print:rounded-lg print:border-blue-200`}>
+                      <span className="text-3xl md:text-4xl print:text-2xl">💊</span>
+                      <div className={`flex flex-wrap items-center gap-2 font-black text-slate-800 ${instTextSize} print:text-sm`}>
                         <span>{rx.rxDose !== null ? p.dose[rx.rxDose] : parseSmartText(p.smart_dose, rx.cDose, rx.cDoseUnit)}</span>
                       </div>
                     </div>
                   )}
                   
                   {(rx.rxFreq !== null || Number(rx.cHour) > 0 || Number(rx.cApply) > 0) && (
-                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:border-blue-200`}>
-                      <span className="text-3xl md:text-4xl">🔄</span>
-                      <span className={`font-black text-slate-800 ${instTextSize}`}>
+                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:p-2 print:rounded-lg print:border-blue-200`}>
+                      <span className="text-3xl md:text-4xl print:text-2xl">🔄</span>
+                      <span className={`font-black text-slate-800 ${instTextSize} print:text-sm`}>
                         {rx.rxFreq !== null && <div>{p.freq[rx.rxFreq]}</div>}
                         {Number(rx.cHour) > 0 && <div className="text-indigo-600">{parseSmartText(p.smart_hour, rx.cHour, rx.cHourUnit)}</div>}
                         {Number(rx.cApply) > 0 && <div className="text-indigo-600">{parseSmartText(p.smart_apply, rx.cApply, rx.cApplyUnit)}</div>}
@@ -701,19 +701,19 @@ export default function PharmaLingoApp() {
                   )}
 
                   {(rx.rxTime !== null || Number(rx.cDays) > 0) && (
-                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:border-blue-200`}>
-                      <span className="text-3xl md:text-4xl">🍽️</span>
-                      <span className={`font-black text-slate-800 ${instTextSize}`}>
+                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:p-2 print:rounded-lg print:border-blue-200`}>
+                      <span className="text-3xl md:text-4xl print:text-2xl">🍽️</span>
+                      <span className={`font-black text-slate-800 ${instTextSize} print:text-sm`}>
                         {rx.rxTime !== null && <div>{p.time[rx.rxTime]}</div>}
-                        {Number(rx.cDays) > 0 && <div className="text-emerald-600 mt-1">{parseSmartText(p.smart_days, rx.cDays, rx.cDaysUnit)}</div>}
+                        {Number(rx.cDays) > 0 && <div className="text-emerald-600 mt-1 print:mt-0 print:text-[10px]">{parseSmartText(p.smart_days, rx.cDays, rx.cDaysUnit)}</div>}
                       </span>
                     </div>
                   )}
 
                   {rx.rxPeriod.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 print:gap-1">
                       {rx.rxPeriod.map((i: number) => (
-                        <span key={i} className={`bg-orange-50 text-orange-600 px-3 py-1.5 rounded-lg font-black border border-orange-200 shadow-sm ${instTextSize}`}>
+                        <span key={i} className={`bg-orange-50 text-orange-600 px-3 py-1.5 rounded-lg font-black border border-orange-200 shadow-sm ${instTextSize} print:px-2 print:py-1 print:text-[10px] print:rounded-md`}>
                           {p.period_icons[i]} {p.period[i]}
                         </span>
                       ))}
@@ -722,9 +722,9 @@ export default function PharmaLingoApp() {
 
                   {/* ข้างอยู่ล่างสุด */}
                   {rx.rxSide !== null && (
-                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:border-blue-200`}>
-                      <span className="text-3xl md:text-4xl">🧭</span>
-                      <span className={`font-black text-purple-600 bg-purple-50 px-3 py-1 rounded-lg border border-purple-200 ${instTextSize}`}>
+                    <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:p-2 print:rounded-lg print:border-blue-200 print:mt-auto`}>
+                      <span className="text-3xl md:text-4xl print:text-2xl">🧭</span>
+                      <span className={`font-black text-purple-600 bg-purple-50 px-3 py-1 rounded-lg border border-purple-200 ${instTextSize} print:text-[10px] print:px-2 print:py-0.5`}>
                         {p.side_icons[rx.rxSide]} {p.side[rx.rxSide]}
                       </span>
                     </div>
@@ -739,43 +739,43 @@ export default function PharmaLingoApp() {
         </div>
 
         {/* 🔴 การ์ดสีแดง (คำเตือน) */}
-        <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center print:p-0 print:min-h-0 print:block print:pt-4 print:pb-0">
-          <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-fit max-h-[90dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-red-200 overflow-hidden print:max-w-full print:w-full print:break-inside-avoid print:shadow-none print:border-none print:rounded-none">
-            <div className="bg-gradient-to-r from-red-800 to-rose-900 p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print:rounded-t-xl print:border print:border-red-900 print:border-b-0">
-              <span className="text-3xl opacity-20">⚠️</span>
+        <div className="w-full h-[100dvh] flex items-center justify-center p-4 snap-center print:p-0 print:h-full print:w-1/2 print:block print-half">
+          <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-fit max-h-[82dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-red-200 overflow-hidden print:max-h-full print:w-full print:break-inside-avoid print:shadow-none print:border-none print:rounded-none print:h-full">
+            <div className="bg-gradient-to-r from-red-800 to-rose-900 p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print:rounded-t-xl print:border print:border-red-900 print:border-b-0 print:p-3">
+              <span className="text-3xl opacity-20 print:text-2xl">⚠️</span>
               <div className="flex flex-col items-center">
-                <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase">Bangkok Pattaya Hospital</h1>
-                <p className="text-red-200 text-[10px] md:text-xs font-bold mt-1 tracking-widest">{p.warn_title}</p>
+                <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase print:text-red-900">Bangkok Pattaya Hospital</h1>
+                <p className="text-red-200 text-[10px] md:text-xs font-bold mt-1 tracking-widest print:text-red-700 print:text-[10px]">{p.warn_title}</p>
               </div>
               <button onClick={() => speakSpecificWarnings(rx)} className={`w-10 h-10 md:w-12 md:h-12 rounded-full text-lg md:text-xl shadow-md flex items-center justify-center print:hidden ${isSpeaking ? 'bg-white text-red-600 animate-pulse' : 'bg-red-800 text-white border border-red-400 hover:bg-red-700'}`}>
                 {isSpeaking ? '🛑' : '🔊'}
               </button>
             </div>
 
-            <div className={`bg-red-50/60 flex flex-col p-4 md:p-6 overflow-y-auto custom-scrollbar print:overflow-visible print:border print:border-red-900 print:rounded-b-xl print:border-t-0`}>
-              <h3 className="text-red-600 font-black text-sm md:text-base uppercase tracking-widest mb-3 border-b-2 border-red-200 pb-2 text-center">⚠️ {p.warn_title}</h3>
-              <div className={`flex flex-col ${warnGap}`}>
+            <div className={`bg-red-50/60 flex flex-col p-4 md:p-6 overflow-y-auto custom-scrollbar print:overflow-visible print:border print:border-red-900 print:rounded-b-xl print:border-t-0 print:p-3 print:gap-2 print:flex-1`}>
+              <h3 className="text-red-600 font-black text-sm md:text-base uppercase tracking-widest mb-3 border-b-2 border-red-200 pb-2 text-center print:text-xs print:mb-1 print:pb-1">⚠️ {p.warn_title}</h3>
+              <div className={`flex flex-col ${warnGap} print:gap-1.5`}>
                 {(rx.rxWarnings.length > 0 || rx.customWarnings.length > 0) ? (
                   <>
                     {rx.rxWarnings.map((wIdx: number) => (
-                      <div key={wIdx} className={`flex items-center bg-white rounded-xl shadow-sm border border-red-100 ${warnPadding} print:border-red-200`}>
-                        <span className={`shrink-0 text-3xl md:text-4xl mr-3`}>{th.warn_icons[wIdx]}</span>
-                        <span className={`text-red-700 font-black leading-snug ${warnTextSize}`}>{p.warn[wIdx]}</span>
+                      <div key={wIdx} className={`flex items-center bg-white rounded-xl shadow-sm border border-red-100 ${warnPadding} print:p-2 print:rounded-lg print:border-red-200`}>
+                        <span className={`shrink-0 text-3xl md:text-4xl mr-3 print:text-xl print:mr-2`}>{th.warn_icons[wIdx]}</span>
+                        <span className={`text-red-700 font-black leading-snug ${warnTextSize} print:text-xs`}>{p.warn[wIdx]}</span>
                       </div>
                     ))}
                     {rx.customWarnings.map((cw: string, i: number) => (
-                      <div key={i} className={`flex items-center bg-red-100 rounded-xl shadow-sm border border-red-300 ${warnPadding} print:border-red-200`}>
-                        <span className={`shrink-0 text-3xl md:text-4xl mr-3`}>🚨</span>
-                        <span className={`text-red-800 font-black leading-snug ${warnTextSize}`}>{cw}</span>
+                      <div key={i} className={`flex items-center bg-red-100 rounded-xl shadow-sm border border-red-300 ${warnPadding} print:p-2 print:rounded-lg print:border-red-300`}>
+                        <span className={`shrink-0 text-3xl md:text-4xl mr-3 print:text-xl print:mr-2`}>🚨</span>
+                        <span className={`text-red-800 font-black leading-snug ${warnTextSize} print:text-xs`}>{cw}</span>
                       </div>
                     ))}
                   </>
                 ) : (
-                  <div className="flex flex-col items-center justify-center py-6 text-slate-300 opacity-60"><span className="text-5xl mb-2">✅</span><span className="font-black text-sm">No special warnings</span></div>
+                  <div className="flex flex-col items-center justify-center py-6 text-slate-300 opacity-60"><span className="text-5xl mb-2 print:text-2xl">✅</span><span className="font-black text-sm print:text-[10px]">No special warnings</span></div>
                 )}
               </div>
-              <div className="mt-4 bg-red-600 text-white rounded-xl p-4 flex items-center gap-3 shadow-md border border-red-400">
-                 <span className="text-3xl shrink-0">🛑</span><span className="font-black text-sm md:text-base leading-snug">{p.allergy_alert}</span>
+              <div className="mt-4 bg-red-600 text-white rounded-xl p-4 flex items-center gap-3 shadow-md border border-red-400 print:mt-auto print:p-2 print:rounded-lg print:gap-2">
+                 <span className="text-3xl shrink-0 print:text-xl">🛑</span><span className="font-black text-sm md:text-base leading-snug print:text-[10px]">{p.allergy_alert}</span>
               </div>
             </div>
           </div>
@@ -804,10 +804,10 @@ export default function PharmaLingoApp() {
 
             {/* ปุ่มปิดและปุ่มปริ้นท์ (มุมขวาบน - ซ่อนตอนปริ้นท์) */}
             <div className="absolute top-6 right-4 flex items-center gap-2 z-50 pointer-events-none print:hidden">
-              <button onClick={() => window.print()} className="bg-emerald-500 hover:bg-emerald-400 text-white w-10 h-10 rounded-full text-xl font-black shadow-md flex items-center justify-center border border-emerald-300 pointer-events-auto">
+              <button onClick={() => window.print()} className="bg-emerald-500 hover:bg-emerald-400 text-white w-10 h-10 md:w-12 md:h-12 rounded-full text-xl font-black shadow-md flex items-center justify-center border border-emerald-300 pointer-events-auto active:scale-95">
                  🖨️
               </button>
-              <button onClick={() => { setIsFullscreen(false); setDispenseState('input'); if(synthRef.current) synthRef.current.cancel(); setIsSpeaking(false); }} className="bg-red-500 hover:bg-red-400 text-white w-10 h-10 rounded-full text-xl font-black shadow-md flex items-center justify-center border border-red-300 pointer-events-auto">
+              <button onClick={() => { setIsFullscreen(false); setDispenseState('input'); if(synthRef.current) synthRef.current.cancel(); setIsSpeaking(false); }} className="bg-red-500 hover:bg-red-400 text-white w-10 h-10 md:w-12 md:h-12 rounded-full text-xl md:text-2xl font-black shadow-md flex items-center justify-center border border-red-300 pointer-events-auto active:scale-95">
                  ✕
               </button>
             </div>
@@ -819,7 +819,7 @@ export default function PharmaLingoApp() {
               </div>
             )}
 
-            {/* Slider แนวนอน -> กลายเป็นแนวตั้งตอนปริ้นท์ */}
+            {/* Slider แนวนอน */}
             <div className="flex-1 w-full h-full relative print:h-auto print:overflow-visible">
                {cart.length > 1 && <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-slate-400 text-[10px] font-bold uppercase tracking-widest animate-bounce z-50 pointer-events-none bg-slate-900/80 px-4 py-1.5 rounded-full border border-slate-700 print:hidden">{p.swipe_hint}</div>}
                <div id="horizontal-scroll-container" className="w-full h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory flex hide-scrollbar scroll-smooth transform-gpu print:flex-col print:overflow-visible print:h-auto print:snap-none" style={{ WebkitOverflowScrolling: 'touch' }}>
@@ -1205,7 +1205,7 @@ export default function PharmaLingoApp() {
         </div>
       )}
 
-      {/* ควบคุมการแสดงผลสำหรับการปริ้นท์โดยเฉพาะ ด้วยวิธีที่ Vercel ไม่บัคแน่นอน */}
+      {/* ควบคุมการแสดงผลสำหรับการปริ้นท์โดยเฉพาะ A5 */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@700;900&display=swap'); 
         .font-arabic { font-family: 'Noto Sans Arabic', sans-serif !important; } 
@@ -1219,24 +1219,42 @@ export default function PharmaLingoApp() {
         .custom-scrollbar::-webkit-scrollbar { width: 6px; } 
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; } 
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; } 
-        select { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>"); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; }
         
+        /* 🖨️ ตั้งค่าการปริ้นท์แบบสีสันจัดเต็มให้อยู่ข้างกันแบบแนวนอน */
         @media print {
-          @page { margin: 0; }
+          @page { 
+            size: A5 landscape; 
+            margin: 5mm; 
+          }
           body { 
-            width: 80mm !important; 
-            margin: 0 auto !important; 
+            width: 100% !important; 
+            margin: 0 !important; 
             background: white !important; 
             color: black !important; 
             -webkit-print-color-adjust: exact !important; 
             print-color-adjust: exact !important;
           }
-          /* ปลดล็อกความสูงตอนปริ้นท์ เพื่อให้กราฟิกและตัวหนังสือยืดได้เต็มที่ ไม่โดนตัด */
-          .max-h-\\[90dvh\\] {
-             max-height: none !important;
+          
+          /* จัดโครงสร้างให้การ์ดเรียงตัวเป็นแนวนอน (ซ้าย-ขวา) บนกระดาษ A5 */
+          .print-card-container {
+             display: flex !important;
+             flex-direction: row !important;
+             justify-content: center !important;
+             align-items: flex-start !important;
+             gap: 5mm !important;
+             width: 100% !important;
+             height: 135mm !important; /* ความสูง A5 โดยประมาณลบขอบกระดาษ */
+             overflow: hidden !important;
+             page-break-inside: avoid !important;
+             page-break-after: always !important; /* ปริ้นท์ใบต่อไปให้ขึ้นกระดาษใหม่ */
+             margin-bottom: 0 !important;
           }
-          .overflow-y-auto {
-             overflow: visible !important;
+
+          /* บังคับให้การ์ดแต่ละใบกว้าง 50% ของหน้ากระดาษ */
+          .print-half {
+             width: 48% !important;
+             height: 100% !important;
+             overflow: hidden !important;
           }
         }
       `}} />
