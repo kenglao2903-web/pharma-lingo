@@ -25,7 +25,7 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
   }, [text]);
 
   return (
-    <div ref={containerRef} className="w-full flex items-center justify-center overflow-visible px-2 relative z-10">
+    <div ref={containerRef} className="w-full flex items-center justify-center overflow-visible px-2 relative z-10 print:overflow-visible">
       <span ref={textRef} className={`inline-block font-black whitespace-nowrap origin-center ${isMain ? 'text-4xl md:text-5xl lg:text-6xl text-slate-900 drop-shadow-sm' : 'text-xl md:text-3xl text-yellow-900 opacity-80'}`} style={{ transform: `scale(${scale})` }}>
         {text.toUpperCase()}
       </span>
@@ -270,7 +270,6 @@ export default function PharmaLingoApp() {
     if (!synthRef.current) return;
     synthRef.current.cancel();
     
-    // กรองคำย่อ
     let cleanText = text.replace(/ч\.л\./g, 'чайная ложка')
                         .replace(/ст\.л\./g, 'столовая ложка')
                         .replace(/табл\./g, 'таблетка')
@@ -281,7 +280,6 @@ export default function PharmaLingoApp() {
     const utterance = new SpeechSynthesisUtterance(cleanText);
     const voices = synthRef.current.getVoices();
     
-    // 🎯 ล็อกรหัสภาษาให้เป๊ะ ป้องกันการดึงภาษาถิ่น (กวางตุ้ง)
     const exactLangMap: any = { ar: 'ar-SA', de: 'de-DE', en: 'en-US', zh: 'zh-CN', ja: 'ja-JP', ru: 'ru-RU' };
     const targetLangMatch = forceEnglish ? 'en-US' : (exactLangMap[langCode] || langCode);
     
@@ -560,7 +558,7 @@ export default function PharmaLingoApp() {
   // ==========================================
   const renderGuideCard = (guide: any) => {
     return (
-      <div className="w-full h-fit max-h-[90vh] lg:max-w-4xl bg-white lg:rounded-[2rem] rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-4 border-teal-200" dir={isRTL ? 'rtl' : 'ltr'}>
+      <div className="w-full h-fit max-h-[90dvh] lg:max-w-4xl bg-white lg:rounded-[2rem] rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-4 border-teal-200" dir={isRTL ? 'rtl' : 'ltr'}>
         <div className="bg-gradient-to-r from-teal-700 to-emerald-900 p-4 md:p-6 text-center relative shrink-0 flex justify-between items-center shadow-inner">
           <span className="text-4xl opacity-30">🪄</span>
           <div className="flex flex-col items-center">
@@ -618,9 +616,9 @@ export default function PharmaLingoApp() {
     return (
       <div key={index} data-index={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu print:h-auto print:overflow-visible print:break-inside-avoid print:mb-8" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
         
-        {/* 🔵 การ์ดสีฟ้า (วิธีใช้) */}
-        <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center pt-20 pb-20 print:p-0 print:min-h-0 print:block print:pb-4">
-          <div className="w-full max-w-md md:max-w-2xl h-fit max-h-full flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-blue-100 overflow-hidden print:max-w-full print:w-full print:break-inside-avoid print:shadow-none print:border-none print:rounded-none">
+        {/* 🔵 การ์ดสีฟ้า (วิธีใช้) - แก้ไข max-h-[90dvh] เพื่อไม่ให้ล้นหน้าจอ */}
+        <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center print:p-0 print:min-h-0 print:block print:pb-4">
+          <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-fit max-h-[90dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-blue-100 overflow-hidden print:max-w-full print:w-full print:break-inside-avoid print:shadow-none print:border-none print:rounded-none">
             <div className="bg-gradient-to-r from-blue-900 to-indigo-900 p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print:rounded-t-xl print:border print:border-blue-900 print:border-b-0">
               <span className="text-3xl opacity-20">🏥</span>
               <div className="flex flex-col items-center">
@@ -741,8 +739,8 @@ export default function PharmaLingoApp() {
         </div>
 
         {/* 🔴 การ์ดสีแดง (คำเตือน) */}
-        <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center pt-20 pb-20 print:p-0 print:min-h-0 print:block print:pt-4 print:pb-0">
-          <div className="w-full max-w-md md:max-w-2xl h-fit max-h-full flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-red-200 overflow-hidden print:max-w-full print:w-full print:break-inside-avoid print:shadow-none print:border-none print:rounded-none">
+        <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center print:p-0 print:min-h-0 print:block print:pt-4 print:pb-0">
+          <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-fit max-h-[90dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-red-200 overflow-hidden print:max-w-full print:w-full print:break-inside-avoid print:shadow-none print:border-none print:rounded-none">
             <div className="bg-gradient-to-r from-red-800 to-rose-900 p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print:rounded-t-xl print:border print:border-red-900 print:border-b-0">
               <span className="text-3xl opacity-20">⚠️</span>
               <div className="flex flex-col items-center">
@@ -1232,6 +1230,13 @@ export default function PharmaLingoApp() {
             color: black !important; 
             -webkit-print-color-adjust: exact !important; 
             print-color-adjust: exact !important;
+          }
+          /* ปลดล็อกความสูงตอนปริ้นท์ เพื่อให้กราฟิกและตัวหนังสือยืดได้เต็มที่ ไม่โดนตัด */
+          .max-h-\\[90dvh\\] {
+             max-height: none !important;
+          }
+          .overflow-y-auto {
+             overflow: visible !important;
           }
         }
       `}} />
