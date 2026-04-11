@@ -11,7 +11,7 @@ const specialData = [
     title: { th: "ยาสูดพ่นแบบกด (MDI)", en: "MDI Inhaler" },
     steps: [
       { icon: "🫁", desc: { th: "หายใจออกให้สุด", en: "Breathe out completely.", zh: "完全呼气。", ja: "息を完全に吐き出します。", ru: "Сделайте глубокий выдох.", ar: "ازفر تمامًا.", de: "Atmen Sie vollständig aus." } },
-      { icon: "👄", desc: { th: "อมปากกระบอกให้สนิท", en: "Place mouthpiece in mouth.", zh: "将咬嘴放入口中。", ja: "マウスピースを口に含みます。", ru: "Поместите мундштук в рот.", ar: "ضع قطعة الفم في فمك.", de: "Nehmen Sie das Mundstück in den Mund." } },
+      { icon: "👄", desc: { th: "อมปากกระบอกให้สนิท", en: "Place mouthpiece in mouth.", zh: "将咬嘴放入口中。", ja: "マウスピースを口に含みます。", ru: "Поместите мундштук в рот.", ar: "ضع قطعة الفม في فمك.", de: "Nehmen Sie das Mundstück in den Mund." } },
       { icon: "🌬️", desc: { th: "กดพร้อมหายใจเข้าลึกๆ", en: "Press and inhale deeply.", zh: "按下并深吸气。", ja: "押して深く息を吸い込みます。", ru: "Нажмите и глубоко вдохните.", ar: "اضغط واستنشق بعمق.", de: "Drücken und tief einatmen." } },
       { icon: "⏱️", desc: { th: "กลั้นหายใจ 10 วินาที", en: "Hold breath for 10s.", zh: "屏住呼吸10秒。", ja: "10秒間息を止めます。", ru: "Задержите дыхание на 10 сек.", ar: "اكتم أنفاسك لمدة 10 ثوانٍ.", de: "Atem für 10s anhalten." } },
       { icon: "🫧", desc: { th: "บ้วนปากหลังใช้เสร็จ", en: "Rinse mouth after use.", zh: "使用后漱口。", ja: "使用後うがいをします。", ru: "Прополощите рот после.", ar: "اشطف فمك بعد الاستخدام.", de: "Mund nach Gebrauch ausspülen." } }
@@ -32,31 +32,44 @@ const specialData = [
 ];
 
 // ==========================================
-// 🛠️ Component: จัดการชื่อยาไม่ให้ล้นกรอบ
+// 🛠️ Component: จัดการชื่อยาไม่ให้ล้นกรอบ [ overhaul ใหม่เพื่อแก้ฟอนต์เน่า ]
 // ==========================================
+// 💡 แก้ไข: เลิกใช้ CSS scale (ที่ทำให้เส้นบาง) เปลี่ยนมาใช้การปรับ FontSize อัตโนมัติแทน
 const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
-  const [scale, setScale] = useState(1);
+  // ตั้งขนาดเริ่มต้น: ถ้า Main คือ 5xl (Ciprofloxacin), ถ้าซับคือ 2xl (500 MG)
+  const baseSize = isMain ? 48 : 24; 
+  const [fontSize, setFontSize] = useState(baseSize);
 
   useEffect(() => {
-    const resize = () => {
+    // ฟังก์ชันปรับขนาดฟอนต์ให้พอดี
+    const fitText = () => {
       if (containerRef.current && textRef.current) {
         const containerW = containerRef.current.offsetWidth;
         const textW = textRef.current.offsetWidth;
-        if (textW > containerW) setScale(containerW / textW);
-        else setScale(1);
+        
+        // ถ้าตัวหนังสือยาวเกินไป ค่อยๆ ลดขนาดฟอนต์ลง (ขั้นละ 1px) จนกว่าจะพอดี
+        if (textW > containerW && fontSize > 10) { 
+          setFontSize(fontSize - 1);
+        } else if (textW < containerW * 0.9 && fontSize < baseSize) {
+          // ถ้ามีพื้นที่เหลือเยอะ ค่อยๆ เพิ่มขนาดกลับ (เพื่อรองรับการย่อขยายหน้าจอ)
+          setFontSize(fontSize + 1);
+        }
       }
     };
-    resize(); 
-    window.addEventListener('resize', resize);
-    return () => window.removeEventListener('resize', resize);
-  }, [text]);
+
+    // เรียกใช้ตอนโหลดและทุกครั้งที่ฟอนต์เปลี่ยน
+    fitText();
+    window.addEventListener('resize', fitText);
+    return () => window.removeEventListener('resize', fitText);
+  }, [text, fontSize]);
 
   return (
-    <div ref={containerRef} className="w-full flex items-center justify-center overflow-visible px-2 relative z-10 print:px-0">
-      {/* 💡 ใส่คลาส print-text-wrap เพื่อบังคับให้ปัดบรรทัดใหม่เวลาปริ้นท์ ไม่ทะลุกรอบ */}
-      <span ref={textRef} className={`print-text-wrap inline-block font-black origin-center print:whitespace-normal print:leading-tight print:w-full ${isMain ? 'text-3xl md:text-5xl text-slate-900 print:text-[1.2rem]' : 'text-lg md:text-2xl text-yellow-900 opacity-80 print:text-[1rem]'}`} style={{ transform: scale < 1 ? `scale(${scale})` : 'none' }}>
+    <div ref={containerRef} className="w-full flex items-center justify-center px-2 relative z-10 print:px-0">
+      <span ref={textRef} 
+        className={`print-text-wrap inline-block font-black origin-center print:leading-tight print:w-full whitespace-nowrap ${isMain ? 'text-slate-900 print:text-[1.5rem]' : 'text-yellow-900 opacity-80 print:text-[1rem]'}`} 
+        style={{ fontSize: `${fontSize}px` }}>
         {text.toUpperCase()}
       </span>
     </div>
@@ -173,7 +186,7 @@ const dict = {
   ru: { 
     hello: 'Привет 👋', tap_to_select: '👆 Выберите', q_name: 'Как ваше полное имя?', q_dob: 'Какова ваша дата рождения?', q_allergy: 'Есть ли у вас аллергия на лекарства?', yes: 'Да', no: 'Нет', dont_know: 'Не знаю', writePaper: 'Напишите на бумаге.',
     q_inj: 'Вам сегодня делали уколы?', q_med: 'Принимали ли вы сегодня лекарства внутрь?', rx_title: 'Применение', warn_title: 'Внимание', drug_name: 'Лекарство:', ind_title: 'Показания:', 
-    indication: ['Жар / Боль', 'Аллергия', 'Кашель', 'Антибиотик', 'Диарея', 'Боль в животе', 'Тошнота', 'Воспаление / Боль'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
+    indication: ['Жар / Боль', 'Аллергия', 'Кашель', 'Antibiotic', 'Diarrhea', 'Pain in stomach', 'Nausea', 'Anti-inflammatory / Pain'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
     dose: ['Половина', '1 табл.', '2 табл.', '1 ч.л.', '1 ст.л.', '1 пшик', '1 капля'],
     side: ['Левый глаз', 'Правый глаз', 'Оба глаза', 'Левое ухо', 'Правое ухо', 'Оба уха'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['1 раз в день', '2 раза в день', '3 раза в день', '4 раза в день', 'Каждые 4-6 ч', 'Каждые 6 ч', 'Каждые 8 ч'],
@@ -653,7 +666,7 @@ export default function PharmaLingoApp() {
     return (
       <div className="w-full h-fit max-h-[85dvh] lg:max-w-4xl bg-white lg:rounded-[2rem] rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-4 border-teal-200 print:max-h-none" dir={isRTL ? 'rtl' : 'ltr'}>
         <div className="bg-gradient-to-r from-teal-700 to-emerald-900 p-4 md:p-6 text-center relative shrink-0 flex justify-between items-center shadow-inner print:bg-teal-800 print:border-b-2 print:border-teal-800">
-          <span className="text-4xl opacity-30">🪄</span>
+          <span className="text-4xl opacity-30 print-text-white">🪄</span>
           <div className="flex flex-col items-center">
             <h1 className="text-white font-black text-lg md:text-xl tracking-widest uppercase print:text-white">Bangkok Pattaya Hospital</h1>
             <p className="text-teal-200 text-sm md:text-base font-bold mt-1 tracking-widest print:text-white">{p.spec_guide}</p>
@@ -688,6 +701,7 @@ export default function PharmaLingoApp() {
   // ==========================================
   const renderBoardingPass = (rx: Prescription, index: number) => {
     const displayDrugEn = rx.drugInput.trim();
+    // 💡 แก้ไข: ใช้ FittedText กับชื่อยาภาษาท้องถิ่นเป็น Main เสมอเพื่อให้หนาและสวย
     const displayDrugLocal = rx.drugName && rx.drugName.toLowerCase() !== rx.drugInput.toLowerCase() ? rx.drugName : '';
     
     let instCount = 0;
@@ -707,31 +721,32 @@ export default function PharmaLingoApp() {
     const warnTextSize = warnCount >= 5 ? 'text-xs md:text-sm print:text-[0.9rem]' : warnCount >= 3 ? 'text-sm md:text-base print:text-[1rem]' : 'text-lg md:text-xl print:text-[1.2rem]';
 
     return (
-      <div key={index} data-index={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu print-card-container print:overflow-hidden print:break-inside-avoid print:mb-0 print:p-0" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
+      <div key={index} data-index={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu print-rx-page" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
         
-        {/* 🖨️ Grid System สำหรับ Print ให้อยู่ข้างกันซ้าย-ขวา */}
+        {/* 🖨️ โครงสร้างตาราง (Grid) แยกซ้าย-ขวาสำหรับปริ้นท์ A5 */}
         <div className="w-full h-full flex flex-col snap-y snap-mandatory print-rx-layout">
             
           {/* 🔵 การ์ดสีฟ้า (วิธีใช้) */}
-          <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center print:p-0 print:min-h-0 print:block print:h-full print:w-full print-half">
-            <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-full max-h-[85dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-blue-100 overflow-hidden print:max-h-full print:w-full print:break-inside-avoid print-rx-card">
+          <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center print-card-wrapper">
+            <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-full max-h-[85dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-blue-100 overflow-hidden print-rx-card">
               
-              <div className="bg-gradient-to-r from-blue-900 to-indigo-900 p-3 md:p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print-bg-blue">
+              <div className="bg-gradient-to-r from-blue-900 to-indigo-900 p-3 md:p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print-bg-blue print-header">
                 <span className="text-3xl opacity-20 print-icon print-text-white">🏥</span>
                 <div className="flex flex-col items-center w-full">
-                  <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase print-text-white print:text-[1.1rem]">Bangkok Pattaya Hospital</h1>
-                  <p className="text-blue-200 text-[10px] md:text-xs font-bold mt-1 tracking-widest print:text-white print:text-[0.8rem]">{p.rx_title}</p>
+                  <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase print-text-md print-text-white">Bangkok Pattaya Hospital</h1>
+                  <p className="text-blue-200 text-[10px] md:text-xs font-bold mt-1 tracking-widest print-text-sm print-text-white">{p.rx_title}</p>
                 </div>
-                <button onClick={() => speakSpecificRx(rx)} className={`w-10 h-10 rounded-full text-lg shadow-md flex items-center justify-center print:hidden ${isSpeaking ? 'bg-white text-blue-600 animate-pulse' : 'bg-blue-800 text-white border border-blue-400 hover:bg-blue-700'}`}>
+                <button onClick={() => speakSpecificRx(rx)} className={`w-10 h-10 rounded-full text-lg shadow-md flex items-center justify-center print-hidden ${isSpeaking ? 'bg-white text-blue-600 animate-pulse' : 'bg-blue-800 text-white border border-blue-400 hover:bg-blue-700'}`}>
                   {isSpeaking ? '🛑' : '🔊'}
                 </button>
               </div>
 
               <div className={`bg-blue-50/40 flex flex-col ${instGap} p-3 md:p-5 overflow-y-auto custom-scrollbar flex-1 print-body`}>
                 {(displayDrugEn || displayDrugLocal) && (
-                  <div className="bg-gradient-to-r from-amber-100 to-yellow-200 border-2 border-yellow-400 rounded-2xl py-3 px-2 flex flex-col items-center justify-center shadow-sm text-center print-box print:bg-yellow-50">
-                    <span className="text-yellow-800 text-[10px] md:text-sm font-black uppercase mb-1 tracking-widest print:text-[0.7rem]">💊 {p.drug_name}</span>
+                  <div className="bg-amber-50 border-2 border-yellow-400 rounded-2xl py-3 px-2 flex flex-col items-center justify-center shadow-sm text-center print-box">
+                    <span className="text-yellow-800 text-[10px] md:text-sm font-black uppercase mb-1 tracking-widest print-text-sm">💊 {p.drug_name}</span>
                     <div className="flex flex-col items-center justify-center w-full px-1 gap-1 print:gap-1">
+                      {/* 💡 FittedText เวอร์ชั่นใหม่ ตัวหนังสือCIPROหนา สวย ไม่เน่า */}
                       {displayDrugLocal && <FittedText text={displayDrugLocal} isMain={true} />}
                       {displayDrugEn && <FittedText text={displayDrugLocal ? `(${displayDrugEn})` : displayDrugEn} isMain={!displayDrugLocal} />}
                     </div>
@@ -739,22 +754,22 @@ export default function PharmaLingoApp() {
                 )}
 
                 {(rx.rxIndication !== null || rx.customIndication) && (
-                  <div className="bg-blue-100 border-l-8 border-blue-500 rounded-r-xl p-2 md:p-3 flex items-center gap-2 shadow-sm print-box print:bg-blue-50">
+                  <div className="bg-blue-100 border-l-8 border-blue-500 rounded-r-xl p-2 md:p-3 flex items-center gap-2 shadow-sm print-box">
                     <span className="text-2xl md:text-3xl shrink-0 print-icon">🎯</span>
                     <div className="flex flex-col">
-                      <span className="text-blue-600 text-[9px] md:text-xs uppercase font-black print:text-[0.7rem]">{p.ind_title}</span>
-                      <span className="text-blue-900 font-black text-base md:text-xl mt-0.5 leading-tight print:text-[1.2rem]">{rx.rxIndication !== null ? p.indication[rx.rxIndication] : rx.customIndication}</span>
+                      <span className="text-blue-600 text-[9px] md:text-xs uppercase font-black print-text-sm">{p.ind_title}</span>
+                      <span className="text-blue-900 font-black text-base md:text-xl mt-0.5 leading-tight print-text-lg">{rx.rxIndication !== null ? p.indication[rx.rxIndication] : rx.customIndication}</span>
                     </div>
                   </div>
                 )}
 
                 {rx.isTapering ? (
                   <div className="bg-white rounded-xl p-2 shadow-sm border border-slate-100 flex-1 print-box">
-                    <div className="text-indigo-600 font-black text-[10px] md:text-sm uppercase mb-1 text-center border-b pb-1 print:text-[0.8rem]">📉 {p.taper_mode}</div>
+                    <div className="text-indigo-600 font-black text-[10px] md:text-sm uppercase mb-1 text-center border-b pb-1 print-text-sm">📉 {p.taper_mode}</div>
                     <div className="flex-1 overflow-x-auto print:overflow-hidden">
                       <table className="w-full text-center border-collapse">
                         <thead>
-                          <tr className="text-slate-400 text-[9px] md:text-xs uppercase border-b-2 print:text-[0.8rem]">
+                          <tr className="text-slate-400 text-[9px] md:text-xs uppercase border-b-2 print-text-sm">
                             <th className="pb-1 text-left">💊 {p.dosage}</th>
                             <th className="pb-1">🍽️ {p.time_col}</th>
                             <th className="pb-1 text-right">🗓️ {p.duration}</th>
@@ -763,12 +778,12 @@ export default function PharmaLingoApp() {
                         <tbody>
                           {rx.taperSteps.map((step, idx) => (
                             <tr key={idx} className="border-b border-slate-50 last:border-0 print:border-slate-200">
-                              <td className="py-1 font-black text-xs md:text-sm text-blue-600 text-left print:text-[1rem]">{step.dose} {unitDict[step.unit][patientLang]}</td>
-                              <td className="py-1 text-[10px] md:text-xs print:text-[0.8rem]">
+                              <td className="py-1 font-black text-xs md:text-sm text-blue-600 text-left print-text-md">{step.dose} {unitDict[step.unit][patientLang]}</td>
+                              <td className="py-1 text-[10px] md:text-xs print:text-sm">
                                  <div className="text-teal-600 font-bold">{step.time !== null && p.time[step.time]}</div>
                                  <div className="text-orange-600 font-bold">{step.periods.map(i => `${th.period_icons[i]} ${p.period[i]}`).join(', ')}</div>
                               </td>
-                              <td className="py-1 font-black text-xs md:text-sm text-slate-700 text-right print:text-[1rem]">{step.days} {p.day}</td>
+                              <td className="py-1 font-black text-xs md:text-sm text-slate-700 text-right print-text-md">{step.days} {p.day}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -778,7 +793,7 @@ export default function PharmaLingoApp() {
                 ) : (
                   <div className={`flex flex-col ${instGap} print:flex-1 print:justify-center`}>
                     {(rx.rxDose !== null || Number(rx.cDose) > 0) && (
-                      <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box print:bg-white`}>
+                      <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box`}>
                         <span className="text-3xl md:text-4xl print-icon">💊</span>
                         <div className={`flex flex-wrap items-center gap-2 font-black text-slate-800 ${instTextSize}`}>
                           <span>{rx.rxDose !== null ? p.dose[rx.rxDose] : parseSmartText(p.smart_dose, rx.cDose, rx.cDoseUnit)}</span>
@@ -787,7 +802,7 @@ export default function PharmaLingoApp() {
                     )}
                     
                     {(rx.rxFreq !== null || Number(rx.cHour) > 0 || Number(rx.cApply) > 0) && (
-                      <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box print:bg-white`}>
+                      <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box`}>
                         <span className="text-3xl md:text-4xl print-icon">🔄</span>
                         <span className={`font-black text-slate-800 ${instTextSize}`}>
                           {rx.rxFreq !== null && <div>{p.freq[rx.rxFreq]}</div>}
@@ -798,19 +813,19 @@ export default function PharmaLingoApp() {
                     )}
 
                     {(rx.rxTime !== null || Number(rx.cDays) > 0) && (
-                      <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box print:bg-white`}>
+                      <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box`}>
                         <span className="text-3xl md:text-4xl print-icon">🍽️</span>
                         <span className={`font-black text-slate-800 ${instTextSize}`}>
                           {rx.rxTime !== null && <div>{p.time[rx.rxTime]}</div>}
-                          {Number(rx.cDays) > 0 && <div className="text-emerald-600 mt-1 print:mt-0 print:text-[0.8rem]">{parseSmartText(p.smart_days, rx.cDays, rx.cDaysUnit)}</div>}
+                          {Number(rx.cDays) > 0 && <div className="text-emerald-600 mt-1 print:mt-0 print:text-sm">{parseSmartText(p.smart_days, rx.cDays, rx.cDaysUnit)}</div>}
                         </span>
                       </div>
                     )}
 
                     {rx.rxPeriod.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 print:gap-1.5 print-box print:border-none print:p-0 print:bg-transparent">
+                      <div className="flex flex-wrap gap-1.5 print-box" style={{border: 'none', padding: '0 !important', background: 'transparent'}}>
                         {rx.rxPeriod.map((i: number) => (
-                          <span key={i} className={`bg-orange-50 text-orange-600 px-3 py-1.5 rounded-lg font-black border border-orange-200 shadow-sm ${instTextSize} print:px-2 print:py-1 print:rounded-lg print:border print:border-orange-200`}>
+                          <span key={i} className={`bg-orange-50 text-orange-600 px-3 py-1.5 rounded-lg font-black border border-orange-200 shadow-sm ${instTextSize} print:px-2 print:py-1 print:rounded-lg print:text-sm`}>
                             {p.period_icons[i]} {p.period[i]}
                           </span>
                         ))}
@@ -818,9 +833,9 @@ export default function PharmaLingoApp() {
                     )}
 
                     {rx.rxSide !== null && (
-                      <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box print:bg-white print:mt-auto`}>
+                      <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box mt-auto`}>
                         <span className="text-3xl md:text-4xl print-icon">🧭</span>
-                        <span className={`font-black text-purple-600 bg-purple-50 px-2 py-1 rounded-lg border border-purple-200 ${instTextSize} print:px-2 print:py-1`}>
+                        <span className={`font-black text-purple-600 bg-purple-50 px-2 py-1 rounded-lg border border-purple-200 ${instTextSize} print:px-2 print:py-1 print:text-sm`}>
                           {p.side_icons[rx.rxSide]} {p.side[rx.rxSide]}
                         </span>
                       </div>
@@ -831,24 +846,24 @@ export default function PharmaLingoApp() {
             </div>
           </div>
 
-          {/* 🔴 การ์ดสีแดง (คำเตือน) */}
-          <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center print:p-0 print:min-h-0 print:block print:h-full print:w-full print-half">
-            <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-full max-h-[85dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-red-200 overflow-hidden print:max-h-full print:w-full print:break-inside-avoid print-rx-card">
+          {/* 🔴 คำเตือน (Red Card) - จะอยู่ฝั่งขวาพอดี */}
+          <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center print-card-wrapper">
+            <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-full max-h-[85dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-red-200 overflow-hidden print-rx-card">
               
-              <div className="bg-gradient-to-r from-red-800 to-rose-900 p-3 md:p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print-bg-red">
+              <div className="bg-gradient-to-r from-red-800 to-rose-900 p-3 md:p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print-bg-red print-header">
                 <span className="text-3xl opacity-20 print-icon print-text-white">⚠️</span>
                 <div className="flex flex-col items-center w-full">
-                  <h1 className="text-white font-black text-sm md:text-base tracking-widest uppercase print:text-white print:text-[1.1rem]">Bangkok Pattaya Hospital</h1>
-                  <p className="text-red-200 text-[10px] md:text-xs font-bold mt-1 tracking-widest print:text-white print:text-[0.8rem]">{p.warn_title}</p>
+                  <h1 className="text-white font-black text-sm md:text-base tracking-widest uppercase print-text-md print-text-white">Bangkok Pattaya Hospital</h1>
+                  <p className="text-red-200 text-[10px] md:text-xs font-bold mt-1 tracking-widest print-text-sm print-text-white">{p.warn_title}</p>
                 </div>
-                <button onClick={() => speakSpecificWarnings(rx)} className={`w-10 h-10 rounded-full text-lg shadow-md flex items-center justify-center print:hidden ${isSpeaking ? 'bg-white text-red-600 animate-pulse' : 'bg-red-800 text-white border border-red-400 hover:bg-red-700'}`}>
+                <button onClick={() => speakSpecificWarnings(rx)} className={`w-10 h-10 rounded-full text-lg shadow-md flex items-center justify-center print-hidden ${isSpeaking ? 'bg-white text-red-600 animate-pulse' : 'bg-red-800 text-white border border-red-400 hover:bg-red-700'}`}>
                   {isSpeaking ? '🛑' : '🔊'}
                 </button>
               </div>
 
               <div className={`bg-red-50/60 flex flex-col ${warnGap} p-3 md:p-5 overflow-y-auto custom-scrollbar flex-1 print-body`}>
-                <h3 className="text-red-600 font-black text-[11px] md:text-sm uppercase tracking-widest border-b-2 border-red-200 pb-1 mb-1 text-center print:text-[0.9rem] print:mb-0">⚠️ {p.warn_title}</h3>
-                <div className={`flex flex-col ${warnGap} print:flex-1 print:justify-center`}>
+                <h3 className="text-red-600 font-black text-[11px] md:text-sm uppercase tracking-widest border-b-2 border-red-200 pb-1 mb-1 text-center print-text-sm print:mb-0">⚠️ {p.warn_title}</h3>
+                <div className={`flex flex-col ${warnGap} print:gap-1.5 print:flex-1 print:justify-center`}>
                   {(rx.rxWarnings.length > 0 || rx.customWarnings.length > 0) ? (
                     <>
                       {rx.rxWarnings.map((wIdx: number) => (
@@ -865,14 +880,14 @@ export default function PharmaLingoApp() {
                       ))}
                     </>
                   ) : (
-                    <div className="flex flex-col items-center justify-center py-4 text-slate-300 opacity-60"><span className="text-4xl mb-2 print-icon">✅</span><span className="font-black text-xs print:text-[0.8rem]">No special warnings</span></div>
+                    <div className="flex flex-col items-center justify-center py-4 text-slate-300 opacity-60"><span className="text-4xl mb-2 print-icon">✅</span><span className="font-black text-xs print-text-sm">No special warnings</span></div>
                   )}
                 </div>
                 
                 {/* 📍 คำเตือนเรื่องแพ้ยา ล็อกไว้ท้ายสุดแบบไม่ให้ตกขอบ */}
-                <div className="bg-red-600 text-white rounded-xl p-3 flex items-center gap-2 shadow-md border border-red-400 mt-2 print-box print:bg-red-600 print:mt-auto">
+                <div className="bg-red-600 text-white rounded-xl p-3 flex items-center gap-2 shadow-md border border-red-400 mt-2 print-box print:mt-auto print:bg-red-600 print-header">
                    <span className="text-2xl md:text-3xl shrink-0 print-icon print-text-white">🛑</span>
-                   <span className="font-black text-xs md:text-sm leading-snug print-text-white print:text-[0.8rem]">{p.allergy_alert}</span>
+                   <span className="font-black text-xs md:text-sm leading-snug print-text-white print-text-sm">{p.allergy_alert}</span>
                 </div>
               </div>
             </div>
@@ -909,7 +924,7 @@ export default function PharmaLingoApp() {
               </button>
             </div>
 
-            {/* ตัวเลขจำนวนยารวมที่มุมขวาล่าง */}
+            {/* 💡 แก้ไข: ขยับตัวเลขจำนวนยาลงมาที่มุมขวาล่างเพื่อหลบชื่อยา */}
             {cart.length > 1 && (
               <div className="absolute bottom-6 right-6 bg-slate-800/80 text-white font-black text-xl md:text-2xl w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full border-2 border-slate-600 shadow-xl z-50 pointer-events-none print:hidden">
                 {cart.length}
@@ -1320,70 +1335,48 @@ export default function PharmaLingoApp() {
         </div>
       )}
 
-      {/* ควบคุมการแสดงผลสำหรับการปริ้นท์ Grid A5 ซ้าย-ขวา เป๊ะๆ */}
+      {/* 🖨️ CSS สำหรับปริ้นท์ A5 ซ้าย-ขวา เป๊ะๆ [Overhaul ใหม่หมด] 🖨️ */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@700;900&display=swap'); 
-        .font-arabic { font-family: 'Noto Sans Arabic', sans-serif !important; } 
-        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 24px); } 
         .animate-in { animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; } 
-        .fade-in { animation: fadeIn 0.3s ease-in-out forwards; } 
         @keyframes popIn { from { opacity: 0; transform: translateY(15px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } } 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } 
         .hide-scrollbar::-webkit-scrollbar { display: none; } 
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } 
         .custom-scrollbar::-webkit-scrollbar { width: 6px; } 
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; } 
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; } 
-        select { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>"); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; }
+        .print-hidden { display: none !important; }
         
-        /* 🖨️ CSS บังคับโครงสร้างตอน Print 🖨️ */
         @media print {
-          @page { 
-            size: A5 landscape; 
-            margin: 0; 
-          }
-          body, html { 
-            width: 100vw !important; 
-            height: 100vh !important;
-            margin: 0 !important; 
-            padding: 0 !important;
-            background: white !important; 
-            color: black !important; 
-            -webkit-print-color-adjust: exact !important; 
-            print-color-adjust: exact !important;
-            font-size: 130% !important; /* 🎯 ขยายฟอนต์ภาพรวม */
-          }
+          @page { size: A5 landscape; margin: 0; }
+          body, html { width: 100vw !important; height: 100vh !important; background: white !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; margin:0 !important; }
           
-          /* การตั้งค่าระบบ Grid สำหรับแยกซ้ายขวา */
-          .print-card-container {
+          /* 🎯 บังคับ Grid Layout ให้การ์ด 2 ใบยืนเรียงคู่กัน ซ้าย-ขวา เป๊ะๆ [แก้ไขจาก Flex] */
+          .print-rx-layout {
              display: grid !important;
              grid-template-columns: 1fr 1fr !important;
              gap: 8mm !important;
+             padding: 5mm !important;
              width: 100% !important;
-             height: 135mm !important; /* 🎯 ความสูงของหน้ากระดาษ A5 ลบขอบ */
+             height: 135mm !important; /* ความสูงของหน้ากระดาษ A5 ลบขอบนิดหน่อย */
              overflow: hidden !important;
              page-break-inside: avoid !important;
-             page-break-after: always !important; 
+             page-break-after: always !important;
              margin-bottom: 0 !important;
-             padding: 5mm !important;
-             transform: none !important;
-          }
-
-          /* บังคับการ์ดแต่ละใบ */
-          .print-half {
-             width: 100% !important;
-             height: 100% !important;
-             overflow: hidden !important;
           }
           
-          /* บังคับชื่อยาไม่ให้ทะลุกรอบ */
-          .print-text-wrap {
-             white-space: normal !important;
-             word-wrap: break-word !important;
-             text-align: center !important;
-             display: block !important;
-             width: 100% !important;
-          }
+          .print-card-wrapper { width: 100% !important; height: 100% !important; }
+          .print-rx-card { border: 2px solid #ccc !important; height: 100% !important; border-radius: 10px !important; }
+          
+          /* 📌 สีหัวกระดาษบังคับ */
+          .print-bg-blue { background: #1e3a8a !important; border-bottom: 2px solid #1e3a8a !important; }
+          .print-bg-red { background: #7f1d1d !important; border-bottom: 2px solid #7f1d1d !important; }
+          .print-text-white { color: white !important; }
+          
+          /* 📌 ขยายขนาดตัวหนังสือให้อ่านง่าย */
+          .print-text-md { font-size: 1.2rem !important; }
+          .print-text-sm { font-size: 0.9rem !important; }
+          .print-icon { font-size: 2.2rem !important; }
+          .print-box { border: 2px solid #e2e8f0 !important; padding: 4mm !important; border-radius: 8px !important; }
         }
       `}} />
     </div>
