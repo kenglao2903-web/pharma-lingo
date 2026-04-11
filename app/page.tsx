@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 
 // ==========================================
-// 🪄 ฐานข้อมูลเทคนิคพิเศษ
+// Specialty Medication Database
 // ==========================================
 const specialData = [
   {
@@ -32,7 +32,7 @@ const specialData = [
 ];
 
 // ==========================================
-// 🛠️ Component: จัดการชื่อยาไม่ให้ล้นกรอบ
+// FittedText Component - Handles Long Drug Names
 // ==========================================
 const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -55,7 +55,6 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
 
   return (
     <div ref={containerRef} className="w-full flex items-center justify-center overflow-visible px-2 relative z-10 print:px-0">
-      {/* 💡 ใส่คลาส print-no-scale เพื่อปิดการย่อขยายอัตโนมัติเมื่อสั่ง Print ให้ใช้การขึ้นบรรทัดใหม่แทน */}
       <span ref={textRef} className={`print-text-wrap print-no-scale inline-block font-black origin-center whitespace-nowrap ${isMain ? 'text-3xl md:text-5xl text-slate-900 print:text-[1.5rem]' : 'text-lg md:text-2xl text-yellow-900 opacity-80 print:text-[1.2rem]'}`} style={{ transform: scale < 1 ? `scale(${scale})` : 'none' }}>
         {text.toUpperCase()}
       </span>
@@ -64,7 +63,7 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
 };
 
 // ==========================================
-// 📚 ฐานข้อมูลคำศัพท์ & พจนานุกรมหน่วยวัด
+// Units Dictionary
 // ==========================================
 const unitDict: any = {
   tab: { th: 'เม็ด', en: 'tablet', de: 'Tablette', zh: '粒', ja: '錠', ru: 'табл.', ar: 'حبة' },
@@ -81,6 +80,9 @@ const unitDict: any = {
   times: { th: 'ครั้ง', en: 'time', de: 'Mal', zh: '次', ja: '回', ru: 'раз', ar: 'مرات' }
 };
 
+// ==========================================
+// Translation Dictionary
+// ==========================================
 const dict = {
   th: {
     dashboard: 'แดชบอร์ดเภสัชกร', change_lang: 'เปลี่ยนภาษา', tab_history: '📋 ซักประวัติ', tab_dispense: '💊 จ่ายยา', tab_special: '🪄 เทคนิคพิเศษ',
@@ -180,6 +182,7 @@ const dict = {
     time: ['До еды', 'После еды', 'Сразу после', 'Независимо'],
     period: ['Утром', 'Днем', 'Вечером', 'На ночь', 'По нужде'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['Закончить курс.', 'Сонливость.', 'Без алкоголя.', 'Без молока.', 'Беречь от солнца.', 'Пить воду.', 'Цвет мочи.', 'Жевать.', 'В холодильник.', 'В воду'],
+    warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'],
     allergy_alert: 'При сыпи или удушье срочно к врачу.',
     show_card: '🚀 Показать', edit_rx: '⬅️ Назад', photo_prompt: '📸 Сфотографируйте экран', write_dob: '✍️ Напишите дату рождения на бумаге.',
     smart_dose: 'По {n} {u}', smart_hour: 'Каждые {n} {u}', smart_apply: '{n} раз(а) в день', smart_days: 'На {n} {u}',
@@ -197,6 +200,7 @@ const dict = {
     time: ['قبل الأكل', 'بعد الأكل', 'مباشرة بعد الأكل', 'قبل/بعد الأكل'],
     period: ['صباح', 'ظهر', 'مساء', 'ليل', 'عند الحاجة'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['أكمل الجرعة.', 'نعاس.', 'لا كحول.', 'لا حليب.', 'تجنب الشمس.', 'اشرب ماء.', 'لون البول.', 'امضغ.', 'ثلاجة.', 'في الماء'],
+    warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'],
     allergy_alert: 'توقف فوراً عند ظهور طفح جلدي أو ضيق تنفس.',
     show_card: '🚀 عرض', edit_rx: '⬅️ رجوع', photo_prompt: '📸 يرجى تصوير الشاشة', write_dob: '✍️ يرجى كتابة تاريخ ميلادك على الورق.',
     smart_dose: 'استخدم {n} {u}', smart_hour: 'كل {n} {u}', smart_apply: '{n} يومياً', smart_days: 'لمدة {n} {u}',
@@ -233,12 +237,10 @@ const LANGUAGES = [
   { code: 'ar', flag: '🇦🇪', label: 'UAE' },
 ];
 
-// แปลงข้อมูลเป็น Base64
 const encodeData = (data: any) => {
     return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
 };
 
-// แปลงข้อมูลกลับจาก Base64
 const decodeData = (str: string) => {
     try {
         return JSON.parse(decodeURIComponent(escape(atob(str))));
@@ -302,15 +304,14 @@ export default function PharmaLingoApp() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const synthRef = useRef<SpeechSynthesis | null>(null);
 
-  // 🔗 สถานะสำหรับการสร้างลิ้งก์ปริ้นท์
+  // Link Generation State
   const [shortLink, setShortLink] = useState('');
   const [isGeneratingLink, setIsGeneratingLink] = useState(false);
   const [showLinkModal, setShowLinkModal] = useState(false);
   
-  // 🎯 สถานะเช็คว่าเป็นเครื่องเภสัช (เปิดผ่านลิ้งก์) หรือไม่
+  // Shared Link State
   const [isSharedLink, setIsSharedLink] = useState(false);
 
-  // ตรวจสอบว่ามีข้อมูลจาก Link หรือไม่ตอนโหลดเว็บ
   useEffect(() => { 
     if (typeof window !== 'undefined') {
       synthRef.current = window.speechSynthesis; 
@@ -319,7 +320,6 @@ export default function PharmaLingoApp() {
         synthRef.current?.getVoices();
       };
 
-      // อ่านค่าจาก URL Param
       const params = new URLSearchParams(window.location.search);
       const rxData = params.get('rx');
       if (rxData) {
@@ -330,23 +330,20 @@ export default function PharmaLingoApp() {
           setHasStarted(true);
           setDispenseState('present');
           setIsFullscreen(true);
-          setIsSharedLink(true); // 🎯 ถ้าเปิดผ่านลิ้งก์ แสดงว่าเป็นเภสัชกรเปิดในคอม
+          setIsSharedLink(true); 
         }
       }
     }
   }, []);
 
-  // 🔗 ฟังก์ชันสร้างลิ้งก์ผ่าน is.gd API
   const generatePrintLink = async () => {
     setIsGeneratingLink(true);
     setShowLinkModal(true);
     try {
       const payload = { cart, lang: patientLang };
       const encodedUrl = encodeData(payload);
-      // สร้าง URL เต็ม
       const longUrl = window.location.origin + '?rx=' + encodedUrl;
       
-      // ส่งไปย่อลิ้งก์ที่ is.gd
       const res = await fetch(`https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`);
       const data = await res.json();
       
@@ -419,26 +416,9 @@ export default function PharmaLingoApp() {
     synthRef.current.speak(utterance);
   };
 
-  // ✅ แก้ไข: แยกฟังก์ชันที่เกี่ยวกับ Regex ออกมาจาก inline JSX เพื่อแก้บั๊ก Vercel Turbopack "Unterminated regexp literal"
-  const handleTaperDaysChange = (idx: number, val: string) => {
-    if (new RegExp('^\\d*$').test(val)) {
-      const ns = [...taperSteps];
-      ns[idx].days = Number(val);
-      setTaperSteps(ns);
-    }
-  };
-
-  const handleTaperDoseChange = (idx: number, val: string) => {
-    if (new RegExp('^\\d*\\.?\\d*$').test(val)) {
-      const ns = [...taperSteps];
-      ns[idx].dose = val;
-      setTaperSteps(ns);
-    }
-  };
-
   const togglePeriod = (index: number) => setRxPeriod(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index].sort());
   const toggleWarning = (index: number) => setRxWarnings(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]);
-  const handleNumberInput = (setter: any, value: string) => { if (value === '' || new RegExp('^\\d*\\.?\\d*$').test(value)) setter(value); };
+  const handleNumberInput = (setter: any, value: string) => { if (value === '' || /^\d*\.?\d*$/.test(value)) setter(value); };
 
   const handleTranslate = async () => {
     if (!customText.trim()) return;
@@ -661,9 +641,7 @@ export default function PharmaLingoApp() {
   if (appMode === 'history' && activeQuestion) patientHeightClass = 'h-[75dvh] p-6 print:hidden'; 
   if (appMode === 'dispense' && dispenseState === 'input') patientHeightClass = 'h-[8dvh] p-2 print:hidden'; 
 
-  // ==========================================
-  // 🪄 Render ฟังก์ชัน: การ์ด Instant Guide
-  // ==========================================
+  // Guide Card Rendering
   const renderGuideCard = (guide: any) => {
     return (
       <div className="w-full h-fit max-h-[85dvh] lg:max-w-4xl bg-white lg:rounded-[2rem] rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-4 border-teal-200 print:max-h-none" dir={isRTL ? 'rtl' : 'ltr'}>
@@ -698,9 +676,7 @@ export default function PharmaLingoApp() {
     );
   };
 
-  // ==========================================
-  // 🎟️ Render Boarding Pass: จัดหน้าจอแบบ Fit & ปริ้นท์ A5 แนวนอน
-  // ==========================================
+  // Boarding Pass Rendering
   const renderBoardingPass = (rx: Prescription, index: number) => {
     const displayDrugEn = rx.drugInput.trim();
     const displayDrugLocal = rx.drugName && rx.drugName.toLowerCase() !== rx.drugInput.toLowerCase() ? rx.drugName : '';
@@ -722,10 +698,10 @@ export default function PharmaLingoApp() {
     return (
       <div key={index} data-index={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu print-card-container print:overflow-hidden print:break-inside-avoid print:mb-0 print:p-0" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
         
-        {/* 🖨️ โครงสร้างตาราง (Flexbox แบบดั้งเดิม) สำหรับ Print ให้อยู่ข้างกันซ้าย-ขวา */}
+        {/* Print Layout */}
         <div className="w-full h-full flex flex-col snap-y snap-mandatory print-rx-layout">
             
-          {/* 🔵 การ์ดสีฟ้า (วิธีใช้) */}
+          {/* Blue Card */}
           <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center print:p-0 print:min-h-0 print:block print:h-full print:w-full print-half print-card-wrapper">
             <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-full max-h-[85dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-blue-100 overflow-hidden print:max-h-full print:w-full print:break-inside-avoid print:border-2 print:border-blue-900 print:rounded-2xl print:h-full print:shadow-none print-rx-card">
               
@@ -844,7 +820,7 @@ export default function PharmaLingoApp() {
             </div>
           </div>
 
-          {/* 🔴 การ์ดสีแดง (คำเตือน) */}
+          {/* Red Card */}
           <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center print:p-0 print:min-h-0 print:block print:h-full print:w-full print-half print-card-wrapper">
             <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-full max-h-[85dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-red-200 overflow-hidden print:max-h-full print:w-full print:break-inside-avoid print:border-2 print:border-red-900 print:rounded-2xl print:h-full print:shadow-none print-rx-card">
               
@@ -861,7 +837,6 @@ export default function PharmaLingoApp() {
 
               <div className={`bg-red-50/60 flex flex-col ${warnGap} p-3 md:p-5 overflow-y-auto custom-scrollbar flex-1 print:overflow-hidden print:bg-transparent print:p-3 print:gap-2`}>
                 <h3 className="text-red-600 font-black text-[11px] md:text-sm uppercase tracking-widest border-b-2 border-red-200 pb-1 mb-1 text-center print:text-[0.9rem] print:mb-0">⚠️ {p.warn_title}</h3>
-                
                 <div className={`flex flex-col ${warnGap} print:flex-1 print:justify-center`}>
                   {(rx.rxWarnings.length > 0 || rx.customWarnings.length > 0) ? (
                     <>
@@ -883,7 +858,7 @@ export default function PharmaLingoApp() {
                   )}
                 </div>
                 
-                {/* 📍 คำเตือนเรื่องแพ้ยา ล็อกไว้ท้ายสุดแบบไม่ให้ตกขอบกระดาษ */}
+                {/* Allergy Alert */}
                 <div className="bg-red-600 text-white rounded-xl p-3 flex items-center gap-2 shadow-md border border-red-400 mt-2 print-box print:mt-auto print-bg-red">
                    <span className="text-2xl md:text-3xl shrink-0 print-icon print-text-white">🛑</span>
                    <span className="font-black text-xs md:text-sm leading-snug print:text-white print:text-[0.8rem]">{p.allergy_alert}</span>
@@ -900,7 +875,7 @@ export default function PharmaLingoApp() {
   return (
     <div className="h-[100dvh] w-full bg-[#0f172a] font-sans flex flex-col overflow-hidden relative print:h-auto print:bg-white print:overflow-visible">
       
-      {/* 🎯 1. เช็ค isSharedLink เพื่อควบคุมทิศทางการหมุนหน้าจอ 🎯 */}
+      {/* Patient View */}
       <div className={`w-full flex justify-center items-center transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] print:rotate-0 print:block
         ${isSharedLink ? 'rotate-0' : 'rotate-180'}
         ${isFullscreen ? 'fixed inset-0 z-[100] bg-slate-900 h-full print:relative print:bg-white print:z-0' : `bg-slate-100 ${patientHeightClass}`}`}>
@@ -908,12 +883,12 @@ export default function PharmaLingoApp() {
         {dispenseState === 'present' && !activeGuide ? (
           <div className="w-full h-full flex flex-col bg-slate-900 relative print:bg-white print:h-auto print:block print:w-full print:mx-auto" dir={isRTL ? 'rtl' : 'ltr'}>
             
-            {/* 📸 กล่องบอกให้ถ่ายรูป (หลบมุมซ้ายบน) */}
+            {/* Photo Prompt Box */}
             <div className="absolute top-6 left-6 bg-blue-600 text-white font-black px-4 py-2 md:px-5 md:py-3 rounded-full shadow-xl border-2 border-blue-400 animate-pulse flex items-center gap-2 z-50 print:hidden pointer-events-auto">
                <span className="text-xl md:text-2xl">📸</span> <span className="text-[10px] md:text-sm">{p.photo_prompt}</span>
             </div>
 
-            {/* ปุ่มปิดและปุ่มปริ้นท์ มุมขวาบน */}
+            {/* Print and Close Buttons */}
             <div className="absolute top-6 right-6 flex items-center gap-2 z-50 pointer-events-none print:hidden">
               <button onClick={() => window.print()} className="bg-emerald-500 hover:bg-emerald-400 text-white w-10 h-10 md:w-12 md:h-12 rounded-full text-xl font-black shadow-xl flex items-center justify-center border-2 border-emerald-300 pointer-events-auto active:scale-95">
                  🖨️
@@ -923,14 +898,14 @@ export default function PharmaLingoApp() {
               </button>
             </div>
 
-            {/* ตัวเลขจำนวนยารวมที่มุมขวาล่าง */}
+            {/* Cart Count */}
             {cart.length > 1 && (
               <div className="absolute bottom-6 right-6 bg-slate-800/80 text-white font-black text-xl md:text-2xl w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full border-2 border-slate-600 shadow-xl z-50 pointer-events-none print:hidden">
                 {cart.length}
               </div>
             )}
 
-            {/* Slider แนวนอน */}
+            {/* Horizontal Slider */}
             <div className="flex-1 w-full h-full relative print:h-auto print:overflow-visible">
                {cart.length > 1 && <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-slate-400 text-[10px] md:text-xs font-bold uppercase tracking-widest animate-bounce z-50 pointer-events-none bg-slate-900/80 px-6 py-2 rounded-full border border-slate-700 print:hidden">{p.swipe_hint}</div>}
                <div id="horizontal-scroll-container" className="w-full h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory flex hide-scrollbar scroll-smooth transform-gpu print:flex-col print:overflow-visible print:h-auto print:snap-none" style={{ WebkitOverflowScrolling: 'touch' }}>
@@ -988,7 +963,7 @@ export default function PharmaLingoApp() {
                       </div>
                     )}
                     
-                    {/* เปลี่ยนหน้าถามวันเกิด เป็นข้อความ */}
+                    {/* DOB Text Prompt */}
                     {activeQuestion === 'q_dob' && (
                       <div className="w-full max-w-xl mx-auto mt-4 animate-in fade-in">
                          <div className="bg-blue-50 text-blue-800 rounded-[2rem] p-6 flex flex-col items-center shadow-md border-2 border-blue-200">
@@ -1026,7 +1001,7 @@ export default function PharmaLingoApp() {
          </div>
       )}
 
-      {/* UI เภสัชกร (ซ่อนตอนปริ้นท์) */}
+      {/* Pharmacist UI - Hidden on Print */}
       {!isFullscreen && (
         <div className="flex-1 bg-[#0f172a] rounded-t-[2.5rem] shadow-[0_-20px_50px_rgba(0,0,0,0.5)] relative z-10 flex flex-col min-h-0 border-t border-slate-700/50 print:hidden">
           
@@ -1041,7 +1016,6 @@ export default function PharmaLingoApp() {
               {appMode === 'dispense' && (
                 <button onClick={clearAll} className="text-[10px] md:text-xs font-black text-white bg-red-900/40 px-3 py-2 md:px-4 md:py-3 rounded-xl border border-red-800 hover:bg-red-800">🗑️ เคลียร์</button>
               )}
-              {/* 🔗 ปุ่มขอ Link ปริ้นท์ สำหรับหน้าแรก */}
               {appMode === 'dispense' && cart.length > 0 && (
                 <button onClick={generatePrintLink} disabled={isGeneratingLink} className="text-[10px] md:text-xs font-black text-white bg-indigo-600 px-3 py-2 md:px-4 md:py-3 rounded-xl border border-indigo-400 hover:bg-indigo-500 flex items-center gap-1.5 disabled:opacity-50">
                   {isGeneratingLink ? '⏳ รอ...' : '🔗 ลิ้งก์ปริ้นท์'}
@@ -1322,10 +1296,10 @@ export default function PharmaLingoApp() {
         </div>
       )}
 
-      {/* 🎯 Popup Modal สำหรับส่งลิ้งก์ให้เภสัช (หมุนหาเภสัชกรเสมอ 0 องศา) 🎯 */}
+      {/* Link Modal */}
       {showLinkModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[200] print:hidden">
-          <div className="bg-white rounded-3xl p-6 md:p-8 flex flex-col items-center max-w-sm w-[90%] shadow-2xl animate-in rotate-0">
+          <div className="bg-white rounded-3xl p-6 md:p-8 flex flex-col items-center max-w-sm w-[90%] shadow-[0_0_50px_rgba(79,70,229,0.5)] animate-in rotate-0">
              <div className="text-5xl mb-4">💻</div>
              <h3 className="text-slate-800 font-black text-lg md:text-xl text-center mb-2">พิมพ์ลิ้งก์ที่คอมเพื่อปริ้นท์</h3>
              <div className="bg-indigo-50 border-2 border-indigo-200 text-indigo-700 font-black text-3xl md:text-4xl py-4 px-8 rounded-2xl my-4 w-full text-center tracking-widest">{shortLink || '⏳'}</div>
@@ -1334,7 +1308,7 @@ export default function PharmaLingoApp() {
         </div>
       )}
 
-      {/* ควบคุมการแสดงผลสำหรับการปริ้นท์ A5 ซ้าย-ขวา เป๊ะๆ ตามโค้ดต้นฉบับ */}
+      {/* Print CSS */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@700;900&display=swap'); 
         .font-arabic { font-family: 'Noto Sans Arabic', sans-serif !important; } 
@@ -1350,7 +1324,6 @@ export default function PharmaLingoApp() {
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; } 
         select { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>"); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; }
         
-        /* 🖨️ CSS บังคับโครงสร้างตอน Print 🖨️ */
         @media print {
           @page { 
             size: A5 landscape; 
@@ -1369,7 +1342,6 @@ export default function PharmaLingoApp() {
           
           .print\\:hidden { display: none !important; }
 
-          /* 📌 บังคับ Flex Layout ให้การ์ด 2 ใบยืนเรียงคู่กัน ซ้าย-ขวา เป๊ะๆ ตามโค้ดต้นฉบับ */
           .print-rx-layout {
              display: flex !important;
              flex-direction: row !important;
@@ -1399,12 +1371,10 @@ export default function PharmaLingoApp() {
              flex-direction: column !important; 
           }
           
-          /* 📌 สีหัวกระดาษและฟอนต์บังคับสีขาว */
           .print-bg-blue { background: #1e3a8a !important; border-bottom: 2px solid #1e3a8a !important; border-radius: 8px 8px 0 0 !important; }
           .print-bg-red { background: #7f1d1d !important; border-bottom: 2px solid #7f1d1d !important; border-radius: 8px 8px 0 0 !important; }
           .print-text-white { color: white !important; }
           
-          /* 📌 บังคับชื่อยาตอน Print ให้ปัดบรรทัด ไม่ล้นกรอบ ไม่บังใคร */
           .print-no-scale { transform: none !important; }
           .print-text-wrap { 
              white-space: normal !important; 
