@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 
 // ==========================================
-// Specialty Medication Database
+// 🪄 ฐานข้อมูลเทคนิคพิเศษ
 // ==========================================
 const specialData = [
   {
@@ -32,7 +32,7 @@ const specialData = [
 ];
 
 // ==========================================
-// FittedText Component - Handles Long Drug Names
+// 🛠️ Component: จัดการชื่อยาไม่ให้ล้นกรอบ
 // ==========================================
 const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -55,7 +55,11 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
 
   return (
     <div ref={containerRef} className="w-full flex items-center justify-center overflow-visible px-2 relative z-10 print:px-0">
-      <span ref={textRef} className={`print-text-wrap print-no-scale inline-block font-black origin-center whitespace-nowrap ${isMain ? 'text-3xl md:text-5xl text-slate-900 print:text-[1.5rem]' : 'text-lg md:text-2xl text-yellow-900 opacity-80 print:text-[1.2rem]'}`} style={{ transform: scale < 1 ? `scale(${scale})` : 'none' }}>
+      <span 
+        ref={textRef} 
+        className={`print-text-wrap print-no-scale inline-block font-black origin-center whitespace-nowrap ${isMain ? 'text-3xl md:text-5xl text-slate-900 print:text-[1.5rem]' : 'text-lg md:text-2xl text-yellow-900 opacity-80 print:text-[1.2rem]'}`} 
+        style={{ transform: scale < 1 ? `scale(${scale})` : 'none' }}
+      >
         {text.toUpperCase()}
       </span>
     </div>
@@ -63,7 +67,7 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
 };
 
 // ==========================================
-// Units Dictionary
+// 📚 ฐานข้อมูลคำศัพท์ & พจนานุกรมหน่วยวัด
 // ==========================================
 const unitDict: any = {
   tab: { th: 'เม็ด', en: 'tablet', de: 'Tablette', zh: '粒', ja: '錠', ru: 'табл.', ar: 'حبة' },
@@ -80,9 +84,6 @@ const unitDict: any = {
   times: { th: 'ครั้ง', en: 'time', de: 'Mal', zh: '次', ja: '回', ru: 'раз', ar: 'مرات' }
 };
 
-// ==========================================
-// Translation Dictionary
-// ==========================================
 const dict = {
   th: {
     dashboard: 'แดชบอร์ดเภสัชกร', change_lang: 'เปลี่ยนภาษา', tab_history: '📋 ซักประวัติ', tab_dispense: '💊 จ่ายยา', tab_special: '🪄 เทคนิคพิเศษ',
@@ -182,7 +183,6 @@ const dict = {
     time: ['До еды', 'После еды', 'Сразу после', 'Независимо'],
     period: ['Утром', 'Днем', 'Вечером', 'На ночь', 'По нужде'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['Закончить курс.', 'Сонливость.', 'Без алкоголя.', 'Без молока.', 'Беречь от солнца.', 'Пить воду.', 'Цвет мочи.', 'Жевать.', 'В холодильник.', 'В воду'],
-    warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'],
     allergy_alert: 'При сыпи или удушье срочно к врачу.',
     show_card: '🚀 Показать', edit_rx: '⬅️ Назад', photo_prompt: '📸 Сфотографируйте экран', write_dob: '✍️ Напишите дату рождения на бумаге.',
     smart_dose: 'По {n} {u}', smart_hour: 'Каждые {n} {u}', smart_apply: '{n} раз(а) в день', smart_days: 'На {n} {u}',
@@ -200,7 +200,6 @@ const dict = {
     time: ['قبل الأكل', 'بعد الأكل', 'مباشرة بعد الأكل', 'قبل/بعد الأكل'],
     period: ['صباح', 'ظهر', 'مساء', 'ليل', 'عند الحاجة'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['أكمل الجرعة.', 'نعاس.', 'لا كحول.', 'لا حليب.', 'تجنب الشمس.', 'اشرب ماء.', 'لون البول.', 'امضغ.', 'ثلاجة.', 'في الماء'],
-    warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'],
     allergy_alert: 'توقف فوراً عند ظهور طفح جلدي أو ضيق تنفس.',
     show_card: '🚀 عرض', edit_rx: '⬅️ رجوع', photo_prompt: '📸 يرجى تصوير الشاشة', write_dob: '✍️ يرجى كتابة تاريخ ميلادك على الورق.',
     smart_dose: 'استخدم {n} {u}', smart_hour: 'كل {n} {u}', smart_apply: '{n} يومياً', smart_days: 'لمدة {n} {u}',
@@ -304,12 +303,10 @@ export default function PharmaLingoApp() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const synthRef = useRef<SpeechSynthesis | null>(null);
 
-  // Link Generation State
   const [shortLink, setShortLink] = useState('');
   const [isGeneratingLink, setIsGeneratingLink] = useState(false);
   const [showLinkModal, setShowLinkModal] = useState(false);
   
-  // Shared Link State
   const [isSharedLink, setIsSharedLink] = useState(false);
 
   useEffect(() => { 
@@ -350,10 +347,10 @@ export default function PharmaLingoApp() {
       if (data.shorturl) {
         setShortLink(data.shorturl.replace('https://', ''));
       } else {
-        setShortLink('Error: ไม่สามารถสร้างลิ้งก์ได้');
+        setShortLink('Error: Link generation failed');
       }
     } catch (err) {
-      setShortLink('Error: การเชื่อมต่อล้มเหลว');
+      setShortLink('Error: Connection failed');
     }
     setIsGeneratingLink(false);
   };
@@ -416,9 +413,26 @@ export default function PharmaLingoApp() {
     synthRef.current.speak(utterance);
   };
 
+  // ✅ Fixed regex to avoid Vercel build errors
+  const handleTaperDaysChange = (idx: number, val: string) => {
+    if (new RegExp('^\\d*$').test(val)) {
+      const ns = [...taperSteps];
+      ns[idx].days = Number(val);
+      setTaperSteps(ns);
+    }
+  };
+
+  const handleTaperDoseChange = (idx: number, val: string) => {
+    if (new RegExp('^\\d*\\.?\\d*$').test(val)) {
+      const ns = [...taperSteps];
+      ns[idx].dose = val;
+      setTaperSteps(ns);
+    }
+  };
+
   const togglePeriod = (index: number) => setRxPeriod(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index].sort());
   const toggleWarning = (index: number) => setRxWarnings(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]);
-  const handleNumberInput = (setter: any, value: string) => { if (value === '' || /^\d*\.?\d*$/.test(value)) setter(value); };
+  const handleNumberInput = (setter: any, value: string) => { if (value === '' || new RegExp('^\\d*\\.?\\d*$').test(value)) setter(value); };
 
   const handleTranslate = async () => {
     if (!customText.trim()) return;
@@ -963,7 +977,7 @@ export default function PharmaLingoApp() {
                       </div>
                     )}
                     
-                    {/* DOB Text Prompt */}
+                    {/* Date of Birth Input Prompt */}
                     {activeQuestion === 'q_dob' && (
                       <div className="w-full max-w-xl mx-auto mt-4 animate-in fade-in">
                          <div className="bg-blue-50 text-blue-800 rounded-[2rem] p-6 flex flex-col items-center shadow-md border-2 border-blue-200">
@@ -998,10 +1012,10 @@ export default function PharmaLingoApp() {
               </div>
             )}
           </div>
-         </div>
-      )}
+        )}
+      </div>
 
-      {/* Pharmacist UI - Hidden on Print */}
+      {/* Pharmacist UI */}
       {!isFullscreen && (
         <div className="flex-1 bg-[#0f172a] rounded-t-[2.5rem] shadow-[0_-20px_50px_rgba(0,0,0,0.5)] relative z-10 flex flex-col min-h-0 border-t border-slate-700/50 print:hidden">
           
@@ -1299,7 +1313,7 @@ export default function PharmaLingoApp() {
       {/* Link Modal */}
       {showLinkModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[200] print:hidden">
-          <div className="bg-white rounded-3xl p-6 md:p-8 flex flex-col items-center max-w-sm w-[90%] shadow-[0_0_50px_rgba(79,70,229,0.5)] animate-in rotate-0">
+          <div className="bg-white rounded-3xl p-6 md:p-8 flex flex-col items-center max-w-sm w-[90%] shadow-2xl animate-in rotate-0">
              <div className="text-5xl mb-4">💻</div>
              <h3 className="text-slate-800 font-black text-lg md:text-xl text-center mb-2">พิมพ์ลิ้งก์ที่คอมเพื่อปริ้นท์</h3>
              <div className="bg-indigo-50 border-2 border-indigo-200 text-indigo-700 font-black text-3xl md:text-4xl py-4 px-8 rounded-2xl my-4 w-full text-center tracking-widest">{shortLink || '⏳'}</div>
