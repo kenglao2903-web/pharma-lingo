@@ -2,15 +2,37 @@
 import { useState, useRef, useEffect } from 'react';
 
 // ==========================================
-// 🪄 ฐานข้อมูลเทคนิคพิเศษ (บีบอัดบรรทัดเพื่อป้องกัน AI ตัดข้อความ)
+// Specialty Medication Database
 // ==========================================
 const specialData = [
-  { id: "inhaler_mdi", icon: "💨", title: { th: "ยาสูดพ่นแบบกด (MDI)", en: "MDI Inhaler" }, steps: [ { icon: "🫁", desc: { th: "หายใจออกให้สุด", en: "Breathe out completely.", zh: "完全呼气。", ja: "息を完全に吐き出します。", ru: "Сделайте глубокий выдох.", ar: "ازفر تمامًا.", de: "Atmen Sie vollständig aus." } }, { icon: "👄", desc: { th: "อมปากกระบอกให้สนิท", en: "Place mouthpiece in mouth.", zh: "将咬嘴放入口中。", ja: "マウスピースを口に含みます。", ru: "Поместите мундштук в рот.", ar: "ضع قطعة الفم في فمك.", de: "Nehmen Sie das Mundstück in den Mund." } }, { icon: "🌬️", desc: { th: "กดพร้อมหายใจเข้าลึกๆ", en: "Press and inhale deeply.", zh: "按下并深吸气。", ja: "押して深く息を吸い込みます。", ru: "Нажмите и глубоко вдохните.", ar: "اضغط واستنشق بعمق.", de: "Drücken und tief einatmen." } }, { icon: "⏱️", desc: { th: "กลั้นหายใจ 10 วินาที", en: "Hold breath for 10s.", zh: "屏住呼吸10秒。", ja: "10秒間息を止めます。", ru: "Задержите дыхание на 10 сек.", ar: "اكتم أنفاسك لمدة 10 ثوانٍ.", de: "Atem für 10s anhalten." } }, { icon: "🫧", desc: { th: "บ้วนปากหลังใช้เสร็จ", en: "Rinse mouth after use.", zh: "使用后漱口。", ja: "使用後うがいをします。", ru: "Прополощите рот после.", ar: "اشطف فمك بعد الاستخدام.", de: "Mund nach Gebrauch ausspülen." } } ] },
-  { id: "insulin_pen", icon: "💉", title: { th: "ปากกาฉีดอินซูลิน", en: "Insulin Pen" }, steps: [ { icon: "🔄", desc: { th: "กลิ้งยาให้เข้ากัน", en: "Roll the pen to mix." } }, { icon: "🔢", desc: { th: "หมุนตั้งขนาดยา", en: "Dial your dose." } }, { icon: "🧼", desc: { th: "เช็ดทำความสะอาดผิวหนัง", en: "Clean the injection site." } }, { icon: "🎯", desc: { th: "ฉีดตั้งฉาก 90 องศา", en: "Inject straight in (90 degrees)." } }, { icon: "⏳", desc: { th: "กดค้างไว้ 10 วินาที", en: "Hold for 10 seconds before removing." } } ] }
+  {
+    id: "inhaler_mdi",
+    icon: "💨",
+    title: { th: "ยาสูดพ่นแบบกด (MDI)", en: "MDI Inhaler" },
+    steps: [
+      { icon: "🫁", desc: { th: "หายใจออกให้สุด", en: "Breathe out completely.", zh: "完全呼气。", ja: "息を完全に吐き出します。", ru: "Сделайте глубокий выдох.", ar: "ازفر تمامًا.", de: "Atmen Sie vollständig aus." } },
+      { icon: "👄", desc: { th: "อมปากกระบอกให้สนิท", en: "Place mouthpiece in mouth.", zh: "将咬嘴放入口中。", ja: "マウスピースを口に含みます。", ru: "Поместите мундштук в рот.", ar: "ضع قطعة الفم في فمك.", de: "Nehmen Sie das Mundstück in den Mund." } },
+      { icon: "🌬️", desc: { th: "กดพร้อมหายใจเข้าลึกๆ", en: "Press and inhale deeply.", zh: "按下并深吸气。", ja: "押して深く息を吸い込みます。", ru: "Нажмите и глубоко вдохните.", ar: "اضغط واستنشق بعمق.", de: "Drücken und tief einatmen." } },
+      { icon: "⏱️", desc: { th: "กลั้นหายใจ 10 วินาที", en: "Hold breath for 10s.", zh: "屏住呼吸10秒。", ja: "10秒間息を止めます。", ru: "Задержите дыхание на 10 сек.", ar: "اكتم أنفاسك لمدة 10 ثوانٍ.", de: "Atem für 10s anhalten." } },
+      { icon: "🫧", desc: { th: "บ้วนปากหลังใช้เสร็จ", en: "Rinse mouth after use.", zh: "使用后漱口。", ja: "使用後うがいをします。", ru: "Прополощите ротหลัง.", ar: "اشطف فมك بعد الاستخدام.", de: "Mund nach Gebrauch ausspülen." } }
+    ]
+  },
+  {
+    id: "insulin_pen",
+    icon: "💉",
+    title: { th: "ปากกาฉีดอินซูลิน", en: "Insulin Pen" },
+    steps: [
+      { icon: "🔄", desc: { th: "กลิ้งยาให้เข้ากัน", en: "Roll the pen to mix." } },
+      { icon: "🔢", desc: { th: "หมุนตั้งขนาดยา", en: "Dial your dose." } },
+      { icon: "🧼", desc: { th: "เช็ดทำความสะอาดผิวหนัง", en: "Clean the injection site." } },
+      { icon: "🎯", desc: { th: "ฉีดตั้งฉาก 90 องศา", en: "Inject straight in (90 degrees)." } },
+      { icon: "⏳", desc: { th: "กดค้างไว้ 10 วินาที", en: "Hold for 10 seconds before removing." } }
+    ]
+  }
 ];
 
 // ==========================================
-// 🛠️ Component: จัดการชื่อยาไม่ให้ล้นกรอบ
+// FittedText Component - Handles Long Drug Names
 // ==========================================
 const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -34,7 +56,7 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
   return (
     <div ref={containerRef} className="w-full flex items-center justify-center overflow-visible px-2 relative z-10 print:px-0">
       <span ref={textRef} 
-        className={`print-text-wrap print-no-scale inline-block font-black origin-center whitespace-nowrap ${isMain ? 'text-3xl md:text-5xl text-slate-900 print:text-[1.3rem]' : 'text-lg md:text-2xl text-yellow-900 opacity-80 print:text-[1rem]'}`} 
+        className={`print-text-wrap print-no-scale inline-block font-black origin-center whitespace-nowrap ${isMain ? 'text-3xl md:text-5xl text-slate-900 print:text-[1.2rem]' : 'text-lg md:text-2xl text-yellow-900 opacity-80 print:text-[0.9rem]'}`} 
         style={{ transform: scale < 1 ? `scale(${scale})` : 'none' }}>
         {text.toUpperCase()}
       </span>
@@ -43,18 +65,151 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
 };
 
 // ==========================================
-// 📚 ฐานข้อมูลคำศัพท์ & พจนานุกรม (บีบอัดบรรทัด)
+// Units Dictionary
 // ==========================================
-const unitDict: any = { tab: { th: 'เม็ด', en: 'tablet', de: 'Tablette', zh: '粒', ja: '錠', ru: 'табл.', ar: 'حبة' }, cap: { th: 'แคปซูล', en: 'capsule', de: 'Kapsel', zh: '胶囊', ja: 'カプセル', ru: 'капс.', ar: 'كبسولة' }, tsp: { th: 'ช้อนชา', en: 'teaspoon', de: 'Teelöffel', zh: '茶匙', ja: '小さじ', ru: 'ч.л.', ar: 'ملعقة صغيرة' }, tbsp: { th: 'ช้อนโต๊ะ', en: 'tablespoon', de: 'Esslöffel', zh: '汤匙', ja: '大さじ', ru: 'ст.л.', ar: 'ملعقة كبيرة' }, ml: { th: 'มล. (ml)', en: 'ml', de: 'ml', zh: '毫升', ja: 'ml', ru: 'мл', ar: 'مل' }, cc: { th: 'ซีซี (cc)', en: 'cc', de: 'cc', zh: 'cc', ja: 'cc', ru: 'куб.см', ar: 'سم مكعب' }, drop: { th: 'หยด', en: 'drop', de: 'Tropfen', zh: '滴', ja: '滴', ru: 'кап.', ar: 'قطرة' }, puff: { th: 'กด/ปั๊ม', en: 'puff', de: 'Sprühstoß', zh: '喷', ja: 'プッシュ', ru: 'пшик', ar: 'بخة' }, hr: { th: 'ชั่วโมง', en: 'hour', de: 'Stunde', zh: '小时', ja: '時間', ru: 'час', ar: 'ساعات' }, day: { th: 'วัน', en: 'day', de: 'Tag', zh: '天', ja: '日', ru: 'дней', ar: 'أيام' }, wk: { th: 'สัปดาห์', en: 'week', de: 'Woche', zh: '周', ja: '週間', ru: 'недель', ar: 'أسابيع' }, times: { th: 'ครั้ง', en: 'time', de: 'Mal', zh: '次', ja: '回', ru: 'раз', ar: 'مرات' } };
+const unitDict: any = {
+  tab: { th: 'เม็ด', en: 'tablet', de: 'Tablette', zh: '粒', ja: '錠', ru: 'табл.', ar: 'حبة' },
+  cap: { th: 'แคปซูล', en: 'capsule', de: 'Kapsel', zh: '胶囊', ja: 'カプセル', ru: 'капс.', ar: 'كبسولة' },
+  tsp: { th: 'ช้อนชา', en: 'teaspoon', de: 'Teelöffel', zh: '茶匙', ja: '小さじ', ru: 'ч.л.', ar: 'ملعقة صغيرة' },
+  tbsp: { th: 'ช้อนโต๊ะ', en: 'tablespoon', de: 'Esslöffel', zh: '汤匙', ja: '大さじ', ru: 'ст.л.', ar: 'ملعقة كبيرة' },
+  ml: { th: 'มล. (ml)', en: 'ml', de: 'ml', zh: '毫升', ja: 'ml', ru: 'мл', ar: 'مل' },
+  cc: { th: 'ซีซี (cc)', en: 'cc', de: 'cc', zh: 'cc', ja: 'cc', ru: 'куб.см', ar: 'سم مكعب' },
+  drop: { th: 'หยด', en: 'drop', de: 'Tropfen', zh: '滴', ja: '滴', ru: 'кап.', ar: 'قطرة' },
+  puff: { th: 'กด/ปั๊ม', en: 'puff', de: 'Sprühstoß', zh: '喷', ja: 'プッシュ', ru: 'пшик', ar: 'بخة' },
+  hr: { th: 'ชั่วโมง', en: 'hour', de: 'Stunde', zh: '小时', ja: '時間', ru: 'час', ar: 'ساعات' },
+  day: { th: 'วัน', en: 'day', de: 'Tag', zh: '天', ja: '日', ru: 'дней', ar: 'أيام' },
+  wk: { th: 'สัปดาห์', en: 'week', de: 'Woche', zh: '周', ja: '週間', ru: 'недель', ar: 'أسابيع' },
+  times: { th: 'ครั้ง', en: 'time', de: 'Mal', zh: '次', ja: '回', ru: 'раз', ar: 'مرات' }
+};
 
+// ==========================================
+// Translation Dictionary
+// ==========================================
 const dict = {
-  th: { dashboard: 'แดชบอร์ดเภสัชกร', change_lang: 'เปลี่ยนภาษา', tab_history: '📋 ซักประวัติ', tab_dispense: '💊 จ่ายยา', tab_special: '🪄 เทคนิคพิเศษ', q_name: 'คุณชื่ออะไร ?', q_dob: 'คุณเกิดวันที่เท่าไหร่ ?', q_allergy: 'คุณมีประวัติแพ้ยาหรือไม่ ?', q_inj: 'วันนี้คุณได้รับการฉีดยาหรือไม่ ?', q_med: 'วันนี้คุณได้รับยารับประทานหรือไม่ ?', ans_yes: 'ใช่', ans_no: 'ไม่ใช่', ans_dont_know: 'ไม่ทราบ', drug_name: 'ยา (Medicine):', ind_title: 'ข้อบ่งใช้:', indication: ['ลดไข้ / แก้ปวด', 'แก้แพ้ / ลดน้ำมูก', 'แก้ไอ / ละลายเสมหะ', 'ยาฆ่าเชื้อ', 'แก้ท้องเสีย', 'ลดกรด / ปวดท้อง', 'แก้คลื่นไส้ / อาเจียน', 'ลดอักเสบ / ปวด'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'], dose: ['ครึ่งเม็ด', '1 เม็ด', '2 เม็ด', '1 ช้อนชา', '1 ช้อนโต๊ะ', '1 กด', '1 หยด'], side: ['ตาซ้าย', 'ตาขวา', 'ตาทั้งสองข้าง', 'หูซ้าย', 'หูขวา', 'หูทั้งสองข้าง'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'], freq: ['วันละ 1 ครั้ง', 'วันละ 2 ครั้ง', 'วันละ 3 ครั้ง', 'วันละ 4 ครั้ง', 'ทุก 4-6 ชม.', 'ทุก 6 ชม.', 'ทุก 8 ชม.'], time: ['ก่อนอาหาร', 'หลังอาหาร', 'หลังอาหารทันที', 'ก่อนหรือหลังอาหารก็ได้'], period: ['เช้า', 'กลางวัน', 'เย็น', 'ก่อนนอน', 'เวลามีอาการ'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'], warn: ['ต้องกินจนหมด', 'อาจทำให้ง่วงนอน', 'ห้ามดื่มแอลกอฮอล์', 'ห้ามกินพร้อมนม', 'ระวังแสงแดดจัด', 'ดื่มน้ำตามมากๆ', 'เปลี่ยนสีปัสสาวะ', 'เคี้ยวให้ละเอียด', 'เก็บในตู้เย็น', 'ละลายน้ำก่อนดื่ม'], warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'], allergy_alert: 'หยุดใช้ยาและพบแพทย์ทันที หากมีผื่นคัน หายใจติดขัด หรือมีอาการแพ้', show_card: '🚀 โชว์ Boarding Pass', edit_rx: '⬅️ กลับไปแก้ไข', photo_prompt: '📸 ถ่ายรูปหน้าจอนี้เก็บไว้', write_dob: '✍️ กรุณาเขียนเลขวันเดือนปีเกิดลงในกระดาษ', smart_dose: 'ใช้ครั้งละ {n} {u}', smart_hour: 'ทุกๆ {n} {u}', smart_apply: 'ทาวันละ {n} {u}', smart_days: 'ติดต่อกัน {n} {u}', add_to_cart: '📥 เก็บลงตะกร้า', cart: 'ตะกร้ายา', items: 'รายการ', swipe_hint: 'ปัดหน้าจอเพื่อดูยาชนิดอื่น', scroll_down: '⬇️ เลื่อนลงเพื่อดูคำเตือน ⬇️', taper_mode: '📉 โหมดลดโดส / กินไม่เท่ากัน', standard_mode: 'กลับไปโหมดปกติ', add_step: '➕ เพิ่มขั้น', duration: 'ระยะเวลา', dosage: 'ปริมาณ', time_col: 'มื้ออาหาร / เวลา', rx_title: 'วิธีใช้ยา', warn_title: 'คำเตือน / ข้อควรระวัง', spec_guide: 'คู่มือการใช้ยา (How to Use)' },
-  en: { hello: 'Hello 👋', tap_to_select: '👆 Please tap an option', q_name: 'What is your full name?', q_dob: 'What is your date of birth?', q_allergy: 'Are you allergic to any medications?', yes: 'Yes', no: 'No', dont_know: 'Not sure', writePaper: 'Please write it down on paper.', q_inj: 'Did you receive any injections today?', q_med: 'Did you receive any oral medications today?', rx_title: 'Prescription Info', warn_title: 'Warnings', drug_name: 'Medicine:', ind_title: 'Indication:', indication: ['Fever / Pain', 'Allergy / Runny nose', 'Cough', 'Antibiotic', 'Diarrhea', 'Stomachache', 'Nausea / Vomiting', 'Anti-inflammatory / Pain'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'], dose: ['Half tablet', '1 Tablet', '2 Tablets', '1 Teaspoon', '1 Tablespoon', '1 Puff', '1 Drop'], side: ['Left eye', 'Right eye', 'Both eyes', 'Left ear', 'Right ear', 'Both ears'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'], freq: ['Once daily', 'Twice daily', '3 times a day', '4 times a day', 'Every 4-6 hours', 'Every 6 hours', 'Every 8 hours'], time: ['Before meal', 'After meal', 'Immediately after meal', 'With/without food'], period: ['Morning', 'Noon', 'Evening', 'Night', 'As needed'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'], warn: ['Finish entire course.', 'May cause drowsiness.', 'Avoid alcohol.', 'Do not take with milk.', 'Avoid strong sunlight.', 'Drink plenty of water.', 'May change urine color.', 'Chew well.', 'Store in refrigerator.', 'Dissolve in water'], warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'], allergy_alert: 'Stop use and seek medical help if you develop a rash or breathing problems.', show_card: '🚀 Show', edit_rx: '⬅️ Edit', photo_prompt: '📸 Take a photo of this screen', write_dob: '✍️ Please write your birth date on paper.', smart_dose: 'Take {n} {u}', smart_hour: 'Every {n} {u}', smart_apply: 'Apply {n} {u} a day', smart_days: 'For {n} {u}', add_to_cart: '📥 Add', cart: 'Cart', items: 'items', swipe_hint: 'Swipe for other meds', scroll_down: '⬇️ Scroll down ⬇️', taper_mode: '📉 Tapering Mode', standard_mode: 'Standard', add_step: '➕ Add Step', duration: 'Duration', dosage: 'Dose', time_col: 'Time', tab_history: '📋 History', tab_dispense: '💊 Dispense', tab_special: '🪄 Specialty', spec_guide: 'How to Use' },
-  de: { hello: 'Hallo 👋', tap_to_select: '👆 Bitte tippen', q_name: 'Wie lautet Ihr vollständiger Name?', q_dob: 'Wann ist Ihr Geburtsdatum?', q_allergy: 'Haben Sie Allergien gegen Medikamente?', yes: 'Ja', no: 'Nein', dont_know: 'Weiß nicht', writePaper: 'Bitte aufschreiben.', q_inj: 'Haben Sie heute Injektionen erhalten?', q_med: 'Haben Sie heute Medikamente eingenommen?', rx_title: 'Einnahme', warn_title: 'Warnhinweise', drug_name: 'Medikament:', ind_title: 'Anwendung:', indication: ['Fieber / Schmerzen', 'Allergie / Nase', 'Husten', 'Antibiotikum', 'Durchfall', 'Magen', 'Übelkeit', 'Entzündung / Schmerzen'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'], dose: ['Halbe Tablette', '1 Tablette', '2 Tabletten', '1 Teelöffel', '1 Esslöffel', '1 Sprühstoß', '1 Tropfen'], side: ['Linkes Auge', 'Rechtes Auge', 'Beide Augen', 'Linkes Ohr', 'Rechtes Ohr', 'Beide Ohren'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'], freq: ['1x täglich', '2x täglich', '3x täglich', '4x täglich', 'Alle 4-6 Std', 'Alle 6 Std', 'Alle 8 Std'], time: ['Vor dem Essen', 'Nach dem Essen', 'Direkt nach Essen', 'Vor/nach Essen'], period: ['Morgens', 'Mittags', 'Abends', 'Nachts', 'Bei Bedarf'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'], warn: ['Vollständig aufbrauchen.', 'Macht schläfrig.', 'Kein Alkohol.', 'Nicht mit Milch.', 'Sonne meiden.', 'Viel trinken.', 'Verfärbt Urin.', 'Gut kauen.', 'Kühlschrank.', 'In Wasser auflösen'], warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'], allergy_alert: 'Bei Ausschlag sofort zum Arzt.', show_card: '🚀 Zeigen', edit_rx: '⬅️ Zurück', photo_prompt: '📸 Bitte fotografieren', write_dob: '✍️ Bitte schreiben Sie Ihr Geburtsdatum auf.', smart_dose: '{n} {u} nehmen', smart_hour: 'Alle {n} {u}', smart_apply: '{n}x täglich', smart_days: 'Für {n} {u}', add_to_cart: '📥 Hinzufügen', cart: 'Korb', items: 'Artikel', swipe_hint: 'Wischen', scroll_down: '⬇️ Nach unten ⬇️', taper_mode: '📉 Ausschleichen', standard_mode: 'Standard', add_step: '➕ Schritt', duration: 'Dauer', dosage: 'Dosis', time_col: 'Zeit', tab_history: '📋 Verlauf', tab_dispense: '💊 Ausgabe', tab_special: '🪄 Spezial', spec_guide: 'Anwendung' },
-  zh: { hello: '你好 👋', tap_to_select: '👆 请点击', q_name: '请问您的全名是什么？', q_dob: '您的出生日期是哪天？', q_allergy: '您对任何药物过敏吗？', yes: '是', no: '否', dont_know: '不清楚', writePaper: '请写下。', q_inj: '您今天接受过注射吗？', q_med: '您今天服用过口服药吗？', rx_title: '服药方法', warn_title: '注意事项', drug_name: '药物：', ind_title: '主治：', indication: ['退烧 / 止痛', '过敏 / 流鼻涕', '咳嗽', '抗生素', '腹泻', '胃痛', '恶心', '消炎 / 止痛'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'], dose: ['半粒', '1 粒', '2 粒', '1 茶匙', '1 汤匙', '1 喷', '1 滴'], side: ['左眼', '右眼', '双眼', '左耳', '右耳', '双耳'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'], freq: ['每天 1 次', '每天 2 次', '每天 3 次', '每天 4 次', '每 4-6 小时', '每 6 小时', '每 8 小时'], time: ['饭前', '饭后', '饭后立即', '饭前/饭后'], period: ['早上', '中午', '晚上', '睡前', '需要时'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'], warn: ['服完疗程。', '可能嗜睡。', '避免饮酒。', '勿与牛奶同服。', '避光。', '多喝水。', '改变尿色。', '嚼碎。', '冷藏。', '溶于水'], warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'], allergy_alert: '如出现皮疹或呼吸困难，请立即就医。', show_card: '🚀 显示', edit_rx: '⬅️ 返回', photo_prompt: '📸 请拍照保存', write_dob: '✍️ 请把出生日期写在纸上。', smart_dose: '使用 {n} {u}', smart_hour: '每 {n} {u}', smart_apply: '每天 {n} {u}', smart_days: '连续 {n} {u}', add_to_cart: '📥 加入', cart: '购物车', items: '项', swipe_hint: '滑动', scroll_down: '⬇️ 向下滚动 ⬇️', taper_mode: '📉 递减剂量', standard_mode: '标准', add_step: '➕ 添加', duration: '期间', dosage: '剂量', time_col: '时间', tab_history: '📋 历史', tab_dispense: '💊 配药', tab_special: '🪄 专科', spec_guide: '使用方法' },
-  ja: { hello: 'こんにちは 👋', tap_to_select: '👆 選択してください', q_name: 'フルネームを教えてください。', q_dob: '生年月日はいつですか？', q_allergy: '薬のアレルギーはありますか？', yes: 'はい', no: 'いいえ', dont_know: '不明', writePaper: '紙に書いてください。', q_inj: '今日、注射を受けましたか？', q_med: '今日、飲み薬を服用しましたか？', rx_title: '服用方法', warn_title: '注意事項', drug_name: '薬：', ind_title: '効能：', indication: ['解熱 / 鎮痛', 'アレルギー', '咳', '抗生物質', '下痢', '胃痛', '吐き気', '抗炎症 / 痛み'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'], dose: ['半分', '1 錠', '2 錠', '小さじ 1', '大さじ 1', '1 プッシュ', '1 滴'], side: ['左目', '右目', '両目', '左耳', '右耳', '両耳'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'], freq: ['1日 1回', '1日 2回', '1日 3回', '1日 4回', '4-6 時間ごと', '6 時間ごと', '8 時間ごと'], time: ['食前', '食後', '食直後', '食前/食後'], period: ['朝', '昼', '夕方', '就寝前', '症状がある時'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'], warn: ['飲みきってください。', '眠気。', '禁酒。', '牛乳不可。', '直射日光を避ける。', '多めの水。', '尿の色変化。', '噛む。', '冷蔵庫。', '水に溶かす'], warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'], allergy_alert: '発疹や息苦しさがあれば直ちに受診してください。', show_card: '🚀 表示', edit_rx: '⬅️ 戻る', photo_prompt: '📸 画面を撮影してください', write_dob: '✍️ 生年月日を紙に書いてください。', smart_dose: '{n} {u} 使用', smart_hour: '{n} {u} ごと', smart_apply: '1日 {n} {u}', smart_days: '{n} {u}間', add_to_cart: '📥 追加', cart: 'カート', items: '個', swipe_hint: 'スワイプ', scroll_down: '⬇️ 下へスクロール ⬇️', taper_mode: '📉 漸減モード', standard_mode: '標準', add_step: '➕ 追加', duration: '期間', dosage: '用量', time_col: '時間', tab_history: '📋 履歴', tab_dispense: '💊 調剤', tab_special: '🪄 特殊', spec_guide: '使い方' },
-  ru: { hello: 'Привет 👋', tap_to_select: '👆 Выберите', q_name: 'Как ваше полное имя?', q_dob: 'Какова ваша дата рождения?', q_allergy: 'Есть ли у вас аллергия на лекарства?', yes: 'Да', no: 'Нет', dont_know: 'Не знаю', writePaper: 'Напишите на бумаге.', q_inj: 'Вам сегодня делали уколы?', q_med: 'Принимали ли вы сегодня лекарства внутрь?', rx_title: 'Применение', warn_title: 'Внимание', drug_name: 'Лекарство:', ind_title: 'Показания:', indication: ['Жар / Боль', 'Аллергия', 'Кашель', 'Антибиотик', 'Диарея', 'Боль в животе', 'Тошнота', 'Воспаление / Боль'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'], dose: ['Половина', '1 табл.', '2 табл.', '1 ч.л.', '1 ст.л.', '1 пшик', '1 капля'], side: ['Левый глаз', 'Правый глаз', 'Оба глаза', 'Левое ухо', 'Правое ухо', 'Оба уха'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'], freq: ['1 раз в день', '2 раза в день', '3 раза в день', '4 раза в день', 'Каждые 4-6 ч', 'Каждые 6 ч', 'Каждые 8 ч'], time: ['До еды', 'После еды', 'Сразу после', 'Независимо'], period: ['Утром', 'Днем', 'Вечером', 'На ночь', 'По нужде'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'], warn: ['Закончить курс.', 'Сонливость.', 'Без алкоголя.', 'Без молока.', 'Беречь от солнца.', 'Пить воду.', 'Цвет мочи.', 'Жевать.', 'В холодильник.', 'В воду'], warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'], allergy_alert: 'При сыпи или удушье срочно к врачу.', show_card: '🚀 Показать', edit_rx: '⬅️ Назад', photo_prompt: '📸 Сфотографируйте экран', write_dob: '✍️ Напишите дату рождения на бумаге.', smart_dose: 'По {n} {u}', smart_hour: 'Каждые {n} {u}', smart_apply: '{n} раз(а) в день', smart_days: 'На {n} {u}', add_to_cart: '📥 В корзину', cart: 'Корзина', items: 'шт', swipe_hint: 'Свайп', scroll_down: '⬇️ Вниз ⬇️', taper_mode: '📉 Снижение', standard_mode: 'Стандарт', add_step: '➕ Шаг', duration: 'Дней', dosage: 'Доза', time_col: 'Время', tab_history: '📋 История', tab_dispense: '💊 Выдача', tab_special: '🪄 Спец', spec_guide: 'Как использовать' },
-  ar: { hello: 'مرحباً 👋', tap_to_select: '👆 اختر', q_name: 'ما هو اسمك الكامل؟', q_dob: 'ما هو تاريخ ميلادك؟', q_allergy: 'هل تعاني من حساسية تجاه أي أدوية؟', yes: 'نعم', no: 'لا', dont_know: 'لا أعرف', writePaper: 'اكتب على ورقة.', q_inj: 'هل تلقيت أي حقن اليوم؟', q_med: 'هل تلقيت أي أدوية عن طريق الفم اليوم؟', rx_title: 'الاستخدام', warn_title: 'تحذيرات', drug_name: 'الدواء:', ind_title: 'دواعي:', indication: ['حمى / ألم', 'حساسية', 'سعال', 'مضاد حيوي', 'إسهال', 'معدة', 'غثيان', 'التهاب / ألم'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'], dose: ['نصف', '1 حبة', '2 حبة', '1 ملعقة صغيرة', '1 ملعقة كبيرة', '1 بخة', '1 قطرة'], side: ['يسرى', 'يمنى', 'كلتيهما', 'يسرى', 'يمنى', 'كلتيهما'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'], freq: ['1 يومياً', '2 يومياً', '3 يومياً', '4 يومياً', 'كل 4-6 س', 'كل 6 س', 'كل 8 س'], time: ['قبل الأكل', 'بعد الأكل', 'مباشرة بعد الأكل', 'قبل/بعد الأكل'], period: ['صباح', 'ظهر', 'مساء', 'ليل', 'عند الحاجة'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'], warn: ['أكمل الجرعة.', 'نعاس.', 'لا كحول.', 'لا حليب.', 'تجنب الشمس.', 'اشرب ماء.', 'لون البول.', 'امضغ.', 'ثلاجة.', 'في الماء'], warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'], allergy_alert: 'توقف فوراً عند ظهور طفح جلدي أو ضيق تنفس.', show_card: '🚀 عرض', edit_rx: '⬅️ رجوع', photo_prompt: '📸 يرجى تصوير الشاشة', write_dob: '✍️ يرجى كتابة تاريخ ميلادك على الورق.', smart_dose: 'استخدم {n} {u}', smart_hour: 'كل {n} {u}', smart_apply: '{n} يومياً', smart_days: 'لمدة {n} {u}', add_to_cart: '📥 إضافة', cart: 'سلة', items: 'عناصر', swipe_hint: 'اسحب', scroll_down: '⬇️ أسفل ⬇️', taper_mode: '📉 تقليل', standard_mode: 'عادي', add_step: '➕ خطوة', duration: 'المدة', dosage: 'الجرعة', time_col: 'الوقت', tab_history: '📋 سجل', tab_dispense: '💊 صرف', tab_special: '🪄 تخصص', spec_guide: 'الاستخدام' }
+  th: {
+    dashboard: 'แดชบอร์ดเภสัชกร', change_lang: 'เปลี่ยนภาษา', tab_history: '📋 ซักประวัติ', tab_dispense: '💊 จ่ายยา', tab_special: '🪄 เทคนิคพิเศษ',
+    q_name: 'คุณชื่ออะไร ?', q_dob: 'คุณเกิดวันที่เท่าไหร่ ?', q_allergy: 'คุณมีประวัติแพ้ยาหรือไม่ ?', q_inj: 'วันนี้คุณได้รับการฉีดยาหรือไม่ ?', q_med: 'วันนี้คุณได้รับยารับประทานหรือไม่ ?', 
+    ans_yes: 'ใช่', ans_no: 'ไม่ใช่', ans_dont_know: 'ไม่ทราบ', drug_name: 'ยา (Medicine):', ind_title: 'ข้อบ่งใช้:',
+    indication: ['ลดไข้ / แก้ปวด', 'แก้แพ้ / ลดน้ำมูก', 'แก้ไอ / ละลายเสมหะ', 'ยาฆ่าเชื้อ', 'แก้ท้องเสีย', 'ลดกรด / ปวดท้อง', 'แก้คลื่นไส้ / อาเจียน', 'ลดอักเสบ / ปวด'],
+    ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
+    dose: ['ครึ่งเม็ด', '1 เม็ด', '2 เม็ด', '1 ช้อนชา', '1 ช้อนโต๊ะ', '1 กด', '1 หยด'],
+    side: ['ตาซ้าย', 'ตาขวา', 'ตาทั้งสองข้าง', 'หูซ้าย', 'หูขวา', 'หูทั้งสองข้าง'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
+    freq: ['วันละ 1 ครั้ง', 'วันละ 2 ครั้ง', 'วันละ 3 ครั้ง', 'วันละ 4 ครั้ง', 'ทุก 4-6 ชม.', 'ทุก 6 ชม.', 'ทุก 8 ชม.'],
+    time: ['ก่อนอาหาร', 'หลังอาหาร', 'หลังอาหารทันที', 'ก่อนหรือหลังอาหารก็ได้'],
+    period: ['เช้า', 'กลางวัน', 'เย็น', 'ก่อนนอน', 'เวลามีอาการ'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
+    warn: ['ต้องกินจนหมด', 'อาจทำให้ง่วงนอน', 'ห้ามดื่มแอลกอฮอล์', 'ห้ามกินพร้อมนม', 'ระวังแสงแดดจัด', 'ดื่มน้ำตามมากๆ', 'เปลี่ยนสีปัสสาวะ', 'เคี้ยวให้ละเอียด', 'เก็บในตู้เย็น', 'ละลายน้ำก่อนดื่ม'],
+    warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'],
+    allergy_alert: 'หยุดใช้ยาและพบแพทย์ทันที หากมีผื่นคัน หายใจติดขัด หรือมีอาการแพ้',
+    show_card: '🚀 โชว์ Boarding Pass', edit_rx: '⬅️ กลับไปแก้ไข', photo_prompt: '📸 ถ่ายรูปหน้าจอนี้เก็บไว้', write_dob: '✍️ กรุณาเขียนเลขวันเดือนปีเกิดลงในกระดาษ',
+    smart_dose: 'ใช้ครั้งละ {n} {u}', smart_hour: 'ทุกๆ {n} {u}', smart_apply: 'ทาวันละ {n} {u}', smart_days: 'ติดต่อกัน {n} {u}',
+    add_to_cart: '📥 เก็บลงตะกร้า', cart: 'ตะกร้ายา', items: 'รายการ', swipe_hint: 'ปัดหน้าจอเพื่อดูยาชนิดอื่น', scroll_down: '⬇️ เลื่อนลงเพื่อดูคำเตือน ⬇️',
+    taper_mode: '📉 โหมดลดโดส / กินไม่เท่ากัน', standard_mode: 'กลับไปโหมดปกติ', add_step: '➕ เพิ่มขั้น',
+    duration: 'ระยะเวลา', dosage: 'ปริมาณ', time_col: 'มื้ออาหาร / เวลา', rx_title: 'วิธีใช้ยา', warn_title: 'คำเตือน / ข้อควรระวัง', spec_guide: 'คู่มือการใช้ยา (How to Use)'
+  },
+  en: { 
+    hello: 'Hello 👋', tap_to_select: '👆 Please tap an option', q_name: 'What is your full name?', q_dob: 'What is your date of birth?', q_allergy: 'Are you allergic to any medications?', yes: 'Yes', no: 'No', dont_know: 'Not sure', writePaper: 'Please write it down on paper.',
+    q_inj: 'Did you receive any injections today?', q_med: 'Did you receive any oral medications today?', rx_title: 'Prescription Info', warn_title: 'Warnings', drug_name: 'Medicine:', ind_title: 'Indication:', 
+    indication: ['Fever / Pain', 'Allergy / Runny nose', 'Cough', 'Antibiotic', 'Diarrhea', 'Stomachache', 'Nausea / Vomiting', 'Anti-inflammatory / Pain'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
+    dose: ['Half tablet', '1 Tablet', '2 Tablets', '1 Teaspoon', '1 Tablespoon', '1 Puff', '1 Drop'],
+    side: ['Left eye', 'Right eye', 'Both eyes', 'Left ear', 'Right ear', 'Both ears'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
+    freq: ['Once daily', 'Twice daily', '3 times a day', '4 times a day', 'Every 4-6 hours', 'Every 6 hours', 'Every 8 hours'],
+    time: ['Before meal', 'After meal', 'Immediately after meal', 'With/without food'],
+    period: ['Morning', 'Noon', 'Evening', 'Night', 'As needed'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
+    warn: ['Finish entire course.', 'May cause drowsiness.', 'Avoid alcohol.', 'Do not take with milk.', 'Avoid strong sunlight.', 'Drink plenty of water.', 'May change urine color.', 'Chew well.', 'Store in refrigerator.', 'Dissolve in water'],
+    allergy_alert: 'Stop use and seek medical help if you develop a rash or breathing problems.',
+    show_card: '🚀 Show', edit_rx: '⬅️ Edit', photo_prompt: '📸 Take a photo of this screen', write_dob: '✍️ Please write your birth date on paper.',
+    smart_dose: 'Take {n} {u}', smart_hour: 'Every {n} {u}', smart_apply: 'Apply {n} {u} a day', smart_days: 'For {n} {u}',
+    add_to_cart: '📥 Add', cart: 'Cart', items: 'items', swipe_hint: 'Swipe for other meds', scroll_down: '⬇️ Scroll down ⬇️',
+    taper_mode: '📉 Tapering Mode', standard_mode: 'Standard', add_step: '➕ Add Step', duration: 'Duration', dosage: 'Dose', time_col: 'Time',
+    tab_history: '📋 History', tab_dispense: '💊 Dispense', tab_special: '🪄 Specialty', spec_guide: 'How to Use'
+  },
+  de: { 
+    hello: 'Hallo 👋', tap_to_select: '👆 Bitte tippen', q_name: 'Wie lautet Ihr vollständiger Name?', q_dob: 'Wann ist Ihr Geburtsdatum?', q_allergy: 'Haben Sie Allergien gegen Medikamente?', yes: 'Ja', no: 'Nein', dont_know: 'Weiß nicht', writePaper: 'Bitte aufschreiben.',
+    q_inj: 'Haben Sie heute Injektionen erhalten?', q_med: 'Haben Sie heute Medikamente eingenommen?', rx_title: 'Einnahme', warn_title: 'Warnhinweise', drug_name: 'Medikament:', ind_title: 'Anwendung:', 
+    indication: ['Fieber / Schmerzen', 'Allergie / Nase', 'Husten', 'Antibiotikum', 'Durchfall', 'Magen', 'Übelkeit', 'Entzündung / Schmerzen'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
+    dose: ['Halbe Tablette', '1 Tablette', '2 Tabletten', '1 Teelöffel', '1 Esslöffel', '1 Sprühstoß', '1 Tropfen'],
+    side: ['Linkes Auge', 'Rechtes Auge', 'Beide Augen', 'Linkes Ohr', 'Rechtes Ohr', 'Beide Ohren'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
+    freq: ['1x täglich', '2x täglich', '3x täglich', '4x täglich', 'Alle 4-6 Std', 'Alle 6 Std', 'Alle 8 Std'],
+    time: ['Vor dem Essen', 'Nach dem Essen', 'Direkt nach Essen', 'Vor/nach Essen'],
+    period: ['Morgens', 'Mittags', 'Abends', 'Nachts', 'Bei Bedarf'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
+    warn: ['Vollständig aufbrauchen.', 'Macht schläfrig.', 'Kein Alkohol.', 'Nicht mit Milch.', 'Sonne meiden.', 'Viel trinken.', 'Verfärbt Urin.', 'Gut kauen.', 'Kühlschrank.', 'In Wasser auflösen'],
+    allergy_alert: 'Bei Ausschlag sofort zum Arzt.',
+    show_card: '🚀 Zeigen', edit_rx: '⬅️ Zurück', photo_prompt: '📸 Bitte fotografieren', write_dob: '✍️ Bitte schreiben Sie Ihr Geburtsdatum auf.',
+    smart_dose: '{n} {u} nehmen', smart_hour: 'Alle {n} {u}', smart_apply: '{n}x täglich', smart_days: 'Für {n} {u}',
+    add_to_cart: '📥 Hinzufügen', cart: 'Korb', items: 'Artikel', swipe_hint: 'Wischen', scroll_down: '⬇️ Nach unten ⬇️',
+    taper_mode: '📉 Ausschleichen', standard_mode: 'Standard', add_step: '➕ Schritt', duration: 'Dauer', dosage: 'Dosis', time_col: 'Zeit',
+    tab_history: '📋 Verlauf', tab_dispense: '💊 Ausgabe', tab_special: '🪄 Spezial', spec_guide: 'Anwendung'
+  },
+  zh: { 
+    hello: '你好 👋', tap_to_select: '👆 请点击', q_name: '请问您的全名是什么？', q_dob: '您的出生日期是哪天？', q_allergy: '您对任何药物过敏吗？', yes: '是', no: '否', dont_know: '不清楚', writePaper: '请写下。',
+    q_inj: '您今天接受过注射吗？', q_med: '您今天服用过口服药吗？', rx_title: '服药方法', warn_title: '注意事项', drug_name: '药物：', ind_title: '主治：', 
+    indication: ['退烧 / 止痛', '过敏 / 流鼻涕', '咳嗽', '抗生素', '腹泻', '胃痛', '恶心', '消炎 / 止痛'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
+    dose: ['半粒', '1 粒', '2 粒', '1 茶匙', '1 汤匙', '1 喷', '1 滴'],
+    side: ['左眼', '右眼', '双眼', '左耳', '右耳', '双耳'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
+    freq: ['每天 1 次', '每天 2 次', '每天 3 次', '每天 4 次', '每 4-6 小时', '每 6 小时', '每 8 小时'],
+    time: ['饭前', '饭后', '饭后立即', '饭前/饭后'],
+    period: ['早上', '中午', '晚上', '睡前', '需要时'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
+    warn: ['服完疗程。', '可能嗜睡。', '避免饮酒。', '勿与牛奶同服。', '避光。', '多喝水。', '改变尿色。', '嚼碎。', '冷藏。', '溶于水'],
+    allergy_alert: '如出现皮疹或呼吸困难，请立即就医。',
+    show_card: '🚀 显示', edit_rx: '⬅️ 返回', photo_prompt: '📸 请拍照保存', write_dob: '✍️ 请把出生日期写在纸上。',
+    smart_dose: '使用 {n} {u}', smart_hour: '每 {n} {u}', smart_apply: '每天 {n} {u}', smart_days: '连续 {n} {u}',
+    add_to_cart: '📥 加入', cart: '购物车', items: '项', swipe_hint: '滑动', scroll_down: '⬇️ 向下滚动 ⬇️',
+    taper_mode: '📉 递减剂量', standard_mode: '标准', add_step: '➕ 添加', duration: '期间', dosage: '剂量', time_col: '时间',
+    tab_history: '📋 历史', tab_dispense: '💊 配药', tab_special: '🪄 专科', spec_guide: '使用方法'
+  },
+  ja: { 
+    hello: 'こんにちは 👋', tap_to_select: '👆 選択してください', q_name: 'フルネームを教えてください。', q_dob: '生年月日はいつですか？', q_allergy: '薬のアレルギーはありますか？', yes: 'はい', no: 'いいえ', dont_know: '不明', writePaper: '紙に書いてください。',
+    q_inj: '今日、注射を受けましたか？', q_med: '今日、飲み薬を服用しましたか？', rx_title: '服用方法', warn_title: '注意事項', drug_name: '薬：', ind_title: '効能：', 
+    indication: ['解熱 / 鎮痛', 'アレルギー', '咳', '抗生物質', '下痢', '胃痛', '吐き気', '抗炎症 / 痛み'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
+    dose: ['半分', '1 錠', '2 錠', '小さじ 1', '大さじ 1', '1 プッシュ', '1 滴'],
+    side: ['左目', '右目', '両目', '左耳', '右耳', '両耳'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
+    freq: ['1日 1回', '1日 2回', '1日 3回', '1日 4回', '4-6 時間ごと', '6 時間ごと', '8 時間ごと'],
+    time: ['食前', '食後', '食直後', '食前/食後'],
+    period: ['朝', '昼', '夕方', '就寝前', '症状がある時'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
+    warn: ['飲みきってください。', '眠気。', '禁酒。', '牛乳不可。', '直射日光を避ける。', '多めの水。', '尿の色変化。', '噛む。', '冷蔵庫。', '水に溶かす'],
+    allergy_alert: '発疹や息苦しさがあれば直ちに受診してください。',
+    show_card: '🚀 表示', edit_rx: '⬅️ 戻る', photo_prompt: '📸 画面を撮影してください', write_dob: '✍️ 生年月日を紙に書いてください。',
+    smart_dose: '{n} {u} 使用', smart_hour: '{n} {u} ごと', smart_apply: '1日 {n} {u}', smart_days: '{n} {u}間',
+    add_to_cart: '📥 追加', cart: 'カート', items: '個', swipe_hint: 'スワイプ', scroll_down: '⬇️ 下へスクロール ⬇️',
+    taper_mode: '📉 漸減モード', standard_mode: '標準', add_step: '➕ 追加', duration: '期間', dosage: '用量', time_col: '時間',
+    tab_history: '📋 履歴', tab_dispense: '💊 調剤', tab_special: '🪄 特殊', spec_guide: '使い方'
+  },
+  ru: { 
+    hello: 'Привет 👋', tap_to_select: '👆 Выберите', q_name: 'Как ваше полное имя?', q_dob: 'Какова ваша дата рождения?', q_allergy: 'Есть ли у вас аллергия на лекарства?', yes: 'Да', no: 'Нет', dont_know: 'Не знаю', writePaper: 'Напишите на бумаге.',
+    q_inj: 'Вам сегодня делали уколы?', q_med: 'Принимали ли вы сегодня лекарства внутрь?', rx_title: 'Применение', warn_title: 'Внимание', drug_name: 'Лекарство:', ind_title: 'Показания:', 
+    indication: ['Жар / Боль', 'Аллергия', 'Кашель', 'Антибиотик', 'Диарея', 'Боль в животе', 'Тошнота', 'Воспаление / Боль'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
+    dose: ['Половина', '1 табл.', '2 табл.', '1 ч.л.', '1 ст.л.', '1 пшик', '1 капля'],
+    side: ['Левый глаз', 'Правый глаз', 'Оба глаза', 'Левое ухо', 'Правое ухо', 'Оба уха'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
+    freq: ['1 раз в день', '2 раза в день', '3 раза в день', '4 раза в день', 'Каждые 4-6 ч', 'Каждые 6 ч', 'Каждые 8 ч'],
+    time: ['До еды', 'После еды', 'Сразу после', 'Независимо'],
+    period: ['Утром', 'Днем', 'Вечером', 'На ночь', 'По нужде'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
+    warn: ['Закончить курс.', 'Сонливость.', 'Без алкоголя.', 'Без молока.', 'Беречь от солнца.', 'Пить воду.', 'Цвет мочи.', 'Жевать.', 'В холодильник.', 'В воду'],
+    warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'],
+    allergy_alert: 'При сыпи или удушье срочно к врачу.',
+    show_card: '🚀 Показать', edit_rx: '⬅️ Назад', photo_prompt: '📸 Сфотографируйте экран', write_dob: '✍️ Напишите дату рождения на бумаге.',
+    smart_dose: 'По {n} {u}', smart_hour: 'Каждые {n} {u}', smart_apply: '{n} раз(а) в день', smart_days: 'На {n} {u}',
+    add_to_cart: '📥 В корзину', cart: 'Корзина', items: 'шт', swipe_hint: 'Свайп', scroll_down: '⬇️ Вниз ⬇️',
+    taper_mode: '📉 Снижение', standard_mode: 'Стандарт', add_step: '➕ Шаг', duration: 'Дней', dosage: 'Доза', time_col: 'Время',
+    tab_history: '📋 История', tab_dispense: '💊 Выдача', tab_special: '🪄 Спец', spec_guide: 'Как использовать'
+  },
+  ar: { 
+    hello: 'مرحباً 👋', tap_to_select: '👆 اختر', q_name: 'ما هو اسمك الكامل؟', q_dob: 'ما هو تاريخ ميلادك؟', q_allergy: 'هل تعاني من حساسية تجاه أي أدوية؟', yes: 'نعم', no: 'لا', dont_know: 'لا أعرف', writePaper: 'اكتب على ورقة.',
+    q_inj: 'هل تلقيت أي حقن اليوم؟', q_med: 'هل تلقيت أي أدوية عن طريق الفم اليوم؟', rx_title: 'الاستخدام', warn_title: 'تحذيرات', drug_name: 'الدواء:', ind_title: 'دواعي:', 
+    indication: ['حمى / ألم', 'حساسية', 'سعال', 'مضاد حيوي', 'إسهال', 'معدة', 'غثيان', 'التهاب / ألم'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
+    dose: ['نصف', '1 حبة', '2 حبة', '1 ملعقة صغيرة', '1 ملعقة كبيرة', '1 بخة', '1 قطرة'],
+    side: ['يسرى', 'يمنى', 'كلتيهما', 'يسرى', 'يمنى', 'كلتيهما'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
+    freq: ['1 يومياً', '2 يومياً', '3 يومياً', '4 يومياً', 'كل 4-6 س', 'كل 6 س', 'كل 8 س'],
+    time: ['قبل الأكل', 'بعد الأكل', 'مباشرة بعد الأكل', 'قبل/بعد الأكل'],
+    period: ['صباح', 'ظهر', 'مساء', 'ليل', 'عند الحاجة'], period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
+    warn: ['أكمل الجرعة.', 'نعاس.', 'لا كحول.', 'لا حليب.', 'تجنب الشمس.', 'اشرب ماء.', 'لون البول.', 'امضغ.', 'ثلاجة.', 'في الماء'],
+    warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'],
+    allergy_alert: 'توقف فوراً عند ظهور طفح جلدي أو ضيق تنفس.',
+    show_card: '🚀 عرض', edit_rx: '⬅️ رجوع', photo_prompt: '📸 يرجى تصوير الشاشة', write_dob: '✍️ يرجى كتابة تاريخ ميلادك على الورق.',
+    smart_dose: 'استخدم {n} {u}', smart_hour: 'كل {n} {u}', smart_apply: '{n} يومياً', smart_days: 'لمدة {n} {u}',
+    add_to_cart: '📥 إضافة', cart: 'سلة', items: 'عناصر', swipe_hint: 'اسحب', scroll_down: '⬇️ أسفل ⬇️',
+    taper_mode: '📉 تقليل', standard_mode: 'عادي', add_step: '➕ خطوة', duration: 'المدة', dosage: 'الجرعة', time_col: 'الوقت',
+    tab_history: '📋 سجل', tab_dispense: '💊 صرف', tab_special: '🪄 تخصص', spec_guide: 'الاستخدام'
+  }
 };
 
 type Lang = keyof typeof dict;
@@ -151,10 +306,12 @@ export default function PharmaLingoApp() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const synthRef = useRef<SpeechSynthesis | null>(null);
 
+  // Link Generation State
   const [shortLink, setShortLink] = useState('');
   const [isGeneratingLink, setIsGeneratingLink] = useState(false);
   const [showLinkModal, setShowLinkModal] = useState(false);
   
+  // Shared Link State
   const [isSharedLink, setIsSharedLink] = useState(false);
 
   useEffect(() => { 
@@ -475,47 +632,9 @@ export default function PharmaLingoApp() {
     return text;
   };
 
-  if (!hasStarted) {
-    return (
-      <div className="min-h-[100dvh] w-full bg-[#0f172a] flex flex-col items-center justify-center relative overflow-hidden font-sans">
-        <div className={"absolute top-10 md:top-20 text-center z-20 transition-opacity duration-300 " + (animatingLang ? "opacity-0" : "opacity-100")}>
-          <h1 className="text-3xl md:text-5xl font-black text-white tracking-widest drop-shadow-md">ASSISTANCE DISPENSER</h1>
-          <p className="text-slate-400 mt-2 text-sm md:text-base font-bold tracking-widest uppercase">Tap to Select Patient Language</p>
-        </div>
-
-        <div className="relative w-[300px] h-[300px] flex items-center justify-center mt-12 md:mt-20">
-          <div className={"absolute w-full h-full rounded-full border-[4px] border-slate-800 transition-opacity duration-300 " + (animatingLang ? "opacity-0" : "opacity-100")}></div>
-          {LANGUAGES.map((l, index) => {
-            const rotation = index * 60; 
-            const isAnimating = animatingLang === l.code;
-            const isOther = animatingLang && animatingLang !== l.code;
-            return (
-              <button key={l.code} onClick={() => handleLangSelect(l.code, l.label)}
-                className={"absolute top-1/2 left-1/2 w-20 h-20 -ml-10 -mt-10 flex flex-col items-center justify-center outline-none transition-all duration-[800ms] ease-[cubic-bezier(0.8,0,0.2,1)] " + (isOther ? "opacity-0 scale-0 " : " ") + (isAnimating ? "z-50" : "z-10 hover:scale-110 cursor-pointer")}
-                style={isAnimating ? { transform: 'translate(0px, 0px) scale(80)' } : { transform: "rotate(" + rotation + "deg) translateY(-150px)" }}
-              >
-                <div className={"flex flex-col items-center justify-center w-full h-full rounded-full transition-all duration-300 " + (isAnimating ? "bg-slate-50" : "")} style={{ transform: "rotate(" + (-rotation) + "deg)" }}>
-                  <div className={"transition-all duration-[800ms] " + (isAnimating ? "text-[1px] opacity-0" : "text-5xl")}>{l.flag}</div>
-                  <span className={"mt-2 font-black text-[10px] md:text-xs bg-slate-900/80 px-3 py-1 rounded-md border text-slate-300 border-slate-700 whitespace-nowrap " + (isAnimating ? "opacity-0" : "opacity-100")}>{l.label}</span>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-        
-        <div className={"absolute bottom-10 z-20 flex gap-4 transition-opacity duration-300 " + (animatingLang ? "opacity-0" : "opacity-100")}>
-            <button onClick={() => setVoiceGender('female')} className={"px-6 py-3 rounded-full font-black text-sm md:text-base transition-colors duration-100 border-2 " + (voiceGender === 'female' ? "bg-pink-600 text-white border-pink-400 shadow-[0_0_15px_rgba(219,39,119,0.5)]" : "bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700")}>👩🏻 Female Voice</button>
-            <button onClick={() => setVoiceGender('male')} className={"px-6 py-3 rounded-full font-black text-sm md:text-base transition-colors duration-100 border-2 " + (voiceGender === 'male' ? "bg-blue-600 text-white border-blue-400 shadow-[0_0_15px_rgba(37,99,235,0.5)]" : "bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700")}>👨🏻 Male Voice</button>
-        </div>
-      </div>
-    );
-  }
-
-  let patientHeightClass = 'h-[25dvh] p-6 print-hidden'; 
-  if (appMode === 'history' && activeQuestion) patientHeightClass = 'h-[75dvh] p-6 print-hidden'; 
-  if (appMode === 'dispense' && dispenseState === 'input') patientHeightClass = 'h-[8dvh] p-2 print-hidden'; 
-
-  // Guide Card Rendering
+  // ==========================================
+  // Render Sub-components
+  // ==========================================
   const renderGuideCard = (guide: any) => {
     return (
       <div className="w-full h-fit max-h-[85dvh] lg:max-w-4xl bg-white lg:rounded-[2rem] rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-4 border-teal-200 print-max-h-none" dir={isRTL ? 'rtl' : 'ltr'}>
@@ -550,7 +669,6 @@ export default function PharmaLingoApp() {
     );
   };
 
-  // Boarding Pass Rendering
   const renderBoardingPass = (rx: Prescription, index: number) => {
     const displayDrugEn = rx.drugInput.trim();
     const displayDrugLocal = rx.drugName && rx.drugName.toLowerCase() !== rx.drugInput.toLowerCase() ? rx.drugName : '';
@@ -577,8 +695,6 @@ export default function PharmaLingoApp() {
 
     return (
       <div key={index} data-index={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu print-card-container print-overflow-hidden print-break-inside-avoid print-mb-0 print-p-0" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
-        
-        {/* Flexbox Layout for Print */}
         <div className="w-full h-full flex flex-col snap-y snap-mandatory print-rx-layout">
             
           {/* Blue Card */}
@@ -753,38 +869,67 @@ export default function PharmaLingoApp() {
     );
   };
 
+  if (!hasStarted) {
+    return (
+      <div className="min-h-[100dvh] w-full bg-[#0f172a] flex flex-col items-center justify-center relative overflow-hidden font-sans">
+        <div className={"absolute top-10 md:top-20 text-center z-20 transition-opacity duration-300 " + (animatingLang ? "opacity-0" : "opacity-100")}>
+          <h1 className="text-3xl md:text-5xl font-black text-white tracking-widest drop-shadow-md">ASSISTANCE DISPENSER</h1>
+          <p className="text-slate-400 mt-2 text-sm md:text-base font-bold tracking-widest uppercase">Tap to Select Patient Language</p>
+        </div>
+
+        <div className="relative w-[300px] h-[300px] flex items-center justify-center mt-12 md:mt-20">
+          <div className={"absolute w-full h-full rounded-full border-[4px] border-slate-800 transition-opacity duration-300 " + (animatingLang ? "opacity-0" : "opacity-100")}></div>
+          {LANGUAGES.map((l, index) => {
+            const rotation = index * 60; 
+            const isAnimating = animatingLang === l.code;
+            const isOther = animatingLang && animatingLang !== l.code;
+            return (
+              <button key={l.code} onClick={() => handleLangSelect(l.code, l.label)}
+                className={"absolute top-1/2 left-1/2 w-20 h-20 -ml-10 -mt-10 flex flex-col items-center justify-center outline-none transition-all duration-[800ms] ease-[cubic-bezier(0.8,0,0.2,1)] " + (isOther ? "opacity-0 scale-0 " : " ") + (isAnimating ? "z-50" : "z-10 hover:scale-110 cursor-pointer")}
+                style={isAnimating ? { transform: 'translate(0px, 0px) scale(80)' } : { transform: "rotate(" + rotation + "deg) translateY(-150px)" }}
+              >
+                <div className={"flex flex-col items-center justify-center w-full h-full rounded-full transition-all duration-300 " + (isAnimating ? "bg-slate-50" : "")} style={{ transform: "rotate(" + (-rotation) + "deg)" }}>
+                  <div className={"transition-all duration-[800ms] " + (isAnimating ? "text-[1px] opacity-0" : "text-5xl")}>{l.flag}</div>
+                  <span className={"mt-2 font-black text-[10px] md:text-xs bg-slate-900/80 px-3 py-1 rounded-md border text-slate-300 border-slate-700 whitespace-nowrap " + (isAnimating ? "opacity-0" : "opacity-100")}>{l.label}</span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+        
+        <div className={"absolute bottom-10 z-20 flex gap-4 transition-opacity duration-300 " + (animatingLang ? "opacity-0" : "opacity-100")}>
+            <button onClick={() => setVoiceGender('female')} className={"px-6 py-3 rounded-full font-black text-sm md:text-base transition-colors duration-100 border-2 " + (voiceGender === 'female' ? "bg-pink-600 text-white border-pink-400 shadow-[0_0_15px_rgba(219,39,119,0.5)]" : "bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700")}>👩🏻 Female Voice</button>
+            <button onClick={() => setVoiceGender('male')} className={"px-6 py-3 rounded-full font-black text-sm md:text-base transition-colors duration-100 border-2 " + (voiceGender === 'male' ? "bg-blue-600 text-white border-blue-400 shadow-[0_0_15px_rgba(37,99,235,0.5)]" : "bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700")}>👨🏻 Male Voice</button>
+        </div>
+      </div>
+    );
+  }
+
+  let patientHeightClass = 'h-[25dvh] p-6 print-hidden'; 
+  if (appMode === 'history' && activeQuestion) patientHeightClass = 'h-[75dvh] p-6 print-hidden'; 
+  if (appMode === 'dispense' && dispenseState === 'input') patientHeightClass = 'h-[8dvh] p-2 print-hidden'; 
+
   return (
     <div className="h-[100dvh] w-full bg-[#0f172a] font-sans flex flex-col overflow-hidden relative print-h-auto print-bg-white print-overflow-visible">
       
-      {/* Patient View */}
-      <div className={"w-full flex justify-center items-center transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] print-rotate-0 print-block " + (isSharedLink ? "rotate-0 " : "rotate-180 ") + (isFullscreen ? "fixed inset-0 z-[100] bg-slate-900 h-full print-relative print-bg-white print-z-0" : "bg-slate-100 " + patientHeightClass)}>
-        
+      {/* ======================= */}
+      {/* 1. Patient View Area  */}
+      {/* ======================= */}
+      <div className={`w-full flex justify-center items-center transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] print-rotate-0 print-block ${isSharedLink ? 'rotate-0 ' : 'rotate-180 '} ${isFullscreen ? 'fixed inset-0 z-[100] bg-slate-900 h-full print-relative print-bg-white print-z-0' : 'bg-slate-100 ' + patientHeightClass}`}>
         {dispenseState === 'present' && !activeGuide ? (
           <div className="w-full h-full flex flex-col bg-slate-900 relative print-bg-white print-h-auto print-block print-w-full print-mx-auto" dir={isRTL ? 'rtl' : 'ltr'}>
-            
-            {/* Photo Prompt */}
             <div className="absolute top-6 left-6 bg-blue-600 text-white font-black px-4 py-2 md:px-5 md:py-3 rounded-full shadow-xl border-2 border-blue-400 animate-pulse flex items-center gap-2 z-50 print-hidden pointer-events-auto">
                <span className="text-xl md:text-2xl">📸</span> <span className="text-[10px] md:text-sm">{p.photo_prompt}</span>
             </div>
-
-            {/* Print and Close Buttons */}
             <div className="absolute top-6 right-6 flex items-center gap-2 z-50 pointer-events-none print-hidden">
-              <button onClick={() => window.print()} className="bg-emerald-500 hover:bg-emerald-400 text-white w-10 h-10 md:w-12 md:h-12 rounded-full text-xl font-black shadow-xl flex items-center justify-center border-2 border-emerald-300 pointer-events-auto active:scale-95">
-                 🖨️
-              </button>
-              <button onClick={() => { setIsFullscreen(false); setDispenseState('input'); if(synthRef.current) synthRef.current.cancel(); setIsSpeaking(false); }} className="bg-red-500 hover:bg-red-400 text-white w-10 h-10 md:w-12 md:h-12 rounded-full text-xl md:text-2xl font-black shadow-xl flex items-center justify-center border-2 border-red-300 pointer-events-auto active:scale-95">
-                 ✕
-              </button>
+              <button onClick={() => window.print()} className="bg-emerald-500 hover:bg-emerald-400 text-white w-10 h-10 md:w-12 md:h-12 rounded-full text-xl font-black shadow-xl flex items-center justify-center border-2 border-emerald-300 pointer-events-auto active:scale-95">🖨️</button>
+              <button onClick={() => { setIsFullscreen(false); setDispenseState('input'); if(synthRef.current) synthRef.current.cancel(); setIsSpeaking(false); }} className="bg-red-500 hover:bg-red-400 text-white w-10 h-10 md:w-12 md:h-12 rounded-full text-xl md:text-2xl font-black shadow-xl flex items-center justify-center border-2 border-red-300 pointer-events-auto active:scale-95">✕</button>
             </div>
-
-            {/* Cart Count */}
             {cart.length > 1 && (
               <div className="absolute bottom-6 right-6 bg-slate-800/80 text-white font-black text-xl md:text-2xl w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full border-2 border-slate-600 shadow-xl z-50 pointer-events-none print-hidden">
                 {cart.length}
               </div>
             )}
-
-            {/* Slider */}
             <div className="flex-1 w-full h-full relative print-h-auto print-overflow-visible">
                {cart.length > 1 && <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-slate-400 text-[10px] md:text-xs font-bold uppercase tracking-widest animate-bounce z-50 pointer-events-none bg-slate-900/80 px-6 py-2 rounded-full border border-slate-700 print-hidden">{p.swipe_hint}</div>}
                <div id="horizontal-scroll-container" className="w-full h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory flex hide-scrollbar scroll-smooth transform-gpu print-flex-col print-overflow-visible print-h-auto print-snap-none" style={{ WebkitOverflowScrolling: 'touch' }}>
@@ -801,21 +946,17 @@ export default function PharmaLingoApp() {
             </div>
           </div>
         ) : (
-          <div dir={isRTL ? 'rtl' : 'ltr'} 
-            className={"relative transition-all duration-500 flex flex-col w-full h-full bg-white rounded-[2rem] shadow-xl overflow-hidden print-hidden " + (activeQuestion || activeGuide ? "opacity-100 p-4 md:p-6 pt-12 md:pt-10" : "opacity-0")}>
-            
+          <div dir={isRTL ? 'rtl' : 'ltr'} className={`relative transition-all duration-500 flex flex-col w-full h-full bg-white rounded-[2rem] shadow-xl overflow-hidden print-hidden ${activeQuestion || activeGuide ? 'opacity-100 p-4 md:p-6 pt-12 md:pt-10' : 'opacity-0'}`}>
             {activeGuide ? (
               <div className="w-full h-full flex flex-col relative">
                 <div className="w-full shrink-0 flex items-center justify-end z-50 absolute top-0 right-0 pointer-events-none">
-                  <button onClick={() => { setIsFullscreen(false); setDispenseState('input'); setActiveGuide(null); if(synthRef.current) synthRef.current.cancel(); setIsSpeaking(false); }} className="bg-red-500 hover:bg-red-400 text-white w-10 h-10 md:w-12 md:h-12 rounded-full text-xl font-black shadow-md flex items-center justify-center border border-red-300 pointer-events-auto">
-                    ✕
-                  </button>
+                  <button onClick={() => { setIsFullscreen(false); setDispenseState('input'); setActiveGuide(null); if(synthRef.current) synthRef.current.cancel(); setIsSpeaking(false); }} className="bg-red-500 hover:bg-red-400 text-white w-10 h-10 md:w-12 md:h-12 rounded-full text-xl font-black shadow-md flex items-center justify-center border border-red-300 pointer-events-auto">✕</button>
                 </div>
                 <div className="flex-1 w-full h-full flex items-center justify-center p-2 md:p-4">
                   {renderGuideCard(activeGuide)}
                 </div>
               </div>
-            ) : appMode === 'history' && (
+            ) : appMode === 'history' ? (
               <div className="text-center w-full flex flex-col h-full justify-center overflow-hidden pt-6 sm:pt-0">
                 {activeQuestion === 'custom_msg' ? (
                   <div className="animate-in"><div className="text-6xl md:text-7xl mb-4 bg-blue-50 w-24 h-24 rounded-full flex items-center justify-center mx-auto shadow-inner">💬</div><h2 className="text-2xl md:text-4xl font-black text-blue-600 mb-4 leading-snug">{translatedText}</h2></div>
@@ -824,7 +965,6 @@ export default function PharmaLingoApp() {
                     {(!boolAnswer && ['q_dob', 'q_allergy', 'q_inj', 'q_med'].includes(activeQuestion as string)) && (
                       <div className="mb-4 text-blue-600 text-sm md:text-base font-bold bg-blue-50 px-6 py-2 rounded-full animate-pulse self-center border border-blue-100 inline-block">{p.tap_to_select}</div>
                     )}
-                    
                     {(!boolAnswer || !['q_allergy', 'q_inj', 'q_med'].includes(activeQuestion as string)) && (
                       <div className="animate-in relative">
                         <div className="text-5xl md:text-6xl mb-4 bg-slate-100 w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center mx-auto shadow-inner">
@@ -840,7 +980,6 @@ export default function PharmaLingoApp() {
                         </div>
                       </div>
                     )}
-                    
                     {activeQuestion === 'q_dob' && (
                       <div className="w-full max-w-xl mx-auto mt-4 animate-in fade-in">
                          <div className="bg-blue-50 text-blue-800 rounded-[2rem] p-6 flex flex-col items-center shadow-md border-2 border-blue-200">
@@ -849,7 +988,6 @@ export default function PharmaLingoApp() {
                          </div>
                       </div>
                     )}
-
                     {['q_allergy', 'q_inj', 'q_med'].includes(activeQuestion as string) && (
                       <div className="w-full max-w-xl mx-auto mt-2">
                         {!boolAnswer ? (
@@ -866,29 +1004,32 @@ export default function PharmaLingoApp() {
                           ) : (
                             <div className="bg-blue-500 text-white rounded-[2rem] p-6 font-black text-3xl md:text-4xl text-center">✅ OK!</div>
                           )
-                        ) : boolAnswer === 'no' ? ( <div className="bg-green-500 text-white rounded-[2rem] p-6 font-black text-3xl md:text-4xl text-center">✅ OK!</div>
-                        ) : ( <div className="bg-yellow-500 text-white rounded-[2rem] p-6 font-black text-3xl md:text-4xl text-center">⚠️ OK</div> )}
+                        ) : boolAnswer === 'no' ? ( 
+                          <div className="bg-green-500 text-white rounded-[2rem] p-6 font-black text-3xl md:text-4xl text-center">✅ OK!</div>
+                        ) : ( 
+                          <div className="bg-yellow-500 text-white rounded-[2rem] p-6 font-black text-3xl md:text-4xl text-center">⚠️ OK</div> 
+                        )}
                       </div>
                     )}
                   </div>
                 )}
               </div>
-            )}
+            ) : null}
           </div>
-         </div>
-      )}
+        )}
+      </div>
 
-      {/* Pharmacist UI */}
+      {/* ======================= */}
+      {/* 2. Pharmacist View Area */}
+      {/* ======================= */}
       {!isFullscreen && (
         <div className="flex-1 bg-[#0f172a] rounded-t-[2.5rem] shadow-[0_-20px_50px_rgba(0,0,0,0.5)] relative z-10 flex flex-col min-h-0 border-t border-slate-700/50 print-hidden">
-          
           <div className="flex justify-between items-center p-4 md:p-6 pb-2 shrink-0">
             <div className="flex bg-slate-800 rounded-xl p-1 border border-slate-700">
-              <button onClick={() => { setAppMode('history'); setDispenseState('input'); }} className={"px-3 py-2 md:px-4 md:py-3 rounded-lg text-xs md:text-sm font-black " + (appMode === 'history' ? "bg-cyan-600 text-white" : "text-slate-400")}>{th.tab_history}</button>
-              <button onClick={() => { setAppMode('dispense'); setActiveQuestion(null); setDispenseState('input'); }} className={"px-3 py-2 md:px-4 md:py-3 rounded-lg text-xs md:text-sm font-black " + (appMode === 'dispense' ? "bg-indigo-600 text-white" : "text-slate-400")}>{th.tab_dispense}</button>
-              <button onClick={() => { setAppMode('specialty'); setActiveQuestion(null); setDispenseState('input'); }} className={"px-3 py-2 md:px-4 md:py-3 rounded-lg text-xs md:text-sm font-black " + (appMode === 'specialty' ? "bg-teal-600 text-white" : "text-slate-400")}>{th.tab_special}</button>
+              <button onClick={() => { setAppMode('history'); setDispenseState('input'); }} className={`px-3 py-2 md:px-4 md:py-3 rounded-lg text-xs md:text-sm font-black ${appMode === 'history' ? 'bg-cyan-600 text-white' : 'text-slate-400'}`}>{th.tab_history}</button>
+              <button onClick={() => { setAppMode('dispense'); setActiveQuestion(null); setDispenseState('input'); }} className={`px-3 py-2 md:px-4 md:py-3 rounded-lg text-xs md:text-sm font-black ${appMode === 'dispense' ? 'bg-indigo-600 text-white' : 'text-slate-400'}`}>{th.tab_dispense}</button>
+              <button onClick={() => { setAppMode('specialty'); setActiveQuestion(null); setDispenseState('input'); }} className={`px-3 py-2 md:px-4 md:py-3 rounded-lg text-xs md:text-sm font-black ${appMode === 'specialty' ? 'bg-teal-600 text-white' : 'text-slate-400'}`}>{th.tab_special}</button>
             </div>
-            
             <div className="flex gap-2">
               {appMode === 'dispense' && (
                 <button onClick={clearAll} className="text-[10px] md:text-xs font-black text-white bg-red-900/40 px-3 py-2 md:px-4 md:py-3 rounded-xl border border-red-800 hover:bg-red-800">🗑️ เคลียร์</button>
@@ -923,14 +1064,14 @@ export default function PharmaLingoApp() {
                   <div className="flex flex-col gap-3 animate-in">
                     <div className="grid grid-cols-3 gap-3 mt-2">
                       {[{ id: 'q_name', icon: '👤', text: th.q_name, bg: 'bg-cyan-600' }, { id: 'q_dob', icon: '📅', text: th.q_dob, bg: 'bg-blue-600' }, { id: 'q_allergy', icon: '🚫', text: th.q_allergy, bg: 'bg-red-600' }].map(q => (
-                        <button key={q.id} onClick={() => askQuestion(q.id)} className={"flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border min-h-[100px] shadow-sm active:scale-95 " + (activeQuestion === q.id ? q.bg + " border-transparent text-white ring-2 ring-white/20" : "bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700")}>
+                        <button key={q.id} onClick={() => askQuestion(q.id)} className={`flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border min-h-[100px] shadow-sm active:scale-95 ${activeQuestion === q.id ? q.bg + ' border-transparent text-white ring-2 ring-white/20' : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'}`}>
                           <div className="text-3xl md:text-4xl">{q.icon}</div><span className="font-black text-xs md:text-sm text-center leading-tight">{q.text}</span>
                         </button>
                       ))}
                     </div>
                     <div className="grid grid-cols-2 gap-3 mt-1">
                       {[{ id: 'q_inj', icon: '💉', text: th.q_inj, bg: 'bg-purple-600' }, { id: 'q_med', icon: '💊', text: th.q_med, bg: 'bg-pink-600' }].map(q => (
-                        <button key={q.id} onClick={() => askQuestion(q.id)} className={"flex items-center justify-center gap-3 p-4 rounded-xl border shadow-sm active:scale-95 " + (activeQuestion === q.id ? q.bg + " border-transparent text-white ring-2 ring-white/20" : "bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700")}>
+                        <button key={q.id} onClick={() => askQuestion(q.id)} className={`flex items-center justify-center gap-3 p-4 rounded-xl border shadow-sm active:scale-95 ${activeQuestion === q.id ? q.bg + ' border-transparent text-white ring-2 ring-white/20' : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700'}`}>
                           <div className="text-2xl md:text-3xl">{q.icon}</div><span className="font-black text-xs md:text-sm">{q.text}</span>
                         </button>
                       ))}
@@ -942,7 +1083,6 @@ export default function PharmaLingoApp() {
 
             {appMode === 'dispense' && dispenseState === 'input' && (
               <div className="flex flex-col gap-4 md:gap-5 pb-[120px] md:pb-[100px] animate-in relative z-0">
-                
                 <div className="bg-gradient-to-br from-blue-900/40 to-indigo-900/40 p-4 rounded-2xl border border-blue-800/50 flex flex-col gap-3 shadow-inner">
                   <div className="flex flex-col gap-2">
                     <span className="text-blue-300 text-[10px] md:text-xs font-black uppercase tracking-widest">💊 {th.drug_name}</span>
@@ -959,7 +1099,7 @@ export default function PharmaLingoApp() {
                     <span className="text-blue-300 text-[10px] md:text-xs font-black uppercase tracking-widest">🎯 {th.ind_title}</span>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                       {th.indication.map((ind: string, i: number) => (
-                        <button key={i} onClick={() => { setRxIndication(rxIndication === i ? null : i); setCustomIndication(''); }} className={"px-2 py-2 rounded-lg text-[10px] md:text-xs font-black border flex items-center gap-1 active:scale-95 " + (rxIndication === i ? "bg-blue-600 border-blue-400 text-white" : "bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700")}>
+                        <button key={i} onClick={() => { setRxIndication(rxIndication === i ? null : i); setCustomIndication(''); }} className={`px-2 py-2 rounded-lg text-[10px] md:text-xs font-black border flex items-center gap-1 active:scale-95 ${rxIndication === i ? 'bg-blue-600 border-blue-400 text-white' : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700'}`}>
                           <span className="text-sm md:text-base">{th.ind_icons[i]}</span> <span className="line-clamp-1">{ind}</span>
                         </button>
                       ))}
@@ -974,8 +1114,8 @@ export default function PharmaLingoApp() {
 
                 <div className="flex items-center justify-between bg-slate-800/50 p-3 rounded-xl border border-slate-700">
                    <span className="text-indigo-400 font-black text-xs md:text-sm px-2">📉 {th.taper_mode}</span>
-                   <button onClick={() => setIsTaperingMode(!isTaperingMode)} className={"w-12 h-6 rounded-full p-1 transition-colors " + (isTaperingMode ? "bg-indigo-600" : "bg-slate-600")}>
-                      <div className={"w-4 h-4 bg-white rounded-full transition-transform " + (isTaperingMode ? "translate-x-6" : "translate-x-0")}></div>
+                   <button onClick={() => setIsTaperingMode(!isTaperingMode)} className={`w-12 h-6 rounded-full p-1 transition-colors ${isTaperingMode ? 'bg-indigo-600' : 'bg-slate-600'}`}>
+                      <div className={`w-4 h-4 bg-white rounded-full transition-transform ${isTaperingMode ? 'translate-x-6' : 'translate-x-0'}`}></div>
                    </button>
                 </div>
 
@@ -1010,7 +1150,7 @@ export default function PharmaLingoApp() {
                             <span className="text-[9px] md:text-[10px] text-slate-500 uppercase font-bold">เวลาอาหาร</span>
                             <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
                               {th.time.map((tFood: string, tIdx: number) => (
-                                <button key={tIdx} onClick={() => { const ns = [...taperSteps]; ns[idx].time = ns[idx].time === tIdx ? null : tIdx; setTaperSteps(ns); }} className={"whitespace-nowrap px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-black border active:scale-95 " + (step.time === tIdx ? "bg-teal-600 border-teal-400 text-white" : "bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700")}>🍽️ {tFood}</button>
+                                <button key={tIdx} onClick={() => { const ns = [...taperSteps]; ns[idx].time = ns[idx].time === tIdx ? null : tIdx; setTaperSteps(ns); }} className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-black border active:scale-95 ${step.time === tIdx ? 'bg-teal-600 border-teal-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700'}`}>🍽️ {tFood}</button>
                               ))}
                             </div>
                          </div>
@@ -1018,7 +1158,7 @@ export default function PharmaLingoApp() {
                             <span className="text-[9px] md:text-[10px] text-slate-500 uppercase font-bold">ช่วงเวลา</span>
                             <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
                               {th.period.map((pr: string, pIdx: number) => (
-                                <button key={pIdx} onClick={() => { const ns = [...taperSteps]; if(ns[idx].periods.includes(pIdx)) ns[idx].periods = ns[idx].periods.filter(i => i !== pIdx); else ns[idx].periods.push(pIdx); ns[idx].periods.sort(); setTaperSteps(ns); }} className={"whitespace-nowrap px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-black border active:scale-95 " + (step.periods.includes(pIdx) ? "bg-orange-500 border-orange-400 text-white" : "bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700")}>{th.period_icons[pIdx]} {pr}</button>
+                                <button key={pIdx} onClick={() => { const ns = [...taperSteps]; if(ns[idx].periods.includes(pIdx)) ns[idx].periods = ns[idx].periods.filter(i => i !== pIdx); else ns[idx].periods.push(pIdx); ns[idx].periods.sort(); setTaperSteps(ns); }} className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-[9px] md:text-[10px] font-black border active:scale-95 ${step.periods.includes(pIdx) ? 'bg-orange-500 border-orange-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700'}`}>{th.period_icons[pIdx]} {pr}</button>
                               ))}
                             </div>
                          </div>
@@ -1031,7 +1171,7 @@ export default function PharmaLingoApp() {
                     <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar items-center">
                       <span className="text-slate-500 text-[10px] md:text-xs font-black uppercase w-12 shrink-0">ปริมาณ:</span>
                       {th.dose.map((item: string, i: number) => (
-                        <button key={i} onClick={() => { setRxDose(rxDose === i ? null : i); setCDose(0); }} className={"whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 " + (rxDose === i ? "bg-indigo-600 border-indigo-400 text-white" : "bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800")}>
+                        <button key={i} onClick={() => { setRxDose(rxDose === i ? null : i); setCDose(0); }} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 ${rxDose === i ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           {i === 0 ? '🌗' : i > 4 ? (i > 6 ? '💧' : '💨') : '💊'} {item}
                         </button>
                       ))}
@@ -1040,7 +1180,7 @@ export default function PharmaLingoApp() {
                     <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar items-center">
                       <span className="text-slate-500 text-[10px] md:text-xs font-black uppercase w-12 shrink-0">ความถี่:</span>
                       {th.freq.map((item: string, i: number) => (
-                        <button key={i} onClick={() => { setRxFreq(rxFreq === i ? null : i); setCHour(0); setCApply(0); }} className={"whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 " + (rxFreq === i ? "bg-indigo-600 border-indigo-400 text-white" : "bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800")}>
+                        <button key={i} onClick={() => { setRxFreq(rxFreq === i ? null : i); setCHour(0); setCApply(0); }} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 ${rxFreq === i ? 'bg-indigo-600 border-indigo-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           🔄 {item}
                         </button>
                       ))}
@@ -1048,7 +1188,7 @@ export default function PharmaLingoApp() {
                     <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar items-center">
                       <span className="text-slate-500 text-[10px] md:text-xs font-black uppercase w-12 shrink-0">อาหาร:</span>
                       {th.time.map((item: string, i: number) => (
-                        <button key={i} onClick={() => setRxTime(rxTime === i ? null : i)} className={"whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 " + (rxTime === i ? "bg-teal-600 border-teal-400 text-white" : "bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800")}>
+                        <button key={i} onClick={() => setRxTime(rxTime === i ? null : i)} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 ${rxTime === i ? 'bg-teal-600 border-teal-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           🍽️ {item}
                         </button>
                       ))}
@@ -1056,7 +1196,7 @@ export default function PharmaLingoApp() {
                     <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar items-center">
                       <span className="text-slate-500 text-[10px] md:text-xs font-black uppercase w-12 shrink-0">เวลา:</span>
                       {th.period.map((pTime: string, i: number) => (
-                        <button key={i} onClick={() => togglePeriod(i)} className={"whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 " + (rxPeriod.includes(i) ? "bg-orange-500 border-orange-400 text-white" : "bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800")}>
+                        <button key={i} onClick={() => togglePeriod(i)} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 ${rxPeriod.includes(i) ? 'bg-orange-500 border-orange-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           {th.period_icons[i]} {pTime}
                         </button>
                       ))}
@@ -1065,7 +1205,7 @@ export default function PharmaLingoApp() {
                     <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar items-center">
                       <span className="text-slate-500 text-[10px] md:text-xs font-black uppercase w-12 shrink-0">ข้าง:</span>
                       {th.side.map((item: string, i: number) => (
-                        <button key={i} onClick={() => setRxSide(rxSide === i ? null : i)} className={"whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 " + (rxSide === i ? "bg-purple-600 border-purple-400 text-white" : "bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800")}>
+                        <button key={i} onClick={() => setRxSide(rxSide === i ? null : i)} className={`whitespace-nowrap px-3 py-2 rounded-lg text-[10px] md:text-xs font-black border active:scale-95 ${rxSide === i ? 'bg-purple-600 border-purple-400 text-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'}`}>
                           {th.side_icons[i]} {item}
                         </button>
                       ))}
@@ -1185,7 +1325,7 @@ export default function PharmaLingoApp() {
         </div>
       )}
 
-      {/* ควบคุมการแสดงผลสำหรับการปริ้นท์ A5 ซ้าย-ขวา เป๊ะๆ ตามโค้ดต้นฉบับ */}
+      {/* ควบคุมการแสดงผลสำหรับการปริ้นท์ A5 ซ้าย-ขวา เป๊ะๆ */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@700;900&display=swap'); 
         .font-arabic { font-family: 'Noto Sans Arabic', sans-serif !important; } 
@@ -1201,7 +1341,6 @@ export default function PharmaLingoApp() {
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; } 
         select { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>"); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; }
         
-        /* 🖨️ CSS บังคับโครงสร้างตอน Print 🖨️ */
         @media print {
           @page { 
             size: A5 landscape; 
@@ -1216,11 +1355,11 @@ export default function PharmaLingoApp() {
             color: black !important; 
             -webkit-print-color-adjust: exact !important; 
             print-color-adjust: exact !important;
+            font-size: 14px !important;
           }
           
           .print-hidden { display: none !important; }
 
-          /* 📌 บังคับ Flex Layout ให้การ์ด 2 ใบยืนเรียงคู่กัน ซ้าย-ขวา เป๊ะๆ ตามโค้ดต้นฉบับ */
           .print-rx-layout {
              display: flex !important;
              flex-direction: row !important;
@@ -1250,12 +1389,10 @@ export default function PharmaLingoApp() {
              flex-direction: column !important; 
           }
           
-          /* 📌 สีหัวกระดาษและฟอนต์บังคับสีขาว */
           .print-bg-blue { background: #1e3a8a !important; border-bottom: 2px solid #1e3a8a !important; border-radius: 8px 8px 0 0 !important; }
           .print-bg-red { background: #7f1d1d !important; border-bottom: 2px solid #7f1d1d !important; border-radius: 8px 8px 0 0 !important; }
           .print-text-white { color: white !important; }
           
-          /* 📌 บังคับชื่อยาตอน Print ให้ปัดบรรทัด ไม่ล้นกรอบ ไม่บังใคร */
           .print-no-scale { transform: none !important; }
           .print-text-wrap { 
              white-space: normal !important; 
@@ -1264,6 +1401,9 @@ export default function PharmaLingoApp() {
              width: 100% !important; 
              text-align: center !important; 
           }
+
+          .print-box { padding: 1.5mm !important; border-radius: 6px !important; border: 1.5px solid #e2e8f0 !important; margin-bottom: 1.5mm !important; }
+          .print-header { padding: 2.5mm !important; }
         }
       `}} />
     </div>
