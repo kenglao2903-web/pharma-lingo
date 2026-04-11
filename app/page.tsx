@@ -12,23 +12,63 @@ const specialData = [
     steps: [
       { 
         icon: "🫁", 
-        desc: { th: "หายใจออกให้สุด", en: "Breathe out completely.", zh: "完全呼气。", ja: "息を完全に吐き出します。", ru: "Сделайте глубокий выдох.", ar: "ازفر تمامًا.", de: "Atmen Sie vollständig aus." } 
+        desc: { 
+          th: "หายใจออกให้สุด", 
+          en: "Breathe out completely.", 
+          zh: "完全呼气。", 
+          ja: "息を完全に吐き出します。", 
+          ru: "Сделайте глубокий выдох.", 
+          ar: "ازفر تمامًا.", 
+          de: "Atmen Sie vollständig aus." 
+        } 
       },
       { 
         icon: "👄", 
-        desc: { th: "อมปากกระบอกให้สนิท", en: "Place mouthpiece in mouth.", zh: "将咬嘴放入口中。", ja: "マウスピースを口に含みます。", ru: "Поместите мундштук в рот.", ar: "ضع قطعة الفم في فมك.", de: "Nehmen Sie das Mundstück in den Mund." } 
+        desc: { 
+          th: "อมปากกระบอกให้สนิท", 
+          en: "Place mouthpiece in mouth.", 
+          zh: "将咬嘴放入口中。", 
+          ja: "マウスピースを口に含みます。", 
+          ru: "Поместите мундштук в рот.", 
+          ar: "ضع قطعة الفم في فمك.", 
+          de: "Nehmen Sie das Mundstück in den Mund." 
+        } 
       },
       { 
         icon: "🌬️", 
-        desc: { th: "กดพร้อมหายใจเข้าลึกๆ", en: "Press and inhale deeply.", zh: "按下并深吸气。", ja: "押して深く息を吸い込みます。", ru: "Нажмите и глубоко вдохните.", ar: "اضغط واستنشق بعمق.", de: "Drücken und tief einatmen." } 
+        desc: { 
+          th: "กดพร้อมหายใจเข้าลึกๆ", 
+          en: "Press and inhale deeply.", 
+          zh: "按下并深吸气。", 
+          ja: "押して深く息を吸い込みます。", 
+          ru: "Нажмите и глубоко вдохните.", 
+          ar: "اضغط واستنشق بعمق.", 
+          de: "Drücken und tief einatmen." 
+        } 
       },
       { 
         icon: "⏱️", 
-        desc: { th: "กลั้นหายใจ 10 วินาที", en: "Hold breath for 10s.", zh: "屏住呼吸10秒。", ja: "10秒間息を止めます。", ru: "Задержите дыхание на 10 сек.", ar: "اكتم أنفاسك لمدة 10 ثوانٍ.", de: "Atem für 10s anhalten." } 
+        desc: { 
+          th: "กลั้นหายใจ 10 วินาที", 
+          en: "Hold breath for 10s.", 
+          zh: "屏住呼吸10秒。", 
+          ja: "10秒間息を止めます。", 
+          ru: "Задержите дыхание на 10 сек.", 
+          ar: "اكتم أنفاسك لمدة 10 ثوانٍ.", 
+          de: "Atem für 10s anhalten." 
+        } 
       },
       { 
         icon: "🫧", 
-        desc: { th: "บ้วนปากหลังใช้เสร็จ", en: "Rinse mouth after use.", zh: "使用后漱口。", ja: "使用後うがいをします。", ru: "Прополощите рот после.", ar: "اشطف فمك بعد الاستخدام.", de: "Mund nach Gebrauch ausspülen." } 
+        desc: { 
+          th: "บ้วนปากหลังใช้เสร็จ", 
+          en: "Rinse mouth after use.", 
+          zh: "使用后漱口。", 
+          ja: "使用後うがいをします。", 
+          ru: "Прополощите рот после.", 
+          ar: "اشطف فمك بعد الاستخدام.", 
+          de: "Mund nach Gebrauch ausspülen." 
+        } 
       }
     ]
   },
@@ -37,11 +77,26 @@ const specialData = [
     icon: "💉",
     title: { th: "ปากกาฉีดอินซูลิน", en: "Insulin Pen" },
     steps: [
-      { icon: "🔄", desc: { th: "กลิ้งยาให้เข้ากัน", en: "Roll the pen to mix." } },
-      { icon: "🔢", desc: { th: "หมุนตั้งขนาดยา", en: "Dial your dose." } },
-      { icon: "🧼", desc: { th: "เช็ดทำความสะอาดผิวหนัง", en: "Clean the injection site." } },
-      { icon: "🎯", desc: { th: "ฉีดตั้งฉาก 90 องศา", en: "Inject straight in (90 degrees)." } },
-      { icon: "⏳", desc: { th: "กดค้างไว้ 10 วินาที", en: "Hold for 10 seconds before removing." } }
+      { 
+        icon: "🔄", 
+        desc: { th: "กลิ้งยาให้เข้ากัน", en: "Roll the pen to mix." } 
+      },
+      { 
+        icon: "🔢", 
+        desc: { th: "หมุนตั้งขนาดยา", en: "Dial your dose." } 
+      },
+      { 
+        icon: "🧼", 
+        desc: { th: "เช็ดทำความสะอาดผิวหนัง", en: "Clean the injection site." } 
+      },
+      { 
+        icon: "🎯", 
+        desc: { th: "ฉีดตั้งฉาก 90 องศา", en: "Inject straight in (90 degrees)." } 
+      },
+      { 
+        icon: "⏳", 
+        desc: { th: "กดค้างไว้ 10 วินาที", en: "Hold for 10 seconds before removing." } 
+      }
     ]
   }
 ];
@@ -70,10 +125,10 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
 
   return (
     <div ref={containerRef} className="w-full flex items-center justify-center overflow-visible px-2 relative z-10 print:px-0">
-      {/* 💡 ใส่คลาส print-no-scale เพื่อปิดการย่อขยายอัตโนมัติเมื่อสั่ง Print ให้ใช้การขึ้นบรรทัดใหม่แทน */}
+      {/* 💡 ใส่คลาส print-no-scale และ print-text-wrap เพื่อให้ปัดบรรทัดอัตโนมัติเวลาปริ้นท์ ไม่ทะลุกรอบ */}
       <span 
         ref={textRef} 
-        className={`print-text-wrap print-no-scale inline-block font-black origin-center print:whitespace-normal print:leading-tight print:w-full ${isMain ? 'text-3xl md:text-5xl text-slate-900 print:text-[1.5rem]' : 'text-lg md:text-2xl text-yellow-900 opacity-80 print:text-[1.2rem]'}`} 
+        className={`print-text-wrap print-no-scale inline-block font-black origin-center whitespace-nowrap ${isMain ? 'text-3xl md:text-5xl text-slate-900 print:text-[1.5rem]' : 'text-lg md:text-2xl text-yellow-900 opacity-80 print:text-[1.2rem]'}`} 
         style={{ transform: scale < 1 ? `scale(${scale})` : 'none' }}
       >
         {text.toUpperCase()}
@@ -102,366 +157,366 @@ const unitDict: any = {
 
 const dict = {
   th: {
-    dashboard: 'แดชบอร์ดเภสัชกร',
-    change_lang: 'เปลี่ยนภาษา',
-    tab_history: '📋 ซักประวัติ',
-    tab_dispense: '💊 จ่ายยา',
+    dashboard: 'แดชบอร์ดเภสัชกร', 
+    change_lang: 'เปลี่ยนภาษา', 
+    tab_history: '📋 ซักประวัติ', 
+    tab_dispense: '💊 จ่ายยา', 
     tab_special: '🪄 เทคนิคพิเศษ',
-    q_name: 'คุณชื่ออะไร ?',
-    q_dob: 'คุณเกิดวันที่เท่าไหร่ ?',
-    q_allergy: 'คุณมีประวัติแพ้ยาหรือไม่ ?',
-    q_inj: 'วันนี้คุณได้รับการฉีดยาหรือไม่ ?',
+    q_name: 'คุณชื่ออะไร ?', 
+    q_dob: 'คุณเกิดวันที่เท่าไหร่ ?', 
+    q_allergy: 'คุณมีประวัติแพ้ยาหรือไม่ ?', 
+    q_inj: 'วันนี้คุณได้รับการฉีดยาหรือไม่ ?', 
     q_med: 'วันนี้คุณได้รับยารับประทานหรือไม่ ?', 
-    ans_yes: 'ใช่',
-    ans_no: 'ไม่ใช่',
-    ans_dont_know: 'ไม่ทราบ',
-    drug_name: 'ยา (Medicine):',
+    ans_yes: 'ใช่', 
+    ans_no: 'ไม่ใช่', 
+    ans_dont_know: 'ไม่ทราบ', 
+    drug_name: 'ยา (Medicine):', 
     ind_title: 'ข้อบ่งใช้:',
     indication: ['ลดไข้ / แก้ปวด', 'แก้แพ้ / ลดน้ำมูก', 'แก้ไอ / ละลายเสมหะ', 'ยาฆ่าเชื้อ', 'แก้ท้องเสีย', 'ลดกรด / ปวดท้อง', 'แก้คลื่นไส้ / อาเจียน', 'ลดอักเสบ / ปวด'],
     ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
     dose: ['ครึ่งเม็ด', '1 เม็ด', '2 เม็ด', '1 ช้อนชา', '1 ช้อนโต๊ะ', '1 กด', '1 หยด'],
-    side: ['ตาซ้าย', 'ตาขวา', 'ตาทั้งสองข้าง', 'หูซ้าย', 'หูขวา', 'หูทั้งสองข้าง'],
+    side: ['ตาซ้าย', 'ตาขวา', 'ตาทั้งสองข้าง', 'หูซ้าย', 'หูขวา', 'หูทั้งสองข้าง'], 
     side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['วันละ 1 ครั้ง', 'วันละ 2 ครั้ง', 'วันละ 3 ครั้ง', 'วันละ 4 ครั้ง', 'ทุก 4-6 ชม.', 'ทุก 6 ชม.', 'ทุก 8 ชม.'],
     time: ['ก่อนอาหาร', 'หลังอาหาร', 'หลังอาหารทันที', 'ก่อนหรือหลังอาหารก็ได้'],
-    period: ['เช้า', 'กลางวัน', 'เย็น', 'ก่อนนอน', 'เวลามีอาการ'],
+    period: ['เช้า', 'กลางวัน', 'เย็น', 'ก่อนนอน', 'เวลามีอาการ'], 
     period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['ต้องกินจนหมด', 'อาจทำให้ง่วงนอน', 'ห้ามดื่มแอลกอฮอล์', 'ห้ามกินพร้อมนม', 'ระวังแสงแดดจัด', 'ดื่มน้ำตามมากๆ', 'เปลี่ยนสีปัสสาวะ', 'เคี้ยวให้ละเอียด', 'เก็บในตู้เย็น', 'ละลายน้ำก่อนดื่ม'],
     warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'],
     allergy_alert: 'หยุดใช้ยาและพบแพทย์ทันที หากมีผื่นคัน หายใจติดขัด หรือมีอาการแพ้',
-    show_card: '🚀 โชว์ Boarding Pass',
-    edit_rx: '⬅️ กลับไปแก้ไข',
-    photo_prompt: '📸 ถ่ายรูปหน้าจอนี้เก็บไว้',
+    show_card: '🚀 โชว์ Boarding Pass', 
+    edit_rx: '⬅️ กลับไปแก้ไข', 
+    photo_prompt: '📸 ถ่ายรูปหน้าจอนี้เก็บไว้', 
     write_dob: '✍️ กรุณาเขียนเลขวันเดือนปีเกิดลงในกระดาษ',
-    smart_dose: 'ใช้ครั้งละ {n} {u}',
-    smart_hour: 'ทุกๆ {n} {u}',
-    smart_apply: 'ทาวันละ {n} {u}',
+    smart_dose: 'ใช้ครั้งละ {n} {u}', 
+    smart_hour: 'ทุกๆ {n} {u}', 
+    smart_apply: 'ทาวันละ {n} {u}', 
     smart_days: 'ติดต่อกัน {n} {u}',
-    add_to_cart: '📥 เก็บลงตะกร้า',
-    cart: 'ตะกร้ายา',
-    items: 'รายการ',
-    swipe_hint: 'ปัดหน้าจอเพื่อดูยาชนิดอื่น',
+    add_to_cart: '📥 เก็บลงตะกร้า', 
+    cart: 'ตะกร้ายา', 
+    items: 'รายการ', 
+    swipe_hint: 'ปัดหน้าจอเพื่อดูยาชนิดอื่น', 
     scroll_down: '⬇️ เลื่อนลงเพื่อดูคำเตือน ⬇️',
-    taper_mode: '📉 โหมดลดโดส / กินไม่เท่ากัน',
-    standard_mode: 'กลับไปโหมดปกติ',
+    taper_mode: '📉 โหมดลดโดส / กินไม่เท่ากัน', 
+    standard_mode: 'กลับไปโหมดปกติ', 
     add_step: '➕ เพิ่มขั้น',
-    duration: 'ระยะเวลา',
-    dosage: 'ปริมาณ',
-    time_col: 'มื้ออาหาร / เวลา',
-    rx_title: 'วิธีใช้ยา',
-    warn_title: 'คำเตือน / ข้อควรระวัง',
+    duration: 'ระยะเวลา', 
+    dosage: 'ปริมาณ', 
+    time_col: 'มื้ออาหาร / เวลา', 
+    rx_title: 'วิธีใช้ยา', 
+    warn_title: 'คำเตือน / ข้อควรระวัง', 
     spec_guide: 'คู่มือการใช้ยา (How to Use)'
   },
   en: { 
-    hello: 'Hello 👋',
-    tap_to_select: '👆 Please tap an option',
-    q_name: 'What is your full name?',
-    q_dob: 'What is your date of birth?',
-    q_allergy: 'Are you allergic to any medications?',
-    yes: 'Yes',
-    no: 'No',
-    dont_know: 'Not sure',
+    hello: 'Hello 👋', 
+    tap_to_select: '👆 Please tap an option', 
+    q_name: 'What is your full name?', 
+    q_dob: 'What is your date of birth?', 
+    q_allergy: 'Are you allergic to any medications?', 
+    yes: 'Yes', 
+    no: 'No', 
+    dont_know: 'Not sure', 
     writePaper: 'Please write it down on paper.',
-    q_inj: 'Did you receive any injections today?',
-    q_med: 'Did you receive any oral medications today?',
-    rx_title: 'Prescription Info',
-    warn_title: 'Warnings',
-    drug_name: 'Medicine:',
+    q_inj: 'Did you receive any injections today?', 
+    q_med: 'Did you receive any oral medications today?', 
+    rx_title: 'Prescription Info', 
+    warn_title: 'Warnings', 
+    drug_name: 'Medicine:', 
     ind_title: 'Indication:', 
-    indication: ['Fever / Pain', 'Allergy / Runny nose', 'Cough', 'Antibiotic', 'Diarrhea', 'Stomachache', 'Nausea / Vomiting', 'Anti-inflammatory / Pain'],
+    indication: ['Fever / Pain', 'Allergy / Runny nose', 'Cough', 'Antibiotic', 'Diarrhea', 'Stomachache', 'Nausea / Vomiting', 'Anti-inflammatory / Pain'], 
     ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
     dose: ['Half tablet', '1 Tablet', '2 Tablets', '1 Teaspoon', '1 Tablespoon', '1 Puff', '1 Drop'],
-    side: ['Left eye', 'Right eye', 'Both eyes', 'Left ear', 'Right ear', 'Both ears'],
+    side: ['Left eye', 'Right eye', 'Both eyes', 'Left ear', 'Right ear', 'Both ears'], 
     side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['Once daily', 'Twice daily', '3 times a day', '4 times a day', 'Every 4-6 hours', 'Every 6 hours', 'Every 8 hours'],
     time: ['Before meal', 'After meal', 'Immediately after meal', 'With/without food'],
-    period: ['Morning', 'Noon', 'Evening', 'Night', 'As needed'],
+    period: ['Morning', 'Noon', 'Evening', 'Night', 'As needed'], 
     period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['Finish entire course.', 'May cause drowsiness.', 'Avoid alcohol.', 'Do not take with milk.', 'Avoid strong sunlight.', 'Drink plenty of water.', 'May change urine color.', 'Chew well.', 'Store in refrigerator.', 'Dissolve in water'],
     warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'],
     allergy_alert: 'Stop use and seek medical help if you develop a rash or breathing problems.',
-    show_card: '🚀 Show',
-    edit_rx: '⬅️ Edit',
-    photo_prompt: '📸 Take a photo of this screen',
+    show_card: '🚀 Show', 
+    edit_rx: '⬅️ Edit', 
+    photo_prompt: '📸 Take a photo of this screen', 
     write_dob: '✍️ Please write your birth date on paper.',
-    smart_dose: 'Take {n} {u}',
-    smart_hour: 'Every {n} {u}',
-    smart_apply: 'Apply {n} {u} a day',
+    smart_dose: 'Take {n} {u}', 
+    smart_hour: 'Every {n} {u}', 
+    smart_apply: 'Apply {n} {u} a day', 
     smart_days: 'For {n} {u}',
-    add_to_cart: '📥 Add',
-    cart: 'Cart',
-    items: 'items',
-    swipe_hint: 'Swipe for other meds',
+    add_to_cart: '📥 Add', 
+    cart: 'Cart', 
+    items: 'items', 
+    swipe_hint: 'Swipe for other meds', 
     scroll_down: '⬇️ Scroll down ⬇️',
-    taper_mode: '📉 Tapering Mode',
-    standard_mode: 'Standard',
-    add_step: '➕ Add Step',
-    duration: 'Duration',
-    dosage: 'Dose',
+    taper_mode: '📉 Tapering Mode', 
+    standard_mode: 'Standard', 
+    add_step: '➕ Add Step', 
+    duration: 'Duration', 
+    dosage: 'Dose', 
     time_col: 'Time',
-    tab_history: '📋 History',
-    tab_dispense: '💊 Dispense',
-    tab_special: '🪄 Specialty',
+    tab_history: '📋 History', 
+    tab_dispense: '💊 Dispense', 
+    tab_special: '🪄 Specialty', 
     spec_guide: 'How to Use'
   },
   de: { 
-    hello: 'Hallo 👋',
-    tap_to_select: '👆 Bitte tippen',
-    q_name: 'Wie lautet Ihr vollständiger Name?',
-    q_dob: 'Wann ist Ihr Geburtsdatum?',
-    q_allergy: 'Haben Sie Allergien gegen Medikamente?',
-    yes: 'Ja',
-    no: 'Nein',
-    dont_know: 'Weiß nicht',
+    hello: 'Hallo 👋', 
+    tap_to_select: '👆 Bitte tippen', 
+    q_name: 'Wie lautet Ihr vollständiger Name?', 
+    q_dob: 'Wann ist Ihr Geburtsdatum?', 
+    q_allergy: 'Haben Sie Allergien gegen Medikamente?', 
+    yes: 'Ja', 
+    no: 'Nein', 
+    dont_know: 'Weiß nicht', 
     writePaper: 'Bitte aufschreiben.',
-    q_inj: 'Haben Sie heute Injektionen erhalten?',
-    q_med: 'Haben Sie heute Medikamente eingenommen?',
-    rx_title: 'Einnahme',
-    warn_title: 'Warnhinweise',
-    drug_name: 'Medikament:',
+    q_inj: 'Haben Sie heute Injektionen erhalten?', 
+    q_med: 'Haben Sie heute Medikamente eingenommen?', 
+    rx_title: 'Einnahme', 
+    warn_title: 'Warnhinweise', 
+    drug_name: 'Medikament:', 
     ind_title: 'Anwendung:', 
-    indication: ['Fieber / Schmerzen', 'Allergie / Nase', 'Husten', 'Antibiotikum', 'Durchfall', 'Magen', 'Übelkeit', 'Entzündung / Schmerzen'],
+    indication: ['Fieber / Schmerzen', 'Allergie / Nase', 'Husten', 'Antibiotikum', 'Durchfall', 'Magen', 'Übelkeit', 'Entzündung / Schmerzen'], 
     ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
     dose: ['Halbe Tablette', '1 Tablette', '2 Tabletten', '1 Teelöffel', '1 Esslöffel', '1 Sprühstoß', '1 Tropfen'],
-    side: ['Linkes Auge', 'Rechtes Auge', 'Beide Augen', 'Linkes Ohr', 'Rechtes Ohr', 'Beide Ohren'],
+    side: ['Linkes Auge', 'Rechtes Auge', 'Beide Augen', 'Linkes Ohr', 'Rechtes Ohr', 'Beide Ohren'], 
     side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['1x täglich', '2x täglich', '3x täglich', '4x täglich', 'Alle 4-6 Std', 'Alle 6 Std', 'Alle 8 Std'],
     time: ['Vor dem Essen', 'Nach dem Essen', 'Direkt nach Essen', 'Vor/nach Essen'],
-    period: ['Morgens', 'Mittags', 'Abends', 'Nachts', 'Bei Bedarf'],
+    period: ['Morgens', 'Mittags', 'Abends', 'Nachts', 'Bei Bedarf'], 
     period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['Vollständig aufbrauchen.', 'Macht schläfrig.', 'Kein Alkohol.', 'Nicht mit Milch.', 'Sonne meiden.', 'Viel trinken.', 'Verfärbt Urin.', 'Gut kauen.', 'Kühlschrank.', 'In Wasser auflösen'],
     warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'],
     allergy_alert: 'Bei Ausschlag sofort zum Arzt.',
-    show_card: '🚀 Zeigen',
-    edit_rx: '⬅️ Zurück',
-    photo_prompt: '📸 Bitte fotografieren',
+    show_card: '🚀 Zeigen', 
+    edit_rx: '⬅️ Zurück', 
+    photo_prompt: '📸 Bitte fotografieren', 
     write_dob: '✍️ Bitte schreiben Sie Ihr Geburtsdatum auf.',
-    smart_dose: '{n} {u} nehmen',
-    smart_hour: 'Alle {n} {u}',
-    smart_apply: '{n}x täglich',
+    smart_dose: '{n} {u} nehmen', 
+    smart_hour: 'Alle {n} {u}', 
+    smart_apply: '{n}x täglich', 
     smart_days: 'Für {n} {u}',
-    add_to_cart: '📥 Hinzufügen',
-    cart: 'Korb',
-    items: 'Artikel',
-    swipe_hint: 'Wischen',
+    add_to_cart: '📥 Hinzufügen', 
+    cart: 'Korb', 
+    items: 'Artikel', 
+    swipe_hint: 'Wischen', 
     scroll_down: '⬇️ Nach unten ⬇️',
-    taper_mode: '📉 Ausschleichen',
-    standard_mode: 'Standard',
-    add_step: '➕ Schritt',
-    duration: 'Dauer',
-    dosage: 'Dosis',
+    taper_mode: '📉 Ausschleichen', 
+    standard_mode: 'Standard', 
+    add_step: '➕ Schritt', 
+    duration: 'Dauer', 
+    dosage: 'Dosis', 
     time_col: 'Zeit',
-    tab_history: '📋 Verlauf',
-    tab_dispense: '💊 Ausgabe',
-    tab_special: '🪄 Spezial',
+    tab_history: '📋 Verlauf', 
+    tab_dispense: '💊 Ausgabe', 
+    tab_special: '🪄 Spezial', 
     spec_guide: 'Anwendung'
   },
   zh: { 
-    hello: '你好 👋',
-    tap_to_select: '👆 请点击',
-    q_name: '请问您的全名是什么？',
-    q_dob: '您的出生日期是哪天？',
-    q_allergy: '您对任何药物过敏吗？',
-    yes: '是',
-    no: '否',
-    dont_know: '不清楚',
+    hello: '你好 👋', 
+    tap_to_select: '👆 请点击', 
+    q_name: '请问您的全名是什么？', 
+    q_dob: '您的出生日期是哪天？', 
+    q_allergy: '您对任何药物过敏吗？', 
+    yes: '是', 
+    no: '否', 
+    dont_know: '不清楚', 
     writePaper: '请写下。',
-    q_inj: '您今天接受过注射吗？',
-    q_med: '您今天服用过口服药吗？',
-    rx_title: '服药方法',
-    warn_title: '注意事项',
-    drug_name: '药物：',
+    q_inj: '您今天接受过注射吗？', 
+    q_med: '您今天服用过口服药吗？', 
+    rx_title: '服药方法', 
+    warn_title: '注意事项', 
+    drug_name: '药物：', 
     ind_title: '主治：', 
-    indication: ['退烧 / 止痛', '过敏 / 流鼻涕', '咳嗽', '抗生素', '腹泻', '胃痛', '恶心', '消炎 / 止痛'],
+    indication: ['退烧 / 止痛', '过敏 / 流鼻涕', '咳嗽', '抗生素', '腹泻', '胃痛', '恶心', '消炎 / 止痛'], 
     ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
     dose: ['半粒', '1 粒', '2 粒', '1 茶匙', '1 汤匙', '1 喷', '1 滴'],
-    side: ['左眼', '右眼', '双眼', '左耳', '右耳', '双耳'],
+    side: ['左眼', '右眼', '双眼', '左耳', '右耳', '双耳'], 
     side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['每天 1 次', '每天 2 次', '每天 3 次', '每天 4 次', '每 4-6 小时', '每 6 小时', '每 8 小时'],
     time: ['饭前', '饭后', '饭后立即', '饭前/饭后'],
-    period: ['早上', '中午', '晚上', '睡前', '需要时'],
+    period: ['早上', '中午', '晚上', '睡前', '需要时'], 
     period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['服完疗程。', '可能嗜睡。', '避免饮酒。', '勿与牛奶同服。', '避光。', '多喝水。', '改变尿色。', '嚼碎。', '冷藏。', '溶于水'],
     warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'],
     allergy_alert: '如出现皮疹或呼吸困难，请立即就医。',
-    show_card: '🚀 显示',
-    edit_rx: '⬅️ 返回',
-    photo_prompt: '📸 请拍照保存',
+    show_card: '🚀 显示', 
+    edit_rx: '⬅️ 返回', 
+    photo_prompt: '📸 请拍照保存', 
     write_dob: '✍️ 请把出生日期写在纸上。',
-    smart_dose: '使用 {n} {u}',
-    smart_hour: '每 {n} {u}',
-    smart_apply: '每天 {n} {u}',
+    smart_dose: '使用 {n} {u}', 
+    smart_hour: '每 {n} {u}', 
+    smart_apply: '每天 {n} {u}', 
     smart_days: '连续 {n} {u}',
-    add_to_cart: '📥 加入',
-    cart: '购物车',
-    items: '项',
-    swipe_hint: '滑动',
+    add_to_cart: '📥 加入', 
+    cart: '购物车', 
+    items: '项', 
+    swipe_hint: '滑动', 
     scroll_down: '⬇️ 向下滚动 ⬇️',
-    taper_mode: '📉 递减剂量',
-    standard_mode: '标准',
-    add_step: '➕ 添加',
-    duration: '期间',
-    dosage: '剂量',
+    taper_mode: '📉 递减剂量', 
+    standard_mode: '标准', 
+    add_step: '➕ 添加', 
+    duration: '期间', 
+    dosage: '剂量', 
     time_col: '时间',
-    tab_history: '📋 历史',
-    tab_dispense: '💊 配药',
-    tab_special: '🪄 专科',
+    tab_history: '📋 历史', 
+    tab_dispense: '💊 配药', 
+    tab_special: '🪄 专科', 
     spec_guide: '使用方法'
   },
   ja: { 
-    hello: 'こんにちは 👋',
-    tap_to_select: '👆 選択してください',
-    q_name: 'フルネームを教えてください。',
-    q_dob: '生年月日はいつですか？',
-    q_allergy: '薬のアレルギーはありますか？',
-    yes: 'はい',
-    no: 'いいえ',
-    dont_know: '不明',
+    hello: 'こんにちは 👋', 
+    tap_to_select: '👆 選択してください', 
+    q_name: 'フルネームを教えてください。', 
+    q_dob: '生年月日はいつですか？', 
+    q_allergy: '薬のアレルギーはありますか？', 
+    yes: 'はい', 
+    no: 'いいえ', 
+    dont_know: '不明', 
     writePaper: '紙に書いてください。',
-    q_inj: '今日、注射を受けましたか？',
-    q_med: '今日、飲み薬を服用しましたか？',
-    rx_title: '服用方法',
-    warn_title: '注意事項',
-    drug_name: '薬：',
+    q_inj: '今日、注射を受けましたか？', 
+    q_med: '今日、飲み薬を服用しましたか？', 
+    rx_title: '服用方法', 
+    warn_title: '注意事項', 
+    drug_name: '薬：', 
     ind_title: '効能：', 
-    indication: ['解熱 / 鎮痛', 'アレルギー', '咳', '抗生物質', '下痢', '胃痛', '吐き気', '抗炎症 / 痛み'],
+    indication: ['解熱 / 鎮痛', 'アレルギー', '咳', '抗生物質', '下痢', '胃痛', '吐き気', '抗炎症 / 痛み'], 
     ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
     dose: ['半分', '1 錠', '2 錠', '小さじ 1', '大さじ 1', '1 プッシュ', '1 滴'],
-    side: ['左目', '右目', '両目', '左耳', '右耳', '両耳'],
+    side: ['左目', '右目', '両目', '左耳', '右耳', '両耳'], 
     side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['1日 1回', '1日 2回', '1日 3回', '1日 4回', '4-6 時間ごと', '6 時間ごと', '8 時間ごと'],
     time: ['食前', '食後', '食直後', '食前/食後'],
-    period: ['朝', '昼', '夕方', '就寝前', '症状がある時'],
+    period: ['朝', '昼', '夕方', '就寝前', '症状がある時'], 
     period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['飲みきってください。', '眠気。', '禁酒。', '牛乳不可。', '直射日光を避ける。', '多めの水。', '尿の色変化。', '噛む。', '冷蔵庫。', '水に溶かす'],
     warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'],
     allergy_alert: '発疹や息苦しさがあれば直ちに受診してください。',
-    show_card: '🚀 表示',
-    edit_rx: '⬅️ 戻る',
-    photo_prompt: '📸 画面を撮影してください',
+    show_card: '🚀 表示', 
+    edit_rx: '⬅️ 戻る', 
+    photo_prompt: '📸 画面を撮影してください', 
     write_dob: '✍️ 生年月日を紙に書いてください。',
-    smart_dose: '{n} {u} 使用',
-    smart_hour: '{n} {u} ごと',
-    smart_apply: '1日 {n} {u}',
+    smart_dose: '{n} {u} 使用', 
+    smart_hour: '{n} {u} ごと', 
+    smart_apply: '1日 {n} {u}', 
     smart_days: '{n} {u}間',
-    add_to_cart: '📥 追加',
-    cart: 'カート',
-    items: '個',
-    swipe_hint: 'スワイプ',
+    add_to_cart: '📥 追加', 
+    cart: 'カート', 
+    items: '個', 
+    swipe_hint: 'スワイプ', 
     scroll_down: '⬇️ 下へスクロール ⬇️',
-    taper_mode: '📉 漸減モード',
-    standard_mode: '標準',
-    add_step: '➕ 追加',
-    duration: '期間',
-    dosage: '用量',
+    taper_mode: '📉 漸減モード', 
+    standard_mode: '標準', 
+    add_step: '➕ 追加', 
+    duration: '期間', 
+    dosage: '用量', 
     time_col: '時間',
-    tab_history: '📋 履歴',
-    tab_dispense: '💊 調剤',
-    tab_special: '🪄 特殊',
+    tab_history: '📋 履歴', 
+    tab_dispense: '💊 調剤', 
+    tab_special: '🪄 特殊', 
     spec_guide: '使い方'
   },
   ru: { 
-    hello: 'Привет 👋',
-    tap_to_select: '👆 Выберите',
-    q_name: 'Как ваше полное имя?',
-    q_dob: 'Какова ваша дата рождения?',
-    q_allergy: 'Есть ли у вас аллергия на лекарства?',
-    yes: 'Да',
-    no: 'Нет',
-    dont_know: 'Не знаю',
+    hello: 'Привет 👋', 
+    tap_to_select: '👆 Выберите', 
+    q_name: 'Как ваше полное имя?', 
+    q_dob: 'Какова ваша дата рождения?', 
+    q_allergy: 'Есть ли у вас аллергия на лекарства?', 
+    yes: 'Да', 
+    no: 'Нет', 
+    dont_know: 'Не знаю', 
     writePaper: 'Напишите на бумаге.',
-    q_inj: 'Вам сегодня делали уколы?',
-    q_med: 'Принимали ли вы сегодня лекарства внутрь?',
-    rx_title: 'Применение',
-    warn_title: 'Внимание',
-    drug_name: 'Лекарство:',
+    q_inj: 'Вам сегодня делали уколы?', 
+    q_med: 'Принимали ли вы сегодня лекарства внутрь?', 
+    rx_title: 'Применение', 
+    warn_title: 'Внимание', 
+    drug_name: 'Лекарство:', 
     ind_title: 'Показания:', 
-    indication: ['Жар / Боль', 'Аллергия', 'Кашель', 'Антибиотик', 'Диарея', 'Боль в животе', 'Тошнота', 'Воспаление / Боль'],
+    indication: ['Жар / Боль', 'Аллергия', 'Кашель', 'Антибиотик', 'Диарея', 'Боль в животе', 'Тошнота', 'Воспаление / Боль'], 
     ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
     dose: ['Половина', '1 табл.', '2 табл.', '1 ч.л.', '1 ст.л.', '1 пшик', '1 капля'],
-    side: ['Левый глаз', 'Правый глаз', 'Оба глаза', 'Левое ухо', 'Правое ухо', 'Оба уха'],
+    side: ['Левый глаз', 'Правый глаз', 'Оба глаза', 'Левое ухо', 'Правое ухо', 'Оба уха'], 
     side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['1 раз в день', '2 раза в день', '3 раза в день', '4 раза в день', 'Каждые 4-6 ч', 'Каждые 6 ч', 'Каждые 8 ч'],
     time: ['До еды', 'После еды', 'Сразу после', 'Независимо'],
-    period: ['Утром', 'Днем', 'Вечером', 'На ночь', 'По нужде'],
+    period: ['Утром', 'Днем', 'Вечером', 'На ночь', 'По нужде'], 
     period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['Закончить курс.', 'Сонливость.', 'Без алкоголя.', 'Без молока.', 'Беречь от солнца.', 'Пить воду.', 'Цвет мочи.', 'Жевать.', 'В холодильник.', 'В воду'],
     warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'],
     allergy_alert: 'При сыпи или удушье срочно к врачу.',
-    show_card: '🚀 Показать',
-    edit_rx: '⬅️ Назад',
-    photo_prompt: '📸 Сфотографируйте экран',
+    show_card: '🚀 Показать', 
+    edit_rx: '⬅️ Назад', 
+    photo_prompt: '📸 Сфотографируйте экран', 
     write_dob: '✍️ Напишите дату рождения на бумаге.',
-    smart_dose: 'По {n} {u}',
-    smart_hour: 'Каждые {n} {u}',
-    smart_apply: '{n} раз(а) в день',
+    smart_dose: 'По {n} {u}', 
+    smart_hour: 'Каждые {n} {u}', 
+    smart_apply: '{n} раз(а) в день', 
     smart_days: 'На {n} {u}',
-    add_to_cart: '📥 В корзину',
-    cart: 'Корзина',
-    items: 'шт',
-    swipe_hint: 'Свайп',
+    add_to_cart: '📥 В корзину', 
+    cart: 'Корзина', 
+    items: 'шт', 
+    swipe_hint: 'Свайп', 
     scroll_down: '⬇️ Вниз ⬇️',
-    taper_mode: '📉 Снижение',
-    standard_mode: 'Стандарт',
-    add_step: '➕ Шаг',
-    duration: 'Дней',
-    dosage: 'Доза',
+    taper_mode: '📉 Снижение', 
+    standard_mode: 'Стандарт', 
+    add_step: '➕ Шаг', 
+    duration: 'Дней', 
+    dosage: 'Доза', 
     time_col: 'Время',
-    tab_history: '📋 История',
-    tab_dispense: '💊 Выдача',
-    tab_special: '🪄 Спец',
+    tab_history: '📋 История', 
+    tab_dispense: '💊 Выдача', 
+    tab_special: '🪄 Спец', 
     spec_guide: 'Как использовать'
   },
   ar: { 
-    hello: 'مرحباً 👋',
-    tap_to_select: '👆 اختر',
-    q_name: 'ما هو اسمك الكامل؟',
-    q_dob: 'ما هو تاريخ ميلادك؟',
-    q_allergy: 'هل تعاني من حساسية تجاه أي أدوية؟',
-    yes: 'نعم',
-    no: 'لا',
-    dont_know: 'لا أعرف',
+    hello: 'مرحباً 👋', 
+    tap_to_select: '👆 اختر', 
+    q_name: 'ما هو اسمك الكامل؟', 
+    q_dob: 'ما هو تاريخ ميلادك؟', 
+    q_allergy: 'هل تعاني من حساسية تجاه أي أدوية؟', 
+    yes: 'نعم', 
+    no: 'لا', 
+    dont_know: 'لا أعرف', 
     writePaper: 'اكتب على ورقة.',
-    q_inj: 'هل تلقيت أي حقن اليوم؟',
-    q_med: 'هل تلقيت أي أدوية عن طريق الفم اليوم؟',
-    rx_title: 'الاستخدام',
-    warn_title: 'تحذيرات',
-    drug_name: 'الدواء:',
+    q_inj: 'هل تلقيت أي حقن اليوم؟', 
+    q_med: 'هل تلقيت أي أدوية عن طريق الفم اليوم؟', 
+    rx_title: 'الاستخدام', 
+    warn_title: 'تحذيرات', 
+    drug_name: 'الدواء:', 
     ind_title: 'دواعي:', 
-    indication: ['حمى / ألم', 'حساسية', 'سعال', 'مضاد حيوي', 'إسهال', 'معدة', 'غثيان', 'التهاب / ألم'],
+    indication: ['حمى / ألم', 'حساسية', 'سعال', 'مضاد حيوي', 'إسهال', 'معدة', 'غثيان', 'التهاب / ألم'], 
     ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
     dose: ['نصف', '1 حبة', '2 حبة', '1 ملعقة صغيرة', '1 ملعقة كبيرة', '1 بخة', '1 قطرة'],
-    side: ['يسرى', 'يمنى', 'كلتيهما', 'يسرى', 'يمنى', 'كلتيهما'],
+    side: ['يسرى', 'يمنى', 'كلتيهما', 'يسرى', 'يمنى', 'كلتيهما'], 
     side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['1 يومياً', '2 يومياً', '3 يومياً', '4 يومياً', 'كل 4-6 س', 'كل 6 س', 'كل 8 س'],
     time: ['قبل الأكل', 'بعد الأكل', 'مباشرة بعد الأكل', 'قبل/بعد الأكل'],
-    period: ['صباح', 'ظهر', 'مساء', 'ليل', 'عند الحاجة'],
+    period: ['صباح', 'ظهر', 'مساء', 'ليل', 'عند الحاجة'], 
     period_icons: ['☀️', '🕛', '🌆', '🌙', '🩹'],
     warn: ['أكمل الجرعة.', 'نعاس.', 'لا كحول.', 'لا حليب.', 'تجنب الشمس.', 'اشرب ماء.', 'لون البول.', 'امضغ.', 'ثلاجة.', 'في الماء'],
     warn_icons: ['💊', '😴', '🍺', '🥛', '☀️', '💧', '🚽', '🦷', '❄️', '🫧'],
     allergy_alert: 'توقف فوراً عند ظهور طفح جلدي أو ضيق تنفس.',
-    show_card: '🚀 عرض',
-    edit_rx: '⬅️ رجوع',
-    photo_prompt: '📸 يرجى تصوير الشاشة',
+    show_card: '🚀 عرض', 
+    edit_rx: '⬅️ رجوع', 
+    photo_prompt: '📸 يرجى تصوير الشاشة', 
     write_dob: '✍️ يرجى كتابة تاريخ ميلادك على الورق.',
-    smart_dose: 'استخدم {n} {u}',
-    smart_hour: 'كل {n} {u}',
-    smart_apply: '{n} يومياً',
+    smart_dose: 'استخدم {n} {u}', 
+    smart_hour: 'كل {n} {u}', 
+    smart_apply: '{n} يومياً', 
     smart_days: 'لمدة {n} {u}',
-    add_to_cart: '📥 إضافة',
-    cart: 'سلة',
-    items: 'عناصر',
-    swipe_hint: 'اسحب',
+    add_to_cart: '📥 إضافة', 
+    cart: 'سلة', 
+    items: 'عناصر', 
+    swipe_hint: 'اسحب', 
     scroll_down: '⬇️ أسفل ⬇️',
-    taper_mode: '📉 تقليل',
-    standard_mode: 'عادي',
-    add_step: '➕ خطوة',
-    duration: 'المدة',
-    dosage: 'الجرعة',
+    taper_mode: '📉 تقليل', 
+    standard_mode: 'عادي', 
+    add_step: '➕ خطوة', 
+    duration: 'المدة', 
+    dosage: 'الجرعة', 
     time_col: 'الوقت',
-    tab_history: '📋 سجل',
-    tab_dispense: '💊 صرف',
-    tab_special: '🪄 تخصص',
+    tab_history: '📋 سجل', 
+    tab_dispense: '💊 صرف', 
+    tab_special: '🪄 تخصص', 
     spec_guide: 'الاستخدام'
   }
 };
@@ -493,10 +548,12 @@ const LANGUAGES = [
   { code: 'ar', flag: '🇦🇪', label: 'UAE' },
 ];
 
+// แปลงข้อมูลเป็น Base64
 const encodeData = (data: any) => {
     return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
 };
 
+// แปลงข้อมูลกลับจาก Base64
 const decodeData = (str: string) => {
     try {
         return JSON.parse(decodeURIComponent(escape(atob(str))));
@@ -588,7 +645,7 @@ export default function PharmaLingoApp() {
           setHasStarted(true);
           setDispenseState('present');
           setIsFullscreen(true);
-          setIsSharedLink(true); // 🎯 ถ้าเปิดผ่านลิ้งก์ แสดงว่าเป็นเภสัชกรเปิดในคอม
+          setIsSharedLink(true); // 🎯 ถ้าเปิดผ่านลิ้งก์ แสดงว่าเป็นเภสัชกรเปิดในคอม ให้หน้าจอตั้งตรง (0 องศา)
         }
       }
     }
@@ -903,7 +960,7 @@ export default function PharmaLingoApp() {
   if (appMode === 'dispense' && dispenseState === 'input') patientHeightClass = 'h-[8dvh] p-2 print:hidden'; 
 
   // ==========================================
-  // 🪄 Render ฟังก์ชัน: การ์ด Instant Guide (ยาเทคนิคพิเศษ)
+  // 🪄 Render ฟังก์ชัน: การ์ด Instant Guide
   // ==========================================
   const renderGuideCard = (guide: any) => {
     return (
@@ -955,15 +1012,17 @@ export default function PharmaLingoApp() {
     
     const instPadding = instCount >= 5 ? 'p-2 md:p-3' : instCount >= 3 ? 'p-3 md:p-4' : 'p-4 md:p-5'; 
     const instGap = instCount >= 5 ? 'gap-1.5 md:gap-2' : instCount >= 3 ? 'gap-2 md:gap-3' : 'gap-4 md:gap-5';
+    const instTextSize = instCount >= 5 ? 'text-sm md:text-base print:text-[1rem]' : instCount >= 3 ? 'text-base md:text-lg print:text-[1.2rem]' : 'text-xl md:text-2xl print:text-[1.5rem]';
     
     const warnCount = rx.rxWarnings.length + rx.customWarnings.length;
     const warnPadding = warnCount >= 5 ? 'p-2 md:p-3' : warnCount >= 3 ? 'p-3 md:p-4' : 'p-4 md:p-5'; 
     const warnGap = warnCount >= 5 ? 'gap-1.5 md:gap-2' : warnCount >= 3 ? 'gap-2 md:gap-3' : 'gap-3 md:gap-4';
+    const warnTextSize = warnCount >= 5 ? 'text-xs md:text-sm print:text-[0.9rem]' : warnCount >= 3 ? 'text-sm md:text-base print:text-[1rem]' : 'text-lg md:text-xl print:text-[1.2rem]';
 
     return (
       <div key={index} data-index={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu print-card-container print:overflow-hidden print:break-inside-avoid print:mb-0 print:p-0" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
         
-        {/* 🖨️ โครงสร้างตาราง (Flexbox) สำหรับ Print ให้อยู่ข้างกันซ้าย-ขวา */}
+        {/* 🖨️ โครงสร้างตาราง (Flexbox แบบดั้งเดิม) สำหรับ Print ให้อยู่ข้างกันซ้าย-ขวา */}
         <div className="w-full h-full flex flex-col snap-y snap-mandatory print-rx-layout">
             
           {/* 🔵 การ์ดสีฟ้า (วิธีใช้) */}
@@ -1034,7 +1093,7 @@ export default function PharmaLingoApp() {
                     {(rx.rxDose !== null || Number(rx.cDose) > 0) && (
                       <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box print:bg-white`}>
                         <span className="text-3xl md:text-4xl print-icon">💊</span>
-                        <div className={`flex flex-wrap items-center gap-2 font-black text-slate-800 text-lg md:text-xl print:text-[1.2rem]`}>
+                        <div className={`flex flex-wrap items-center gap-2 font-black text-slate-800 ${instTextSize}`}>
                           <span>{rx.rxDose !== null ? p.dose[rx.rxDose] : parseSmartText(p.smart_dose, rx.cDose, rx.cDoseUnit)}</span>
                         </div>
                       </div>
@@ -1043,7 +1102,7 @@ export default function PharmaLingoApp() {
                     {(rx.rxFreq !== null || Number(rx.cHour) > 0 || Number(rx.cApply) > 0) && (
                       <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box print:bg-white`}>
                         <span className="text-3xl md:text-4xl print-icon">🔄</span>
-                        <span className={`font-black text-slate-800 text-lg md:text-xl print:text-[1.2rem]`}>
+                        <span className={`font-black text-slate-800 ${instTextSize}`}>
                           {rx.rxFreq !== null && <div>{p.freq[rx.rxFreq]}</div>}
                           {Number(rx.cHour) > 0 && <div className="text-indigo-600">{parseSmartText(p.smart_hour, rx.cHour, rx.cHourUnit)}</div>}
                           {Number(rx.cApply) > 0 && <div className="text-indigo-600">{parseSmartText(p.smart_apply, rx.cApply, rx.cApplyUnit)}</div>}
@@ -1054,7 +1113,7 @@ export default function PharmaLingoApp() {
                     {(rx.rxTime !== null || Number(rx.cDays) > 0) && (
                       <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box print:bg-white`}>
                         <span className="text-3xl md:text-4xl print-icon">🍽️</span>
-                        <span className={`font-black text-slate-800 text-lg md:text-xl print:text-[1.2rem]`}>
+                        <span className={`font-black text-slate-800 ${instTextSize}`}>
                           {rx.rxTime !== null && <div>{p.time[rx.rxTime]}</div>}
                           {Number(rx.cDays) > 0 && <div className="text-emerald-600 mt-1 print:mt-0 print:text-[0.8rem]">{parseSmartText(p.smart_days, rx.cDays, rx.cDaysUnit)}</div>}
                         </span>
@@ -1064,7 +1123,7 @@ export default function PharmaLingoApp() {
                     {rx.rxPeriod.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 print:gap-1.5 print-box print:bg-transparent print:border-none print:p-0">
                         {rx.rxPeriod.map((i: number) => (
-                          <span key={i} className={`bg-orange-50 text-orange-600 px-3 py-1.5 rounded-lg font-black border border-orange-200 shadow-sm text-sm md:text-base print:px-2 print:py-1 print:rounded-lg print:border print:text-[1rem]`}>
+                          <span key={i} className={`bg-orange-50 text-orange-600 px-3 py-1.5 rounded-lg font-black border border-orange-200 shadow-sm ${instTextSize} print:px-2 print:py-1 print:rounded-lg print:border`}>
                             {p.period_icons[i]} {p.period[i]}
                           </span>
                         ))}
@@ -1074,7 +1133,7 @@ export default function PharmaLingoApp() {
                     {rx.rxSide !== null && (
                       <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box print:bg-white print:mt-auto`}>
                         <span className="text-3xl md:text-4xl print-icon">🧭</span>
-                        <span className={`font-black text-purple-600 bg-purple-50 px-2 py-1 rounded-lg border border-purple-200 text-sm md:text-base print:px-2 print:py-1 print:text-[1rem]`}>
+                        <span className={`font-black text-purple-600 bg-purple-50 px-2 py-1 rounded-lg border border-purple-200 ${instTextSize} print:px-2 print:py-1`}>
                           {p.side_icons[rx.rxSide]} {p.side[rx.rxSide]}
                         </span>
                       </div>
@@ -1108,13 +1167,13 @@ export default function PharmaLingoApp() {
                       {rx.rxWarnings.map((wIdx: number) => (
                         <div key={wIdx} className={`flex items-center bg-white rounded-xl shadow-sm border border-red-100 ${warnPadding} print-box print:bg-white`}>
                           <span className={`shrink-0 text-3xl md:text-4xl mr-2 print-icon print:mr-2`}>{th.warn_icons[wIdx]}</span>
-                          <span className={`text-red-700 font-black leading-snug text-sm md:text-base print:text-[1rem]`}>{p.warn[wIdx]}</span>
+                          <span className={`text-red-700 font-black leading-snug ${warnTextSize}`}>{p.warn[wIdx]}</span>
                         </div>
                       ))}
                       {rx.customWarnings.map((cw: string, i: number) => (
                         <div key={i} className={`flex items-center bg-red-100 rounded-xl shadow-sm border border-red-300 ${warnPadding} print-box print:bg-red-50`}>
                           <span className={`shrink-0 text-3xl md:text-4xl mr-2 print-icon print:mr-2`}>🚨</span>
-                          <span className={`text-red-800 font-black leading-snug text-sm md:text-base print:text-[1rem]`}>{cw}</span>
+                          <span className={`text-red-800 font-black leading-snug ${warnTextSize}`}>{cw}</span>
                         </div>
                       ))}
                     </>
@@ -1126,7 +1185,7 @@ export default function PharmaLingoApp() {
                 {/* 📍 คำเตือนเรื่องแพ้ยา ล็อกไว้ท้ายสุดแบบไม่ให้ตกขอบกระดาษ */}
                 <div className="bg-red-600 text-white rounded-xl p-3 flex items-center gap-2 shadow-md border border-red-400 mt-2 print-box print:mt-auto print-bg-red">
                    <span className="text-2xl md:text-3xl shrink-0 print-icon print-text-white">🛑</span>
-                   <span className="font-black text-xs md:text-sm leading-snug print-text-white print:text-[0.8rem]">{p.allergy_alert}</span>
+                   <span className="font-black text-xs md:text-sm leading-snug print:text-white print:text-[0.8rem]">{p.allergy_alert}</span>
                 </div>
               </div>
             </div>
@@ -1562,7 +1621,7 @@ export default function PharmaLingoApp() {
         </div>
       )}
 
-      {/* 🎯 Popup Modal สำหรับส่งลิ้งก์ให้เภสัช (0 องศาเสมอ) 🎯 */}
+      {/* 🎯 Popup Modal สำหรับส่งลิ้งก์ให้เภสัช (หมุนหาเภสัชกรเสมอ 0 องศา) 🎯 */}
       {showLinkModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[200] print:hidden">
           <div className="bg-white rounded-3xl p-6 md:p-8 flex flex-col items-center max-w-sm w-[90%] shadow-2xl animate-in rotate-0">
@@ -1605,34 +1664,29 @@ export default function PharmaLingoApp() {
             color: black !important; 
             -webkit-print-color-adjust: exact !important; 
             print-color-adjust: exact !important;
-            font-size: 130% !important; /* 🎯 ขยายฟอนต์ภาพรวมให้อ่านง่าย */
           }
           
           .print\\:hidden { display: none !important; }
 
-          /* 📌 บังคับ Grid Layout ให้การ์ด 2 ใบยืนเรียงคู่กัน ซ้าย-ขวา เป๊ะๆ */
+          /* 📌 บังคับ Flex Layout ให้การ์ด 2 ใบยืนเรียงคู่กัน ซ้าย-ขวา เป๊ะๆ ตามโค้ดต้นฉบับ */
           .print-rx-layout {
-             display: grid !important;
-             grid-template-columns: 1fr 1fr !important;
-             gap: 8mm !important;
-             width: 100% !important;
-             height: 135mm !important; /* 🎯 ความสูงของหน้ากระดาษ A5 ลบขอบ */
+             display: flex !important;
+             flex-direction: row !important;
+             justify-content: center !important;
+             align-items: stretch !important;
+             gap: 4% !important;
+             width: 100vw !important;
+             height: 100vh !important;
              overflow: hidden !important;
              page-break-inside: avoid !important;
-             page-break-after: always !important; 
-             margin-bottom: 0 !important;
+             page-break-after: always !important;
              padding: 5mm !important;
-             transform: none !important;
-          }
-
-          /* บังคับการ์ดแต่ละใบให้เต็มช่อง Grid */
-          .print-half {
-             width: 100% !important;
-             height: 100% !important;
-             overflow: hidden !important;
+             box-sizing: border-box !important;
           }
           
           .print-card-wrapper { 
+             width: 48% !important; 
+             height: 100% !important; 
              padding: 0 !important;
           }
           
