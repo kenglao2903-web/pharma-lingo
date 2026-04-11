@@ -14,7 +14,7 @@ const specialData = [
       { icon: "👄", desc: { th: "อมปากกระบอกให้สนิท", en: "Place mouthpiece in mouth.", zh: "将咬嘴放入口中。", ja: "マウスピースを口に含みます。", ru: "Поместите мундштук в рот.", ar: "ضع قطعة الفم في فمك.", de: "Nehmen Sie das Mundstück in den Mund." } },
       { icon: "🌬️", desc: { th: "กดพร้อมหายใจเข้าลึกๆ", en: "Press and inhale deeply.", zh: "按下并深吸气。", ja: "押して深く息を吸い込みます。", ru: "Нажмите и глубоко вдохните.", ar: "اضغط واستنشق بعمق.", de: "Drücken und tief einatmen." } },
       { icon: "⏱️", desc: { th: "กลั้นหายใจ 10 วินาที", en: "Hold breath for 10s.", zh: "屏住呼吸10秒。", ja: "10秒間息を止めます。", ru: "Задержите дыхание на 10 сек.", ar: "اكتم أنفاسك لمدة 10 ثوانٍ.", de: "Atem für 10s anhalten." } },
-      { icon: "🫧", desc: { th: "บ้วนปากหลังใช้เสร็จ", en: "Rinse mouth after use.", zh: "使用后漱口。", ja: "使用後うがいをします。", ru: "Прополощите рот после.", ar: "اشطف فمك بعد الاستخدام.", de: "Mund nach Gebrauch ausspülen." } }
+      { icon: "🫧", desc: { th: "บ้วนปากหลังใช้เสร็จ", en: "Rinse mouth after use.", zh: "使用后漱口。", ja: "使用後うがいをします。", ru: "Прополощите рот после.", ar: "اشطف فมك بعد الاستخدام.", de: "Mund nach Gebrauch ausspülen." } }
     ]
   },
   {
@@ -55,7 +55,7 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
 
   return (
     <div ref={containerRef} className="w-full flex items-center justify-center overflow-visible px-2 relative z-10 print:overflow-visible">
-      <span ref={textRef} className={`inline-block font-black whitespace-nowrap origin-center ${isMain ? 'text-3xl md:text-5xl text-slate-900 drop-shadow-sm print:text-2xl' : 'text-lg md:text-2xl text-yellow-900 opacity-80 print:text-lg'}`} style={{ transform: `scale(${scale})` }}>
+      <span ref={textRef} className={`inline-block font-black whitespace-nowrap origin-center ${isMain ? 'text-3xl md:text-5xl text-slate-900 drop-shadow-sm print:text-3xl' : 'text-lg md:text-2xl text-yellow-900 opacity-80 print:text-xl'}`} style={{ transform: `scale(${scale})` }}>
         {text.toUpperCase()}
       </span>
     </div>
@@ -73,7 +73,7 @@ const unitDict: any = {
   ml: { th: 'มล. (ml)', en: 'ml', de: 'ml', zh: '毫升', ja: 'ml', ru: 'мл', ar: 'مل' },
   cc: { th: 'ซีซี (cc)', en: 'cc', de: 'cc', zh: 'cc', ja: 'cc', ru: 'куб.см', ar: 'سم مكعب' },
   drop: { th: 'หยด', en: 'drop', de: 'Tropfen', zh: '滴', ja: '滴', ru: 'кап.', ar: 'قطرة' },
-  puff: { th: 'กด/ปั๊ม', en: 'puff', de: 'Sprühstoß', zh: '喷', ja: 'プッシュ', ru: 'пшик', ar: 'بخة' },
+  puff: { th: 'กด/ปั๊ม', en: 'puff', de: 'Sprühstoß', zh: '喷', ja: 'プッシュ', ru: 'пшик', ar: 'บخة' },
   hr: { th: 'ชั่วโมง', en: 'hour', de: 'Stunde', zh: '小时', ja: '時間', ru: 'час', ar: 'ساعات' },
   day: { th: 'วัน', en: 'day', de: 'Tag', zh: '天', ja: '日', ru: 'дней', ar: 'أيام' },
   wk: { th: 'สัปดาห์', en: 'week', de: 'Woche', zh: '周', ja: '週間', ru: 'недель', ar: 'أسابيع' },
@@ -172,7 +172,7 @@ const dict = {
   ru: { 
     hello: 'Привет 👋', tap_to_select: '👆 Выберите', q_name: 'Как ваше полное имя?', q_dob: 'Какова ваша дата рождения?', q_allergy: 'Есть ли у вас аллергия на лекарства?', yes: 'Да', no: 'Нет', dont_know: 'Не знаю', writePaper: 'Напишите на бумаге.',
     q_inj: 'Вам сегодня делали уколы?', q_med: 'Принимали ли вы сегодня лекарства внутрь?', rx_title: 'Применение', warn_title: 'Внимание', drug_name: 'Лекарство:', ind_title: 'Показания:', 
-    indication: ['Жар / Боль', 'Аллергия', 'Кашель', 'Антибиотик', 'Диарея', 'Боль в животе', 'Тошнота', 'Воспаление / Боль'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
+    indication: ['Жар / Боль', 'Аллергия', 'Кашель', 'Antibiotic', 'Диарея', 'Боль в животе', 'Тошнота', 'Воспаление / Боль'], ind_icons: ['🤒', '🤧', '🗣️', '🦠', '🚽', '🤢', '🤮', '⚡'],
     dose: ['Половина', '1 табл.', '2 табл.', '1 ч.л.', '1 ст.л.', '1 пшик', '1 капля'],
     side: ['Левый глаз', 'Правый глаз', 'Оба глаза', 'Левое ухо', 'Правое ухо', 'Оба уха'], side_icons: ['👁️⬅️', '👁️➡️', '👁️👁️', '👂⬅️', '👂➡️', '👂👂'],
     freq: ['1 раз в день', '2 раза в день', '3 раза в день', '4 раза в день', 'Каждые 4-6 ч', 'Каждые 6 ч', 'Каждые 8 ч'],
@@ -704,7 +704,7 @@ export default function PharmaLingoApp() {
     const warnTextSize = warnCount >= 5 ? 'text-xs md:text-sm' : warnCount >= 3 ? 'text-sm md:text-base' : 'text-lg md:text-xl';
 
     return (
-      <div key={index} data-index={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu print:h-full print:w-full print:overflow-hidden print:break-inside-avoid print:mb-0 print:p-0" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
+      <div key={index} data-index={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu print:h-full print:w-full print:overflow-hidden print:break-inside-avoid print:mb-0 print:p-0 print:font-size: 1.25rem !important;" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
         
         {/* 🖨️ Grid System สำหรับ Print ให้อยู่ข้างกันซ้าย-ขวา */}
         <div className="w-full h-full flex flex-col snap-y snap-mandatory print:grid print:grid-cols-2 print:gap-[5mm] print:w-full print:h-[135mm] print:snap-none">
@@ -741,7 +741,7 @@ export default function PharmaLingoApp() {
                     <span className="text-2xl md:text-3xl shrink-0 print:text-xl">🎯</span>
                     <div className="flex flex-col">
                       <span className="text-blue-600 text-[9px] md:text-xs uppercase font-black print:text-[8px]">{p.ind_title}</span>
-                      <span className="text-blue-900 font-black text-base md:text-xl mt-0.5 leading-tight print:text-xs">{rx.rxIndication !== null ? p.indication[rx.rxIndication] : rx.customIndication}</span>
+                      <span className="text-blue-900 font-black text-base md:text-xl mt-0.5 leading-tight print:text-base">{rx.rxIndication !== null ? p.indication[rx.rxIndication] : rx.customIndication}</span>
                     </div>
                   </div>
                 )}
@@ -778,7 +778,7 @@ export default function PharmaLingoApp() {
                     {(rx.rxDose !== null || Number(rx.cDose) > 0) && (
                       <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:p-1.5 print:rounded-lg print:border-blue-200`}>
                         <span className="text-3xl md:text-4xl print:text-xl">💊</span>
-                        <div className={`flex flex-wrap items-center gap-2 font-black text-slate-800 ${instTextSize} print:text-xs`}>
+                        <div className={`flex flex-wrap items-center gap-2 font-black text-slate-800 ${instTextSize} print:text-sm`}>
                           <span>{rx.rxDose !== null ? p.dose[rx.rxDose] : parseSmartText(p.smart_dose, rx.cDose, rx.cDoseUnit)}</span>
                         </div>
                       </div>
@@ -787,7 +787,7 @@ export default function PharmaLingoApp() {
                     {(rx.rxFreq !== null || Number(rx.cHour) > 0 || Number(rx.cApply) > 0) && (
                       <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:p-1.5 print:rounded-lg print:border-blue-200`}>
                         <span className="text-3xl md:text-4xl print:text-xl">🔄</span>
-                        <span className={`font-black text-slate-800 ${instTextSize} print:text-xs`}>
+                        <span className={`font-black text-slate-800 ${instTextSize} print:text-sm`}>
                           {rx.rxFreq !== null && <div>{p.freq[rx.rxFreq]}</div>}
                           {Number(rx.cHour) > 0 && <div className="text-indigo-600">{parseSmartText(p.smart_hour, rx.cHour, rx.cHourUnit)}</div>}
                           {Number(rx.cApply) > 0 && <div className="text-indigo-600">{parseSmartText(p.smart_apply, rx.cApply, rx.cApplyUnit)}</div>}
@@ -798,7 +798,7 @@ export default function PharmaLingoApp() {
                     {(rx.rxTime !== null || Number(rx.cDays) > 0) && (
                       <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:p-1.5 print:rounded-lg print:border-blue-200`}>
                         <span className="text-3xl md:text-4xl print:text-xl">🍽️</span>
-                        <span className={`font-black text-slate-800 ${instTextSize} print:text-xs`}>
+                        <span className={`font-black text-slate-800 ${instTextSize} print:text-sm`}>
                           {rx.rxTime !== null && <div>{p.time[rx.rxTime]}</div>}
                           {Number(rx.cDays) > 0 && <div className="text-emerald-600 mt-1 print:mt-0 print:text-[9px]">{parseSmartText(p.smart_days, rx.cDays, rx.cDaysUnit)}</div>}
                         </span>
@@ -852,13 +852,13 @@ export default function PharmaLingoApp() {
                       {rx.rxWarnings.map((wIdx: number) => (
                         <div key={wIdx} className={`flex items-center bg-white rounded-xl shadow-sm border border-red-100 ${warnPadding} print:p-1.5 print:rounded-lg print:border-red-200`}>
                           <span className={`shrink-0 text-3xl md:text-4xl mr-2 print:text-xl print:mr-1.5`}>{th.warn_icons[wIdx]}</span>
-                          <span className={`text-red-700 font-black leading-snug ${warnTextSize} print:text-[10px]`}>{p.warn[wIdx]}</span>
+                          <span className={`text-red-700 font-black leading-snug ${warnTextSize} print:text-sm`}>{p.warn[wIdx]}</span>
                         </div>
                       ))}
                       {rx.customWarnings.map((cw: string, i: number) => (
                         <div key={i} className={`flex items-center bg-red-100 rounded-xl shadow-sm border border-red-300 ${warnPadding} print:p-1.5 print:rounded-lg print:border-red-300`}>
                           <span className={`shrink-0 text-3xl md:text-4xl mr-2 print:text-xl print:mr-1.5`}>🚨</span>
-                          <span className={`text-red-800 font-black leading-snug ${warnTextSize} print:text-[10px]`}>{cw}</span>
+                          <span className={`text-red-800 font-black leading-snug ${warnTextSize} print:text-sm`}>{cw}</span>
                         </div>
                       ))}
                     </>
@@ -882,7 +882,8 @@ export default function PharmaLingoApp() {
     <div className="h-[100dvh] w-full bg-[#0f172a] font-sans flex flex-col overflow-hidden relative print:h-auto print:bg-white print:overflow-visible">
       
       {/* 👑 ฝั่งคนไข้ */}
-      <div className={`w-full flex justify-center items-center rotate-180 transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] print:rotate-0 print:block
+      {/* 💡 เปลี่ยน print:rotate-0 เป็น lg:rotate-0 print:rotate-0 หน้าจอไม่หมุน 180 บนคอม เพื่อให้เภสัชปริ้นสะดวก */}
+      <div className={`w-full flex justify-center items-center rotate-180 lg:rotate-0 transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] print:rotate-0 print:block
         ${isFullscreen ? 'fixed inset-0 z-[100] bg-slate-900 h-full print:relative print:bg-white print:z-0' : `bg-slate-100 ${patientHeightClass}`}`}>
         
         {dispenseState === 'present' && !activeGuide ? (
@@ -1351,6 +1352,7 @@ export default function PharmaLingoApp() {
             color: black !important; 
             -webkit-print-color-adjust: exact !important; 
             print-color-adjust: exact !important;
+            font-size: 110% !important; /* 💡 ขยายตัวหนังสือ Boarding Pass ตอนพิมพ์ ให้ใหญ่เต็มตาตามคำขอ */
           }
         }
       `}} />
