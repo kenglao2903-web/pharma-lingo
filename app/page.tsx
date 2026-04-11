@@ -1,6 +1,5 @@
 'use client'
 import { useState, useRef, useEffect } from 'react';
-import { specialData } from './specialData';
 
 // ==========================================
 // 🛠️ Component: จัดการชื่อยาไม่ให้ล้นกรอบ
@@ -26,7 +25,7 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
 
   return (
     <div ref={containerRef} className="w-full flex items-center justify-center overflow-visible px-2 relative z-10 print:overflow-visible">
-      <span ref={textRef} className={`inline-block font-black whitespace-nowrap origin-center ${isMain ? 'text-4xl md:text-5xl lg:text-6xl text-slate-900 drop-shadow-sm print:text-2xl' : 'text-xl md:text-3xl text-yellow-900 opacity-80 print:text-lg'}`} style={{ transform: `scale(${scale})` }}>
+      <span ref={textRef} className={`inline-block font-black whitespace-nowrap origin-center ${isMain ? 'text-3xl md:text-5xl text-slate-900 drop-shadow-sm print:text-3xl' : 'text-lg md:text-2xl text-yellow-900 opacity-80 print:text-xl'}`} style={{ transform: `scale(${scale})` }}>
         {text.toUpperCase()}
       </span>
     </div>
@@ -194,12 +193,14 @@ type Prescription = {
   cApply: string | number; cApplyUnit: string; cDays: string | number; cDaysUnit: string;
 };
 
+// 🇩🇪 เอากลับมาให้ครบ 6 ภาษาแล้วครับ!
 const LANGUAGES = [
   { code: 'en', flag: '🇬🇧', label: 'United Kingdom' }, 
-  { code: 'ar', flag: '🇦🇪', label: 'United Arab Emirates' },
-  { code: 'ja', flag: '🇯🇵', label: 'Japan' }, 
-  { code: 'zh', flag: '🇨🇳', label: 'China' },
+  { code: 'de', flag: '🇩🇪', label: 'Germany' },
   { code: 'ru', flag: '🇷🇺', label: 'Russia' }, 
+  { code: 'zh', flag: '🇨🇳', label: 'China' },
+  { code: 'ja', flag: '🇯🇵', label: 'Japan' }, 
+  { code: 'ar', flag: '🇦🇪', label: 'UAE' },
 ];
 
 export default function PharmaLingoApp() {
@@ -515,29 +516,53 @@ export default function PharmaLingoApp() {
   if (!hasStarted) {
     return (
       <div className="min-h-[100dvh] w-full bg-[#0f172a] flex flex-col items-center justify-center relative overflow-hidden font-sans">
-        <div className={`absolute top-10 md:top-20 text-center z-20 transition-opacity duration-300 ${animatingLang ? 'opacity-0' : 'opacity-100'}`}>
-          <h1 className="text-3xl md:text-5xl font-black text-white tracking-widest drop-shadow-md">ASSISTANCE DISPENSER</h1>
-          <p className="text-slate-400 mt-2 text-sm md:text-base font-bold tracking-widest uppercase">Tap to Select Patient Language</p>
-        </div>
+        <FittedText text="PharmaLingo Assistance Dispenser" isMain={false} />
+        
+        {/* การ์ดลอยแบบ Boarding Pass ทิ้งตัว 6 ใบ (เพิ่มภาษาเยอรมันให้แล้วครับ!) */}
+        <div className="relative w-full max-w-[600px] h-[500px] flex items-center justify-center scale-[0.85] md:scale-100 mt-2 z-20 transition-opacity duration-300">
+          
+          <div className="absolute top-12 left-16">
+            <button onClick={() => handleLangSelect('en', 'United Kingdom')} className="relative w-[150px] h-[85px] bg-white rounded-xl shadow-lg border border-slate-300 flex flex-col items-center justify-center hover:scale-105 active:scale-95 group transform -rotate-[12deg]">
+              <span className="absolute -top-3 -left-3 text-4xl group-hover:animate-pulse">🇬🇧</span>
+              <span className="text-slate-800 font-black text-sm mt-3 px-2 text-center leading-tight">United Kingdom</span>
+            </button>
+          </div>
 
-        <div className="relative w-[300px] h-[300px] flex items-center justify-center mt-12 md:mt-20">
-          <div className={`absolute w-full h-full rounded-full border-[4px] border-slate-800 transition-opacity duration-300 ${animatingLang ? 'opacity-0' : 'opacity-100'}`}></div>
-          {LANGUAGES.map((l, index) => {
-            const rotation = index * 72; 
-            const isAnimating = animatingLang === l.code;
-            const isOther = animatingLang && animatingLang !== l.code;
-            return (
-              <button key={l.code} onClick={() => handleLangSelect(l.code, l.label)}
-                className={`absolute top-1/2 left-1/2 w-20 h-20 -ml-10 -mt-10 flex flex-col items-center justify-center outline-none transition-all duration-[800ms] ease-[cubic-bezier(0.8,0,0.2,1)] ${isOther ? 'opacity-0 scale-0' : ''} ${isAnimating ? 'z-50' : 'z-10 hover:scale-110 cursor-pointer'}`}
-                style={isAnimating ? { transform: 'translate(0px, 0px) scale(80)' } : { transform: `rotate(${rotation}deg) translateY(-150px)` }}
-              >
-                <div className={`flex flex-col items-center justify-center w-full h-full rounded-full transition-all duration-300 ${isAnimating ? 'bg-slate-50' : ''}`} style={{ transform: `rotate(${-rotation}deg)` }}>
-                  <div className={`transition-all duration-[800ms] ${isAnimating ? 'text-[1px] opacity-0' : 'text-5xl'}`}>{l.flag}</div>
-                  <span className={`mt-2 font-black text-[10px] md:text-xs bg-slate-900/80 px-3 py-1 rounded-md border text-slate-300 border-slate-700 whitespace-nowrap ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>{l.label}</span>
-                </div>
-              </button>
-            );
-          })}
+          <div className="absolute top-8 right-20">
+            <button onClick={() => handleLangSelect('de', 'Germany')} className="relative w-[140px] h-[80px] bg-white rounded-xl shadow-lg border border-slate-300 flex flex-col items-center justify-center hover:scale-105 active:scale-95 group transform rotate-[15deg]">
+              <span className="absolute -top-3 -left-3 text-4xl group-hover:animate-pulse">🇩🇪</span>
+              <span className="text-slate-800 font-black text-sm mt-3 px-2 text-center leading-tight">Germany</span>
+            </button>
+          </div>
+
+          <div className="absolute top-[45%] right-8">
+            <button onClick={() => handleLangSelect('ar', 'United Arab Emirates')} className="relative w-[170px] h-[95px] bg-white rounded-xl shadow-lg border border-slate-300 flex flex-col items-center justify-center hover:scale-105 active:scale-95 group transform rotate-[25deg]">
+              <span className="absolute -top-3 -left-3 text-4xl group-hover:animate-pulse">🇦🇪</span>
+              <span className="text-slate-800 font-black text-sm mt-3 px-2 text-center leading-tight">United Arab Emirates</span>
+            </button>
+          </div>
+
+          <div className="absolute bottom-12 right-24">
+            <button onClick={() => handleLangSelect('ja', 'Japan')} className="relative w-[150px] h-[85px] bg-white rounded-xl shadow-lg border border-slate-300 flex flex-col items-center justify-center hover:scale-105 active:scale-95 group transform rotate-[10deg]">
+              <span className="absolute -top-3 -left-3 text-4xl group-hover:animate-pulse">🇯🇵</span>
+              <span className="text-slate-800 font-black text-sm mt-3 px-2 text-center leading-tight">Japan</span>
+            </button>
+          </div>
+
+          <div className="absolute bottom-6 left-28">
+            <button onClick={() => handleLangSelect('zh', 'China')} className="relative w-[140px] h-[75px] bg-white rounded-xl shadow-lg border border-slate-300 flex flex-col items-center justify-center hover:scale-105 active:scale-95 group transform -rotate-[5deg]">
+              <span className="absolute -top-3 -left-3 text-4xl group-hover:animate-pulse">🇨🇳</span>
+              <span className="text-slate-800 font-black text-sm mt-3 px-2 text-center leading-tight">China</span>
+            </button>
+          </div>
+
+          <div className="absolute top-[45%] left-6">
+            <button onClick={() => handleLangSelect('ru', 'Russia')} className="relative w-[140px] h-[80px] bg-white rounded-xl shadow-lg border border-slate-300 flex flex-col items-center justify-center hover:scale-105 active:scale-95 group transform -rotate-[20deg]">
+              <span className="absolute -top-3 -left-3 text-4xl group-hover:animate-pulse">🇷🇺</span>
+              <span className="text-slate-800 font-black text-sm mt-3 px-2 text-center leading-tight">Russia</span>
+            </button>
+          </div>
+
         </div>
         
         <div className={`absolute bottom-10 z-20 flex gap-4 transition-opacity duration-300 ${animatingLang ? 'opacity-0' : 'opacity-100'}`}>
@@ -558,29 +583,29 @@ export default function PharmaLingoApp() {
   // ==========================================
   const renderGuideCard = (guide: any) => {
     return (
-      <div className="w-full h-fit max-h-[90dvh] lg:max-w-4xl bg-white lg:rounded-[2rem] rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-4 border-teal-200 print:max-h-none" dir={isRTL ? 'rtl' : 'ltr'}>
-        <div className="bg-gradient-to-r from-teal-700 to-emerald-900 p-4 md:p-6 text-center relative shrink-0 flex justify-between items-center shadow-inner print:border-b-2 print:border-teal-800">
+      <div className="w-full h-full max-h-[85dvh] lg:max-w-4xl bg-white lg:rounded-[2rem] rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-4 border-teal-200 print:max-h-none" dir={isRTL ? 'rtl' : 'ltr'}>
+        <div className="bg-gradient-to-r from-teal-700 to-emerald-900 p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print:border-b-2 print:border-teal-800">
           <span className="text-4xl opacity-30">🪄</span>
           <div className="flex flex-col items-center">
-            <h1 className="text-white font-black text-lg md:text-xl tracking-widest uppercase print:text-teal-900">Bangkok Pattaya Hospital</h1>
-            <p className="text-teal-200 text-sm md:text-base font-bold mt-1 tracking-widest print:text-teal-700">{p.spec_guide}</p>
+            <h1 className="text-white font-black text-base md:text-lg tracking-widest uppercase print:text-teal-900">Bangkok Pattaya Hospital</h1>
+            <p className="text-teal-200 text-xs md:text-sm font-bold mt-1 tracking-widest print:text-teal-700">{p.spec_guide}</p>
           </div>
-          <button onClick={() => speakGuide(guide)} className={`w-12 h-12 md:w-14 md:h-14 rounded-full text-2xl shadow-lg flex items-center justify-center print:hidden ${isSpeaking ? 'bg-white text-teal-600 animate-pulse' : 'bg-teal-800 text-white border-2 border-teal-400 hover:bg-teal-700'}`}>
+          <button onClick={() => speakGuide(guide)} className={`w-10 h-10 rounded-full text-xl shadow-lg flex items-center justify-center print:hidden ${isSpeaking ? 'bg-white text-teal-600 animate-pulse' : 'bg-teal-800 text-white border-2 border-teal-400 hover:bg-teal-700'}`}>
             {isSpeaking ? '🛑' : '🔊'}
           </button>
         </div>
-        <div className="bg-teal-50/30 flex flex-col lg:flex-row gap-4 flex-1 overflow-y-auto p-4 md:p-6 custom-scrollbar print:overflow-visible">
-          <div className="lg:flex-1 bg-gradient-to-r from-teal-100 to-emerald-100 border-2 border-teal-400 rounded-3xl p-5 flex items-center justify-center gap-4 shadow-sm print:border-teal-800 print:border-2">
-            <span className="text-6xl md:text-7xl drop-shadow-md">{guide.icon}</span>
-            <span className="text-teal-900 font-black text-2xl md:text-3xl leading-tight">{guide.title[patientLang] || guide.title.en}</span>
+        <div className="bg-teal-50/30 flex flex-col lg:flex-row gap-3 flex-1 overflow-y-auto p-4 custom-scrollbar print:overflow-visible">
+          <div className="lg:flex-1 bg-gradient-to-r from-teal-100 to-emerald-100 border-2 border-teal-400 rounded-3xl p-4 flex items-center justify-center gap-4 shadow-sm print:border-teal-800 print:border-2">
+            <span className="text-5xl md:text-6xl drop-shadow-md">{guide.icon}</span>
+            <span className="text-teal-900 font-black text-xl md:text-2xl leading-tight">{guide.title[patientLang] || guide.title.en}</span>
           </div>
-          <div className="flex flex-col lg:flex-1 lg:grid lg:grid-cols-2 gap-3 mt-2 lg:mt-0">
+          <div className="flex flex-col lg:flex-1 lg:grid lg:grid-cols-2 gap-2 mt-1 lg:mt-0">
             {guide.steps.map((step: any, sIdx: number) => (
-              <div key={sIdx} className="flex items-center gap-4 bg-white p-4 md:p-5 rounded-2xl shadow-sm border border-teal-100/50 print:border-teal-200 print:border">
-                <div className="text-4xl md:text-5xl shrink-0 drop-shadow-sm">{step.icon}</div>
+              <div key={sIdx} className="flex items-center gap-3 bg-white p-3 rounded-2xl shadow-sm border border-teal-100/50 print:border-teal-200 print:border">
+                <div className="text-3xl md:text-4xl shrink-0 drop-shadow-sm">{step.icon}</div>
                 <div className="flex flex-col leading-tight">
-                  <span className="text-teal-500 text-xs font-black uppercase tracking-widest mb-1 print:text-teal-700">Step {sIdx + 1}</span>
-                  <span className="font-black text-base md:text-lg text-slate-800">{step.desc[patientLang] || step.desc.en}</span>
+                  <span className="text-teal-500 text-[10px] font-black uppercase tracking-widest mb-1 print:text-teal-700">Step {sIdx + 1}</span>
+                  <span className="font-black text-sm md:text-base text-slate-800">{step.desc[patientLang] || step.desc.en}</span>
                 </div>
               </div>
             ))}
@@ -591,7 +616,7 @@ export default function PharmaLingoApp() {
   };
 
   // ==========================================
-  // 🎟️ Render Boarding Pass: จัดการ A5 Print
+  // 🎟️ Render Boarding Pass: จัดหน้าจอแบบ Fit (ห้ามเลื่อน) & ปริ้นท์ A5 แนวนอน
   // ==========================================
   const renderBoardingPass = (rx: Prescription, index: number) => {
     const displayDrugEn = rx.drugInput.trim();
@@ -604,37 +629,39 @@ export default function PharmaLingoApp() {
     if (rx.rxPeriod.length > 0) instCount++;
     if (rx.rxSide !== null) instCount++;
     
-    const instPadding = instCount >= 4 ? 'p-3 md:p-4' : 'p-4 md:p-5'; 
-    const instGap = instCount >= 4 ? 'gap-2 md:gap-3' : 'gap-3 md:gap-4';
-    const instTextSize = instCount >= 4 ? 'text-base md:text-lg' : 'text-lg md:text-xl';
+    const instPadding = instCount >= 4 ? 'p-2 md:p-3' : 'p-3 md:p-4'; 
+    const instGap = instCount >= 4 ? 'gap-1.5 md:gap-2' : 'gap-2 md:gap-3';
+    const instTextSize = instCount >= 4 ? 'text-sm md:text-base' : 'text-base md:text-lg';
     
     const totalW = rx.rxWarnings.length + rx.customWarnings.length;
-    const warnPadding = totalW >= 5 ? 'p-3' : 'p-4'; 
-    const warnGap = totalW >= 5 ? 'gap-2' : 'gap-3';
-    const warnTextSize = totalW >= 5 ? 'text-sm md:text-base' : 'text-base md:text-lg';
+    const warnPadding = totalW >= 5 ? 'p-2' : 'p-3'; 
+    const warnGap = totalW >= 5 ? 'gap-1.5' : 'gap-2';
+    const warnTextSize = totalW >= 5 ? 'text-xs md:text-sm' : 'text-sm md:text-base';
 
     return (
       <div key={index} data-index={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu print-card-container print:h-auto print:overflow-hidden print:flex-row print:items-start print:justify-center print:gap-2 print:break-inside-avoid print:mb-0" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
         
-        {/* 🔵 การ์ดสีฟ้า (วิธีใช้) - ปรับ print-half ให้กว้างครึ่งนึงพอดี */}
-        <div className="w-full h-[100dvh] flex items-center justify-center p-4 snap-center print:p-0 print:h-full print:w-1/2 print:block print-half">
-          <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-fit max-h-[82dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-blue-100 overflow-hidden print:max-h-full print:w-full print:break-inside-avoid print:shadow-none print:border-none print:rounded-none print:h-full">
-            <div className="bg-gradient-to-r from-blue-900 to-indigo-900 p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print:rounded-t-xl print:border print:border-blue-900 print:border-b-0 print:p-3">
+        {/* 🔵 การ์ดสีฟ้า (วิธีใช้) - แก้ไข max-h ให้บีบข้อมูลพอดีจอ */}
+        <div className="w-full h-full min-h-0 flex items-center justify-center p-4 snap-center print:p-0 print:h-full print:w-1/2 print:block print-half">
+          {/* 💡 บีบ max-h ให้เหลือแค่ 85dvh เพื่อบังคับให้ไม่ล้นจอ */}
+          <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-full max-h-[85dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-blue-100 overflow-hidden print:max-h-full print:w-full print:break-inside-avoid print:shadow-none print:border-none print:rounded-none print:h-full">
+            {/* 💡 แก้ไขสี text-white ในปริ้นท์ให้ชัดเจน */}
+            <div className="bg-gradient-to-r from-blue-900 to-indigo-900 p-3 md:p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print:rounded-t-xl print:border print:border-blue-900 print:border-b-0 print:p-3">
               <span className="text-3xl opacity-20 print:text-2xl">🏥</span>
               <div className="flex flex-col items-center">
-                <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase print:text-blue-900">Bangkok Pattaya Hospital</h1>
-                <p className="text-blue-200 text-xs md:text-sm font-bold mt-1 tracking-widest print:text-blue-700 print:text-[10px]">{p.rx_title}</p>
+                <h1 className="text-white font-black text-sm md:text-base tracking-widest uppercase print:text-white">Bangkok Pattaya Hospital</h1>
+                <p className="text-blue-200 text-[10px] md:text-xs font-bold mt-1 tracking-widest print:text-blue-100 print:text-[10px]">{p.rx_title}</p>
               </div>
-              <button onClick={() => speakSpecificRx(rx)} className={`w-10 h-10 md:w-12 md:h-12 rounded-full text-lg md:text-xl shadow-md flex items-center justify-center print:hidden ${isSpeaking ? 'bg-white text-blue-600 animate-pulse' : 'bg-blue-800 text-white border border-blue-400 hover:bg-blue-700'}`}>
+              <button onClick={() => speakSpecificRx(rx)} className={`w-10 h-10 rounded-full text-lg shadow-md flex items-center justify-center print:hidden ${isSpeaking ? 'bg-white text-blue-600 animate-pulse' : 'bg-blue-800 text-white border border-blue-400 hover:bg-blue-700'}`}>
                 {isSpeaking ? '🛑' : '🔊'}
               </button>
             </div>
 
-            <div className={`bg-blue-50/40 flex flex-col ${instGap} p-4 md:p-6 overflow-y-auto custom-scrollbar print:overflow-visible print:border print:border-blue-900 print:rounded-b-xl print:border-t-0 print:p-3 print:gap-2 print:flex-1`}>
+            <div className={`bg-blue-50/40 flex flex-col ${instGap} p-3 md:p-4 overflow-y-auto custom-scrollbar print:overflow-visible print:border print:border-blue-900 print:rounded-b-xl print:border-t-0 print:p-3 print:gap-2 print:flex-1`}>
               {(displayDrugEn || displayDrugLocal) && (
-                <div className="bg-gradient-to-r from-amber-100 to-yellow-200 border-2 border-yellow-400 rounded-2xl py-4 flex flex-col items-center justify-center shadow-sm text-center print:py-2 print:rounded-lg">
-                  <span className="text-yellow-800 text-xs md:text-sm font-black uppercase mb-1 tracking-widest print:text-[10px]">💊 {p.drug_name}</span>
-                  <div className="flex flex-col items-center justify-center w-full px-2 gap-1 print:gap-0">
+                <div className="bg-gradient-to-r from-amber-100 to-yellow-200 border-2 border-yellow-400 rounded-2xl py-2 px-2 flex flex-col items-center justify-center shadow-sm text-center print:py-2 print:rounded-lg">
+                  <span className="text-yellow-800 text-[10px] md:text-xs font-black uppercase mb-1 tracking-widest print:text-[10px]">💊 {p.drug_name}</span>
+                  <div className="flex flex-col items-center justify-center w-full px-1 gap-1 print:gap-0">
                     {displayDrugLocal && <FittedText text={displayDrugLocal} isMain={true} />}
                     {displayDrugEn && <FittedText text={displayDrugLocal ? `(${displayDrugEn})` : displayDrugEn} isMain={!displayDrugLocal} />}
                   </div>
@@ -642,22 +669,22 @@ export default function PharmaLingoApp() {
               )}
 
               {(rx.rxIndication !== null || rx.customIndication) && (
-                <div className="bg-blue-100 border-l-8 border-blue-500 rounded-r-xl p-3 flex items-center gap-3 shadow-sm print:p-2 print:rounded-r-lg">
-                  <span className="text-3xl shrink-0 print:text-2xl">🎯</span>
+                <div className="bg-blue-100 border-l-8 border-blue-500 rounded-r-xl p-2 flex items-center gap-2 shadow-sm print:p-2 print:rounded-r-lg">
+                  <span className="text-2xl shrink-0 print:text-2xl">🎯</span>
                   <div className="flex flex-col">
-                    <span className="text-blue-600 text-[10px] md:text-xs uppercase font-black print:text-[9px]">{p.ind_title}</span>
-                    <span className="text-blue-900 font-black text-lg md:text-xl mt-0.5 leading-tight print:text-sm">{rx.rxIndication !== null ? p.indication[rx.rxIndication] : rx.customIndication}</span>
+                    <span className="text-blue-600 text-[9px] uppercase font-black print:text-[9px]">{p.ind_title}</span>
+                    <span className="text-blue-900 font-black text-base md:text-lg mt-0.5 leading-tight print:text-sm">{rx.rxIndication !== null ? p.indication[rx.rxIndication] : rx.customIndication}</span>
                   </div>
                 </div>
               )}
 
               {rx.isTapering ? (
-                <div className="bg-white rounded-xl p-3 shadow-sm border border-slate-100 flex-1">
-                  <div className="text-indigo-600 font-black text-xs md:text-sm uppercase mb-2 text-center border-b pb-1">📉 {p.taper_mode}</div>
+                <div className="bg-white rounded-xl p-2 shadow-sm border border-slate-100 flex-1">
+                  <div className="text-indigo-600 font-black text-[10px] md:text-xs uppercase mb-1 text-center border-b pb-1">📉 {p.taper_mode}</div>
                   <div className="flex-1 overflow-x-auto print:overflow-visible">
                     <table className="w-full text-center border-collapse">
                       <thead>
-                        <tr className="text-slate-400 text-[10px] md:text-xs uppercase border-b-2">
+                        <tr className="text-slate-400 text-[9px] uppercase border-b-2">
                           <th className="pb-1 text-left">💊 {p.dosage}</th>
                           <th className="pb-1">🍽️ {p.time_col}</th>
                           <th className="pb-1 text-right">🗓️ {p.duration}</th>
@@ -666,12 +693,12 @@ export default function PharmaLingoApp() {
                       <tbody>
                         {rx.taperSteps.map((step, idx) => (
                           <tr key={idx} className="border-b border-slate-50 last:border-0 print:border-slate-200">
-                            <td className="py-2 font-black text-sm md:text-base text-blue-600 text-left print:text-xs">{step.dose} {unitDict[step.unit][patientLang]}</td>
-                            <td className="py-2 text-xs md:text-sm print:text-[10px]">
+                            <td className="py-1 font-black text-xs md:text-sm text-blue-600 text-left print:text-xs">{step.dose} {unitDict[step.unit][patientLang]}</td>
+                            <td className="py-1 text-[10px] md:text-xs print:text-[10px]">
                                <div className="text-teal-600 font-bold">{step.time !== null && p.time[step.time]}</div>
                                <div className="text-orange-600 font-bold">{step.periods.map(i => `${th.period_icons[i]} ${p.period[i]}`).join(', ')}</div>
                             </td>
-                            <td className="py-2 font-black text-sm md:text-base text-slate-700 text-right print:text-xs">{step.days} {p.day}</td>
+                            <td className="py-1 font-black text-xs md:text-sm text-slate-700 text-right print:text-xs">{step.days} {p.day}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -682,7 +709,7 @@ export default function PharmaLingoApp() {
                 <div className={`flex flex-col ${instGap} print:gap-2 print:flex-1`}>
                   {(rx.rxDose !== null || Number(rx.cDose) > 0) && (
                     <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:p-2 print:rounded-lg print:border-blue-200`}>
-                      <span className="text-3xl md:text-4xl print:text-2xl">💊</span>
+                      <span className="text-2xl md:text-3xl print:text-2xl">💊</span>
                       <div className={`flex flex-wrap items-center gap-2 font-black text-slate-800 ${instTextSize} print:text-sm`}>
                         <span>{rx.rxDose !== null ? p.dose[rx.rxDose] : parseSmartText(p.smart_dose, rx.cDose, rx.cDoseUnit)}</span>
                       </div>
@@ -691,7 +718,7 @@ export default function PharmaLingoApp() {
                   
                   {(rx.rxFreq !== null || Number(rx.cHour) > 0 || Number(rx.cApply) > 0) && (
                     <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:p-2 print:rounded-lg print:border-blue-200`}>
-                      <span className="text-3xl md:text-4xl print:text-2xl">🔄</span>
+                      <span className="text-2xl md:text-3xl print:text-2xl">🔄</span>
                       <span className={`font-black text-slate-800 ${instTextSize} print:text-sm`}>
                         {rx.rxFreq !== null && <div>{p.freq[rx.rxFreq]}</div>}
                         {Number(rx.cHour) > 0 && <div className="text-indigo-600">{parseSmartText(p.smart_hour, rx.cHour, rx.cHourUnit)}</div>}
@@ -702,7 +729,7 @@ export default function PharmaLingoApp() {
 
                   {(rx.rxTime !== null || Number(rx.cDays) > 0) && (
                     <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:p-2 print:rounded-lg print:border-blue-200`}>
-                      <span className="text-3xl md:text-4xl print:text-2xl">🍽️</span>
+                      <span className="text-2xl md:text-3xl print:text-2xl">🍽️</span>
                       <span className={`font-black text-slate-800 ${instTextSize} print:text-sm`}>
                         {rx.rxTime !== null && <div>{p.time[rx.rxTime]}</div>}
                         {Number(rx.cDays) > 0 && <div className="text-emerald-600 mt-1 print:mt-0 print:text-[10px]">{parseSmartText(p.smart_days, rx.cDays, rx.cDaysUnit)}</div>}
@@ -711,71 +738,68 @@ export default function PharmaLingoApp() {
                   )}
 
                   {rx.rxPeriod.length > 0 && (
-                    <div className="flex flex-wrap gap-2 print:gap-1">
+                    <div className="flex flex-wrap gap-1.5 print:gap-1">
                       {rx.rxPeriod.map((i: number) => (
-                        <span key={i} className={`bg-orange-50 text-orange-600 px-3 py-1.5 rounded-lg font-black border border-orange-200 shadow-sm ${instTextSize} print:px-2 print:py-1 print:text-[10px] print:rounded-md`}>
+                        <span key={i} className={`bg-orange-50 text-orange-600 px-2 py-1 rounded-lg font-black border border-orange-200 shadow-sm ${instTextSize} print:px-2 print:py-1 print:text-[10px] print:rounded-md`}>
                           {p.period_icons[i]} {p.period[i]}
                         </span>
                       ))}
                     </div>
                   )}
 
-                  {/* ข้างอยู่ล่างสุด */}
                   {rx.rxSide !== null && (
                     <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print:p-2 print:rounded-lg print:border-blue-200 print:mt-auto`}>
-                      <span className="text-3xl md:text-4xl print:text-2xl">🧭</span>
-                      <span className={`font-black text-purple-600 bg-purple-50 px-3 py-1 rounded-lg border border-purple-200 ${instTextSize} print:text-[10px] print:px-2 print:py-0.5`}>
+                      <span className="text-2xl md:text-3xl print:text-2xl">🧭</span>
+                      <span className={`font-black text-purple-600 bg-purple-50 px-2 py-1 rounded-lg border border-purple-200 ${instTextSize} print:text-[10px] print:px-2 print:py-0.5`}>
                         {p.side_icons[rx.rxSide]} {p.side[rx.rxSide]}
                       </span>
                     </div>
                   )}
                 </div>
               )}
-              <div className="text-center pt-2 text-blue-500 font-bold text-sm mt-auto opacity-80 animate-bounce print:hidden">
-                  {p.scroll_down}
-              </div>
             </div>
           </div>
         </div>
 
-        {/* 🔴 การ์ดสีแดง (คำเตือน) */}
-        <div className="w-full h-[100dvh] flex items-center justify-center p-4 snap-center print:p-0 print:h-full print:w-1/2 print:block print-half">
-          <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-fit max-h-[82dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-red-200 overflow-hidden print:max-h-full print:w-full print:break-inside-avoid print:shadow-none print:border-none print:rounded-none print:h-full">
-            <div className="bg-gradient-to-r from-red-800 to-rose-900 p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print:rounded-t-xl print:border print:border-red-900 print:border-b-0 print:p-3">
+        {/* 🔴 การ์ดสีแดง (คำเตือน) - บีบให้อยู่ในหน้าจอแบบไม่เลื่อน */}
+        <div className="w-full h-[100dvh] min-h-0 flex items-center justify-center p-4 snap-center print:p-0 print:h-full print:w-1/2 print:block print-half">
+          <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-full max-h-[85dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-red-200 overflow-hidden print:max-h-full print:w-full print:break-inside-avoid print:shadow-none print:border-none print:rounded-none print:h-full">
+            {/* 💡 แก้ไขสี text-white ในปริ้นท์ให้ชัดเจน */}
+            <div className="bg-gradient-to-r from-red-800 to-rose-900 p-3 md:p-4 text-center relative shrink-0 flex justify-between items-center shadow-inner print:rounded-t-xl print:border print:border-red-900 print:border-b-0 print:p-3">
               <span className="text-3xl opacity-20 print:text-2xl">⚠️</span>
               <div className="flex flex-col items-center">
-                <h1 className="text-white font-black text-sm md:text-lg tracking-widest uppercase print:text-red-900">Bangkok Pattaya Hospital</h1>
-                <p className="text-red-200 text-[10px] md:text-xs font-bold mt-1 tracking-widest print:text-red-700 print:text-[10px]">{p.warn_title}</p>
+                <h1 className="text-white font-black text-sm md:text-base tracking-widest uppercase print:text-white">Bangkok Pattaya Hospital</h1>
+                <p className="text-red-200 text-[10px] md:text-xs font-bold mt-1 tracking-widest print:text-red-100 print:text-[10px]">{p.warn_title}</p>
               </div>
-              <button onClick={() => speakSpecificWarnings(rx)} className={`w-10 h-10 md:w-12 md:h-12 rounded-full text-lg md:text-xl shadow-md flex items-center justify-center print:hidden ${isSpeaking ? 'bg-white text-red-600 animate-pulse' : 'bg-red-800 text-white border border-red-400 hover:bg-red-700'}`}>
+              <button onClick={() => speakSpecificWarnings(rx)} className={`w-10 h-10 rounded-full text-lg shadow-md flex items-center justify-center print:hidden ${isSpeaking ? 'bg-white text-red-600 animate-pulse' : 'bg-red-800 text-white border border-red-400 hover:bg-red-700'}`}>
                 {isSpeaking ? '🛑' : '🔊'}
               </button>
             </div>
 
-            <div className={`bg-red-50/60 flex flex-col p-4 md:p-6 overflow-y-auto custom-scrollbar print:overflow-visible print:border print:border-red-900 print:rounded-b-xl print:border-t-0 print:p-3 print:gap-2 print:flex-1`}>
-              <h3 className="text-red-600 font-black text-sm md:text-base uppercase tracking-widest mb-3 border-b-2 border-red-200 pb-2 text-center print:text-xs print:mb-1 print:pb-1">⚠️ {p.warn_title}</h3>
+            <div className={`bg-red-50/60 flex flex-col p-3 md:p-4 overflow-y-auto custom-scrollbar print:overflow-visible print:border print:border-red-900 print:rounded-b-xl print:border-t-0 print:p-3 print:gap-2 print:flex-1`}>
+              <h3 className="text-red-600 font-black text-[11px] md:text-sm uppercase tracking-widest mb-2 border-b-2 border-red-200 pb-1 text-center print:text-xs print:mb-1 print:pb-1">⚠️ {p.warn_title}</h3>
               <div className={`flex flex-col ${warnGap} print:gap-1.5`}>
                 {(rx.rxWarnings.length > 0 || rx.customWarnings.length > 0) ? (
                   <>
                     {rx.rxWarnings.map((wIdx: number) => (
                       <div key={wIdx} className={`flex items-center bg-white rounded-xl shadow-sm border border-red-100 ${warnPadding} print:p-2 print:rounded-lg print:border-red-200`}>
-                        <span className={`shrink-0 text-3xl md:text-4xl mr-3 print:text-xl print:mr-2`}>{th.warn_icons[wIdx]}</span>
+                        <span className={`shrink-0 text-2xl md:text-3xl mr-2 print:text-xl print:mr-2`}>{th.warn_icons[wIdx]}</span>
                         <span className={`text-red-700 font-black leading-snug ${warnTextSize} print:text-xs`}>{p.warn[wIdx]}</span>
                       </div>
                     ))}
                     {rx.customWarnings.map((cw: string, i: number) => (
                       <div key={i} className={`flex items-center bg-red-100 rounded-xl shadow-sm border border-red-300 ${warnPadding} print:p-2 print:rounded-lg print:border-red-300`}>
-                        <span className={`shrink-0 text-3xl md:text-4xl mr-3 print:text-xl print:mr-2`}>🚨</span>
+                        <span className={`shrink-0 text-2xl md:text-3xl mr-2 print:text-xl print:mr-2`}>🚨</span>
                         <span className={`text-red-800 font-black leading-snug ${warnTextSize} print:text-xs`}>{cw}</span>
                       </div>
                     ))}
                   </>
                 ) : (
-                  <div className="flex flex-col items-center justify-center py-6 text-slate-300 opacity-60"><span className="text-5xl mb-2 print:text-2xl">✅</span><span className="font-black text-sm print:text-[10px]">No special warnings</span></div>
+                  <div className="flex flex-col items-center justify-center py-4 text-slate-300 opacity-60"><span className="text-4xl mb-2 print:text-2xl">✅</span><span className="font-black text-xs print:text-[10px]">No special warnings</span></div>
                 )}
               </div>
-              <div className="mt-4 bg-red-600 text-white rounded-xl p-4 flex items-center gap-3 shadow-md border border-red-400 print:mt-auto print:p-2 print:rounded-lg print:gap-2">
-                 <span className="text-3xl shrink-0 print:text-xl">🛑</span><span className="font-black text-sm md:text-base leading-snug print:text-[10px]">{p.allergy_alert}</span>
+              <div className="mt-2 md:mt-4 bg-red-600 text-white rounded-xl p-3 flex items-center gap-2 shadow-md border border-red-400 print:mt-auto print:p-2 print:rounded-lg print:gap-2">
+                 <span className="text-2xl shrink-0 print:text-xl">🛑</span><span className="font-black text-xs md:text-sm leading-snug print:text-[10px]">{p.allergy_alert}</span>
               </div>
             </div>
           </div>
@@ -795,33 +819,31 @@ export default function PharmaLingoApp() {
         {dispenseState === 'present' && !activeGuide ? (
           <div className="w-full h-full flex flex-col bg-slate-900 relative print:bg-white print:h-auto print:block print:w-full print:mx-auto" dir={isRTL ? 'rtl' : 'ltr'}>
             
-            {/* 📸 Top Alert Bar (ซ่อนตอนปริ้นท์) */}
-            <div className="absolute top-0 left-0 w-full pt-6 pb-2 flex flex-col items-center z-50 pointer-events-none print:hidden">
-               <div className="bg-blue-600 text-white font-black px-4 py-2 rounded-full shadow-lg border-2 border-blue-400 animate-pulse flex items-center gap-2 pointer-events-auto">
-                 <span className="text-lg md:text-xl">📸</span> <span className="text-xs md:text-sm">{p.photo_prompt}</span>
-               </div>
+            {/* 📸 กล่องบอกให้ถ่ายรูป ขยายให้เบิ้มๆ สมดุลกับการ์ดยาตามที่คุณเก่งสั่ง! */}
+            <div className="absolute top-8 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white font-black px-6 py-3 md:px-8 md:py-4 rounded-full shadow-2xl border-4 border-blue-400 animate-pulse flex items-center gap-3 z-50 print:hidden pointer-events-auto">
+               <span className="text-2xl md:text-4xl">📸</span> <span className="text-base md:text-xl">{p.photo_prompt}</span>
             </div>
 
-            {/* ปุ่มปิดและปุ่มปริ้นท์ (มุมขวาบน - ซ่อนตอนปริ้นท์) */}
-            <div className="absolute top-6 right-4 flex items-center gap-2 z-50 pointer-events-none print:hidden">
-              <button onClick={() => window.print()} className="bg-emerald-500 hover:bg-emerald-400 text-white w-10 h-10 md:w-12 md:h-12 rounded-full text-xl font-black shadow-md flex items-center justify-center border border-emerald-300 pointer-events-auto active:scale-95">
+            {/* ปุ่มปิดและปุ่มปริ้นท์ */}
+            <div className="absolute top-8 right-6 flex items-center gap-3 z-50 pointer-events-none print:hidden">
+              <button onClick={() => window.print()} className="bg-emerald-500 hover:bg-emerald-400 text-white w-12 h-12 md:w-14 md:h-14 rounded-full text-2xl font-black shadow-2xl flex items-center justify-center border-2 border-emerald-300 pointer-events-auto active:scale-95">
                  🖨️
               </button>
-              <button onClick={() => { setIsFullscreen(false); setDispenseState('input'); if(synthRef.current) synthRef.current.cancel(); setIsSpeaking(false); }} className="bg-red-500 hover:bg-red-400 text-white w-10 h-10 md:w-12 md:h-12 rounded-full text-xl md:text-2xl font-black shadow-md flex items-center justify-center border border-red-300 pointer-events-auto active:scale-95">
+              <button onClick={() => { setIsFullscreen(false); setDispenseState('input'); if(synthRef.current) synthRef.current.cancel(); setIsSpeaking(false); }} className="bg-red-500 hover:bg-red-400 text-white w-12 h-12 md:w-14 md:h-14 rounded-full text-2xl md:text-3xl font-black shadow-2xl flex items-center justify-center border-2 border-red-300 pointer-events-auto active:scale-95">
                  ✕
               </button>
             </div>
 
-            {/* ตัวเลขจำนวนยารวมที่มุมซ้ายล่าง (ซ่อนตอนปริ้นท์) */}
+            {/* ตัวเลขจำนวนยารวมที่มุมซ้ายล่าง */}
             {cart.length > 1 && (
-              <div className="absolute bottom-6 left-6 bg-slate-800/80 text-white font-black text-2xl w-12 h-12 flex items-center justify-center rounded-full border-2 border-slate-600 shadow-2xl z-50 pointer-events-none print:hidden">
+              <div className="absolute bottom-8 left-8 bg-slate-800/80 text-white font-black text-2xl md:text-3xl w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full border-2 border-slate-600 shadow-2xl z-50 pointer-events-none print:hidden">
                 {cart.length}
               </div>
             )}
 
             {/* Slider แนวนอน */}
             <div className="flex-1 w-full h-full relative print:h-auto print:overflow-visible">
-               {cart.length > 1 && <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-slate-400 text-[10px] font-bold uppercase tracking-widest animate-bounce z-50 pointer-events-none bg-slate-900/80 px-4 py-1.5 rounded-full border border-slate-700 print:hidden">{p.swipe_hint}</div>}
+               {cart.length > 1 && <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-slate-400 text-xs md:text-sm font-bold uppercase tracking-widest animate-bounce z-50 pointer-events-none bg-slate-900/80 px-6 py-2 rounded-full border border-slate-700 print:hidden">{p.swipe_hint}</div>}
                <div id="horizontal-scroll-container" className="w-full h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory flex hide-scrollbar scroll-smooth transform-gpu print:flex-col print:overflow-visible print:h-auto print:snap-none" style={{ WebkitOverflowScrolling: 'touch' }}>
                    {cart.length > 0 ? (
                      cart.map((rx, idx) => renderBoardingPass(rx, idx))
