@@ -1,7 +1,9 @@
 'use client'
 import { useState, useRef, useEffect } from 'react';
 
-// Specialty Data
+// ==========================================
+// 🪄 ฐานข้อมูลเทคนิคพิเศษ
+// ==========================================
 const specialData = [
   {
     id: "inhaler_mdi",
@@ -9,7 +11,7 @@ const specialData = [
     title: { th: "ยาสูดพ่นแบบกด (MDI)", en: "MDI Inhaler" },
     steps: [
       { icon: "🫁", desc: { th: "หายใจออกให้สุด", en: "Breathe out completely.", zh: "完全呼气。", ja: "息を完全に吐き出します。", ru: "Сделайте глубокий выдох.", ar: "ازفر تمامًا.", de: "Atmen Sie vollständig aus." } },
-      { icon: "👄", desc: { th: "อมปากกระบอกให้สนิท", en: "Place mouthpiece in mouth.", zh: "将咬嘴放入口中。", ja: "マウスピースを口に含みます。", ru: "Поместите мундштук в рот.", ar: "ضع قطعة الفم في فมك.", de: "Nehmen Sie das Mundstück in den Mund." } },
+      { icon: "👄", desc: { th: "อมปากกระบอกให้สนิท", en: "Place mouthpiece in mouth.", zh: "将咬嘴放入口中。", ja: "マウスピースを口に含みます。", ru: "Поместите мундштук в рот.", ar: "ضع قطعة الفم في فمك.", de: "Nehmen Sie das Mundstück in den Mund." } },
       { icon: "🌬️", desc: { th: "กดพร้อมหายใจเข้าลึกๆ", en: "Press and inhale deeply.", zh: "按下并深吸气。", ja: "押して深く息を吸い込みます。", ru: "Нажмите и глубоко вдохните.", ar: "اضغط واستنشق بعمق.", de: "Drücken und tief einatmen." } },
       { icon: "⏱️", desc: { th: "กลั้นหายใจ 10 วินาที", en: "Hold breath for 10s.", zh: "屏住呼吸10秒。", ja: "10秒間息を止めます。", ru: "Задержите дыхание на 10 сек.", ar: "اكتم أنفاسك لمدة 10 ثوانٍ.", de: "Atem für 10s anhalten." } },
       { icon: "🫧", desc: { th: "บ้วนปากหลังใช้เสร็จ", en: "Rinse mouth after use.", zh: "使用后漱口。", ja: "使用後うがいをします。", ru: "Прополощите рот после.", ar: "اشطف فمك بعد الاستخدام.", de: "Mund nach Gebrauch ausspülen." } }
@@ -29,7 +31,9 @@ const specialData = [
   }
 ];
 
-// FittedText Component
+// ==========================================
+// 🛠️ Component: จัดการชื่อยาไม่ให้ล้นกรอบ
+// ==========================================
 const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
@@ -51,7 +55,7 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
 
   return (
     <div ref={containerRef} className="w-full flex items-center justify-center overflow-visible px-2 relative z-10 print:px-0">
-      {/* Disable scale on print, use word-wrap instead */}
+      {/* 💡 ใส่คลาส print-no-scale เพื่อปิดการย่อขยายอัตโนมัติเมื่อสั่ง Print ให้ใช้การขึ้นบรรทัดใหม่แทน */}
       <span ref={textRef} className={`print-text-wrap print-no-scale inline-block font-black origin-center whitespace-nowrap ${isMain ? 'text-3xl md:text-5xl text-slate-900 print:text-[1.5rem]' : 'text-lg md:text-2xl text-yellow-900 opacity-80 print:text-[1.2rem]'}`} style={{ transform: scale < 1 ? `scale(${scale})` : 'none' }}>
         {text.toUpperCase()}
       </span>
@@ -59,7 +63,9 @@ const FittedText = ({ text, isMain }: { text: string, isMain: boolean }) => {
   );
 };
 
-// Dictionary and Units
+// ==========================================
+// 📚 ฐานข้อมูลคำศัพท์ & พจนานุกรมหน่วยวัด
+// ==========================================
 const unitDict: any = {
   tab: { th: 'เม็ด', en: 'tablet', de: 'Tablette', zh: '粒', ja: '錠', ru: 'табл.', ar: 'حبة' },
   cap: { th: 'แคปซูล', en: 'capsule', de: 'Kapsel', zh: '胶囊', ja: 'カプセル', ru: 'капс.', ar: 'كبسولة' },
@@ -227,10 +233,12 @@ const LANGUAGES = [
   { code: 'ar', flag: '🇦🇪', label: 'UAE' },
 ];
 
+// แปลงข้อมูลเป็น Base64
 const encodeData = (data: any) => {
     return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
 };
 
+// แปลงข้อมูลกลับจาก Base64
 const decodeData = (str: string) => {
     try {
         return JSON.parse(decodeURIComponent(escape(atob(str))));
@@ -294,14 +302,15 @@ export default function PharmaLingoApp() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const synthRef = useRef<SpeechSynthesis | null>(null);
 
-  // Print link states
+  // 🔗 สถานะสำหรับการสร้างลิ้งก์ปริ้นท์
   const [shortLink, setShortLink] = useState('');
   const [isGeneratingLink, setIsGeneratingLink] = useState(false);
   const [showLinkModal, setShowLinkModal] = useState(false);
   
-  // Shared link state
+  // 🎯 สถานะเช็คว่าเป็นเครื่องเภสัช (เปิดผ่านลิ้งก์) หรือไม่
   const [isSharedLink, setIsSharedLink] = useState(false);
 
+  // ตรวจสอบว่ามีข้อมูลจาก Link หรือไม่ตอนโหลดเว็บ
   useEffect(() => { 
     if (typeof window !== 'undefined') {
       synthRef.current = window.speechSynthesis; 
@@ -310,6 +319,7 @@ export default function PharmaLingoApp() {
         synthRef.current?.getVoices();
       };
 
+      // อ่านค่าจาก URL Param
       const params = new URLSearchParams(window.location.search);
       const rxData = params.get('rx');
       if (rxData) {
@@ -320,31 +330,33 @@ export default function PharmaLingoApp() {
           setHasStarted(true);
           setDispenseState('present');
           setIsFullscreen(true);
-          setIsSharedLink(true);
+          setIsSharedLink(true); // 🎯 ถ้าเปิดผ่านลิ้งก์ แสดงว่าเป็นเภสัชกรเปิดในคอม
         }
       }
     }
   }, []);
 
-  // Generate link function
+  // 🔗 ฟังก์ชันสร้างลิ้งก์ผ่าน is.gd API
   const generatePrintLink = async () => {
     setIsGeneratingLink(true);
     setShowLinkModal(true);
     try {
       const payload = { cart, lang: patientLang };
       const encodedUrl = encodeData(payload);
+      // สร้าง URL เต็ม
       const longUrl = window.location.origin + '?rx=' + encodedUrl;
       
+      // ส่งไปย่อลิ้งก์ที่ is.gd
       const res = await fetch(`https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`);
       const data = await res.json();
       
       if (data.shorturl) {
         setShortLink(data.shorturl.replace('https://', ''));
       } else {
-        setShortLink('Error: Link generation failed');
+        setShortLink('Error: ไม่สามารถสร้างลิ้งก์ได้');
       }
     } catch (err) {
-      setShortLink('Error: Connection failed');
+      setShortLink('Error: การเชื่อมต่อล้มเหลว');
     }
     setIsGeneratingLink(false);
   };
@@ -407,9 +419,26 @@ export default function PharmaLingoApp() {
     synthRef.current.speak(utterance);
   };
 
+  // ✅ แก้ไข: แยกฟังก์ชันที่เกี่ยวกับ Regex ออกมาจาก inline JSX เพื่อแก้บั๊ก Vercel Turbopack "Unterminated regexp literal"
+  const handleTaperDaysChange = (idx: number, val: string) => {
+    if (new RegExp('^\\d*$').test(val)) {
+      const ns = [...taperSteps];
+      ns[idx].days = Number(val);
+      setTaperSteps(ns);
+    }
+  };
+
+  const handleTaperDoseChange = (idx: number, val: string) => {
+    if (new RegExp('^\\d*\\.?\\d*$').test(val)) {
+      const ns = [...taperSteps];
+      ns[idx].dose = val;
+      setTaperSteps(ns);
+    }
+  };
+
   const togglePeriod = (index: number) => setRxPeriod(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index].sort());
   const toggleWarning = (index: number) => setRxWarnings(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]);
-  const handleNumberInput = (setter: any, value: string) => { if (value === '' || /^\d*\.?\d*$/.test(value)) setter(value); };
+  const handleNumberInput = (setter: any, value: string) => { if (value === '' || new RegExp('^\\d*\\.?\\d*$').test(value)) setter(value); };
 
   const handleTranslate = async () => {
     if (!customText.trim()) return;
@@ -632,12 +661,14 @@ export default function PharmaLingoApp() {
   if (appMode === 'history' && activeQuestion) patientHeightClass = 'h-[75dvh] p-6 print:hidden'; 
   if (appMode === 'dispense' && dispenseState === 'input') patientHeightClass = 'h-[8dvh] p-2 print:hidden'; 
 
-  // Guide Card Rendering
+  // ==========================================
+  // 🪄 Render ฟังก์ชัน: การ์ด Instant Guide
+  // ==========================================
   const renderGuideCard = (guide: any) => {
     return (
       <div className="w-full h-fit max-h-[85dvh] lg:max-w-4xl bg-white lg:rounded-[2rem] rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border-4 border-teal-200 print:max-h-none" dir={isRTL ? 'rtl' : 'ltr'}>
         <div className="bg-gradient-to-r from-teal-700 to-emerald-900 p-4 md:p-6 text-center relative shrink-0 flex justify-between items-center shadow-inner print:bg-teal-800 print:border-b-2 print:border-teal-800">
-          <span className="text-4xl opacity-30 print:text-white">🪄</span>
+          <span className="text-4xl opacity-30 print-text-white">🪄</span>
           <div className="flex flex-col items-center">
             <h1 className="text-white font-black text-lg md:text-xl tracking-widest uppercase print:text-white">Bangkok Pattaya Hospital</h1>
             <p className="text-teal-200 text-sm md:text-base font-bold mt-1 tracking-widest print:text-white">{p.spec_guide}</p>
@@ -667,7 +698,9 @@ export default function PharmaLingoApp() {
     );
   };
 
-  // Boarding Pass Rendering
+  // ==========================================
+  // 🎟️ Render Boarding Pass: จัดหน้าจอแบบ Fit & ปริ้นท์ A5 แนวนอน
+  // ==========================================
   const renderBoardingPass = (rx: Prescription, index: number) => {
     const displayDrugEn = rx.drugInput.trim();
     const displayDrugLocal = rx.drugName && rx.drugName.toLowerCase() !== rx.drugInput.toLowerCase() ? rx.drugName : '';
@@ -681,20 +714,18 @@ export default function PharmaLingoApp() {
     
     const instPadding = instCount >= 5 ? 'p-2 md:p-3' : instCount >= 3 ? 'p-3 md:p-4' : 'p-4 md:p-5'; 
     const instGap = instCount >= 5 ? 'gap-1.5 md:gap-2' : instCount >= 3 ? 'gap-2 md:gap-3' : 'gap-4 md:gap-5';
-    const instTextSize = instCount >= 5 ? 'text-sm md:text-base print:text-[1rem]' : instCount >= 3 ? 'text-base md:text-lg print:text-[1.2rem]' : 'text-xl md:text-2xl print:text-[1.5rem]';
     
     const warnCount = rx.rxWarnings.length + rx.customWarnings.length;
     const warnPadding = warnCount >= 5 ? 'p-2 md:p-3' : warnCount >= 3 ? 'p-3 md:p-4' : 'p-4 md:p-5'; 
     const warnGap = warnCount >= 5 ? 'gap-1.5 md:gap-2' : warnCount >= 3 ? 'gap-2 md:gap-3' : 'gap-3 md:gap-4';
-    const warnTextSize = warnCount >= 5 ? 'text-xs md:text-sm print:text-[0.9rem]' : warnCount >= 3 ? 'text-sm md:text-base print:text-[1rem]' : 'text-lg md:text-xl print:text-[1.2rem]';
 
     return (
       <div key={index} data-index={index} className="w-full h-full flex-shrink-0 snap-center overflow-x-hidden overflow-y-auto snap-y snap-mandatory hide-scrollbar transform-gpu print-card-container print:overflow-hidden print:break-inside-avoid print:mb-0 print:p-0" style={{ WebkitOverflowScrolling: 'touch' }} dir={isRTL ? 'rtl' : 'ltr'}>
         
-        {/* Print Layout */}
+        {/* 🖨️ โครงสร้างตาราง (Flexbox แบบดั้งเดิม) สำหรับ Print ให้อยู่ข้างกันซ้าย-ขวา */}
         <div className="w-full h-full flex flex-col snap-y snap-mandatory print-rx-layout">
             
-          {/* Blue Card */}
+          {/* 🔵 การ์ดสีฟ้า (วิธีใช้) */}
           <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center print:p-0 print:min-h-0 print:block print:h-full print:w-full print-half print-card-wrapper">
             <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-full max-h-[85dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-blue-100 overflow-hidden print:max-h-full print:w-full print:break-inside-avoid print:border-2 print:border-blue-900 print:rounded-2xl print:h-full print:shadow-none print-rx-card">
               
@@ -762,7 +793,7 @@ export default function PharmaLingoApp() {
                     {(rx.rxDose !== null || Number(rx.cDose) > 0) && (
                       <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box print:bg-white`}>
                         <span className="text-3xl md:text-4xl print-icon">💊</span>
-                        <div className={`flex flex-wrap items-center gap-2 font-black text-slate-800 ${instTextSize}`}>
+                        <div className={`flex flex-wrap items-center gap-2 font-black text-slate-800 text-lg md:text-xl print:text-[1.2rem]`}>
                           <span>{rx.rxDose !== null ? p.dose[rx.rxDose] : parseSmartText(p.smart_dose, rx.cDose, rx.cDoseUnit)}</span>
                         </div>
                       </div>
@@ -771,7 +802,7 @@ export default function PharmaLingoApp() {
                     {(rx.rxFreq !== null || Number(rx.cHour) > 0 || Number(rx.cApply) > 0) && (
                       <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box print:bg-white`}>
                         <span className="text-3xl md:text-4xl print-icon">🔄</span>
-                        <span className={`font-black text-slate-800 ${instTextSize}`}>
+                        <span className={`font-black text-slate-800 text-lg md:text-xl print:text-[1.2rem]`}>
                           {rx.rxFreq !== null && <div>{p.freq[rx.rxFreq]}</div>}
                           {Number(rx.cHour) > 0 && <div className="text-indigo-600">{parseSmartText(p.smart_hour, rx.cHour, rx.cHourUnit)}</div>}
                           {Number(rx.cApply) > 0 && <div className="text-indigo-600">{parseSmartText(p.smart_apply, rx.cApply, rx.cApplyUnit)}</div>}
@@ -782,7 +813,7 @@ export default function PharmaLingoApp() {
                     {(rx.rxTime !== null || Number(rx.cDays) > 0) && (
                       <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box print:bg-white`}>
                         <span className="text-3xl md:text-4xl print-icon">🍽️</span>
-                        <span className={`font-black text-slate-800 ${instTextSize}`}>
+                        <span className={`font-black text-slate-800 text-lg md:text-xl print:text-[1.2rem]`}>
                           {rx.rxTime !== null && <div>{p.time[rx.rxTime]}</div>}
                           {Number(rx.cDays) > 0 && <div className="text-emerald-600 mt-1 print:mt-0 print:text-[0.8rem]">{parseSmartText(p.smart_days, rx.cDays, rx.cDaysUnit)}</div>}
                         </span>
@@ -792,7 +823,7 @@ export default function PharmaLingoApp() {
                     {rx.rxPeriod.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 print:gap-1.5 print-box print:bg-transparent print:border-none print:p-0">
                         {rx.rxPeriod.map((i: number) => (
-                          <span key={i} className={`bg-orange-50 text-orange-600 px-3 py-1.5 rounded-lg font-black border border-orange-200 shadow-sm ${instTextSize} print:px-2 print:py-1 print:rounded-lg print:border`}>
+                          <span key={i} className={`bg-orange-50 text-orange-600 px-3 py-1.5 rounded-lg font-black border border-orange-200 shadow-sm text-sm md:text-base print:px-2 print:py-1 print:rounded-lg print:border print:text-[1rem]`}>
                             {p.period_icons[i]} {p.period[i]}
                           </span>
                         ))}
@@ -802,7 +833,7 @@ export default function PharmaLingoApp() {
                     {rx.rxSide !== null && (
                       <div className={`flex items-center gap-3 bg-white rounded-xl shadow-sm border border-slate-100 ${instPadding} print-box print:bg-white print:mt-auto`}>
                         <span className="text-3xl md:text-4xl print-icon">🧭</span>
-                        <span className={`font-black text-purple-600 bg-purple-50 px-2 py-1 rounded-lg border border-purple-200 ${instTextSize} print:px-2 print:py-1`}>
+                        <span className={`font-black text-purple-600 bg-purple-50 px-2 py-1 rounded-lg border border-purple-200 text-sm md:text-base print:px-2 print:py-1 print:text-[1rem]`}>
                           {p.side_icons[rx.rxSide]} {p.side[rx.rxSide]}
                         </span>
                       </div>
@@ -813,7 +844,7 @@ export default function PharmaLingoApp() {
             </div>
           </div>
 
-          {/* Red Card */}
+          {/* 🔴 การ์ดสีแดง (คำเตือน) */}
           <div className="w-full h-full min-h-[100dvh] flex items-center justify-center p-4 snap-center print:p-0 print:min-h-0 print:block print:h-full print:w-full print-half print-card-wrapper">
             <div className="w-full max-w-md md:max-w-xl lg:max-w-2xl h-full max-h-[85dvh] flex flex-col bg-white rounded-[2rem] shadow-2xl border-2 border-red-200 overflow-hidden print:max-h-full print:w-full print:break-inside-avoid print:border-2 print:border-red-900 print:rounded-2xl print:h-full print:shadow-none print-rx-card">
               
@@ -830,19 +861,20 @@ export default function PharmaLingoApp() {
 
               <div className={`bg-red-50/60 flex flex-col ${warnGap} p-3 md:p-5 overflow-y-auto custom-scrollbar flex-1 print:overflow-hidden print:bg-transparent print:p-3 print:gap-2`}>
                 <h3 className="text-red-600 font-black text-[11px] md:text-sm uppercase tracking-widest border-b-2 border-red-200 pb-1 mb-1 text-center print:text-[0.9rem] print:mb-0">⚠️ {p.warn_title}</h3>
+                
                 <div className={`flex flex-col ${warnGap} print:flex-1 print:justify-center`}>
                   {(rx.rxWarnings.length > 0 || rx.customWarnings.length > 0) ? (
                     <>
                       {rx.rxWarnings.map((wIdx: number) => (
                         <div key={wIdx} className={`flex items-center bg-white rounded-xl shadow-sm border border-red-100 ${warnPadding} print-box print:bg-white`}>
                           <span className={`shrink-0 text-3xl md:text-4xl mr-2 print-icon print:mr-2`}>{th.warn_icons[wIdx]}</span>
-                          <span className={`text-red-700 font-black leading-snug ${warnTextSize}`}>{p.warn[wIdx]}</span>
+                          <span className={`text-red-700 font-black leading-snug text-sm md:text-base print:text-[1rem]`}>{p.warn[wIdx]}</span>
                         </div>
                       ))}
                       {rx.customWarnings.map((cw: string, i: number) => (
                         <div key={i} className={`flex items-center bg-red-100 rounded-xl shadow-sm border border-red-300 ${warnPadding} print-box print:bg-red-50`}>
                           <span className={`shrink-0 text-3xl md:text-4xl mr-2 print-icon print:mr-2`}>🚨</span>
-                          <span className={`text-red-800 font-black leading-snug ${warnTextSize}`}>{cw}</span>
+                          <span className={`text-red-800 font-black leading-snug text-sm md:text-base print:text-[1rem]`}>{cw}</span>
                         </div>
                       ))}
                     </>
@@ -851,7 +883,7 @@ export default function PharmaLingoApp() {
                   )}
                 </div>
                 
-                {/* Allergy Alert Block */}
+                {/* 📍 คำเตือนเรื่องแพ้ยา ล็อกไว้ท้ายสุดแบบไม่ให้ตกขอบกระดาษ */}
                 <div className="bg-red-600 text-white rounded-xl p-3 flex items-center gap-2 shadow-md border border-red-400 mt-2 print-box print:mt-auto print-bg-red">
                    <span className="text-2xl md:text-3xl shrink-0 print-icon print-text-white">🛑</span>
                    <span className="font-black text-xs md:text-sm leading-snug print:text-white print:text-[0.8rem]">{p.allergy_alert}</span>
@@ -868,7 +900,7 @@ export default function PharmaLingoApp() {
   return (
     <div className="h-[100dvh] w-full bg-[#0f172a] font-sans flex flex-col overflow-hidden relative print:h-auto print:bg-white print:overflow-visible">
       
-      {/* 🎯 SharedLink handles orientation 🎯 */}
+      {/* 🎯 1. เช็ค isSharedLink เพื่อควบคุมทิศทางการหมุนหน้าจอ 🎯 */}
       <div className={`w-full flex justify-center items-center transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] print:rotate-0 print:block
         ${isSharedLink ? 'rotate-0' : 'rotate-180'}
         ${isFullscreen ? 'fixed inset-0 z-[100] bg-slate-900 h-full print:relative print:bg-white print:z-0' : `bg-slate-100 ${patientHeightClass}`}`}>
@@ -876,12 +908,12 @@ export default function PharmaLingoApp() {
         {dispenseState === 'present' && !activeGuide ? (
           <div className="w-full h-full flex flex-col bg-slate-900 relative print:bg-white print:h-auto print:block print:w-full print:mx-auto" dir={isRTL ? 'rtl' : 'ltr'}>
             
-            {/* Photo prompt box */}
+            {/* 📸 กล่องบอกให้ถ่ายรูป (หลบมุมซ้ายบน) */}
             <div className="absolute top-6 left-6 bg-blue-600 text-white font-black px-4 py-2 md:px-5 md:py-3 rounded-full shadow-xl border-2 border-blue-400 animate-pulse flex items-center gap-2 z-50 print:hidden pointer-events-auto">
                <span className="text-xl md:text-2xl">📸</span> <span className="text-[10px] md:text-sm">{p.photo_prompt}</span>
             </div>
 
-            {/* Print and Close Buttons */}
+            {/* ปุ่มปิดและปุ่มปริ้นท์ มุมขวาบน */}
             <div className="absolute top-6 right-6 flex items-center gap-2 z-50 pointer-events-none print:hidden">
               <button onClick={() => window.print()} className="bg-emerald-500 hover:bg-emerald-400 text-white w-10 h-10 md:w-12 md:h-12 rounded-full text-xl font-black shadow-xl flex items-center justify-center border-2 border-emerald-300 pointer-events-auto active:scale-95">
                  🖨️
@@ -891,14 +923,14 @@ export default function PharmaLingoApp() {
               </button>
             </div>
 
-            {/* Medication Counter */}
+            {/* ตัวเลขจำนวนยารวมที่มุมขวาล่าง */}
             {cart.length > 1 && (
               <div className="absolute bottom-6 right-6 bg-slate-800/80 text-white font-black text-xl md:text-2xl w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full border-2 border-slate-600 shadow-xl z-50 pointer-events-none print:hidden">
                 {cart.length}
               </div>
             )}
 
-            {/* Horizontal Slider */}
+            {/* Slider แนวนอน */}
             <div className="flex-1 w-full h-full relative print:h-auto print:overflow-visible">
                {cart.length > 1 && <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-slate-400 text-[10px] md:text-xs font-bold uppercase tracking-widest animate-bounce z-50 pointer-events-none bg-slate-900/80 px-6 py-2 rounded-full border border-slate-700 print:hidden">{p.swipe_hint}</div>}
                <div id="horizontal-scroll-container" className="w-full h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory flex hide-scrollbar scroll-smooth transform-gpu print:flex-col print:overflow-visible print:h-auto print:snap-none" style={{ WebkitOverflowScrolling: 'touch' }}>
@@ -956,7 +988,7 @@ export default function PharmaLingoApp() {
                       </div>
                     )}
                     
-                    {/* Date of Birth Input Prompt */}
+                    {/* เปลี่ยนหน้าถามวันเกิด เป็นข้อความ */}
                     {activeQuestion === 'q_dob' && (
                       <div className="w-full max-w-xl mx-auto mt-4 animate-in fade-in">
                          <div className="bg-blue-50 text-blue-800 rounded-[2rem] p-6 flex flex-col items-center shadow-md border-2 border-blue-200">
@@ -994,7 +1026,7 @@ export default function PharmaLingoApp() {
          </div>
       )}
 
-      {/* Pharmacist UI (Hidden on print) */}
+      {/* UI เภสัชกร (ซ่อนตอนปริ้นท์) */}
       {!isFullscreen && (
         <div className="flex-1 bg-[#0f172a] rounded-t-[2.5rem] shadow-[0_-20px_50px_rgba(0,0,0,0.5)] relative z-10 flex flex-col min-h-0 border-t border-slate-700/50 print:hidden">
           
@@ -1009,7 +1041,7 @@ export default function PharmaLingoApp() {
               {appMode === 'dispense' && (
                 <button onClick={clearAll} className="text-[10px] md:text-xs font-black text-white bg-red-900/40 px-3 py-2 md:px-4 md:py-3 rounded-xl border border-red-800 hover:bg-red-800">🗑️ เคลียร์</button>
               )}
-              {/* Print Link Button */}
+              {/* 🔗 ปุ่มขอ Link ปริ้นท์ สำหรับหน้าแรก */}
               {appMode === 'dispense' && cart.length > 0 && (
                 <button onClick={generatePrintLink} disabled={isGeneratingLink} className="text-[10px] md:text-xs font-black text-white bg-indigo-600 px-3 py-2 md:px-4 md:py-3 rounded-xl border border-indigo-400 hover:bg-indigo-500 flex items-center gap-1.5 disabled:opacity-50">
                   {isGeneratingLink ? '⏳ รอ...' : '🔗 ลิ้งก์ปริ้นท์'}
@@ -1110,7 +1142,7 @@ export default function PharmaLingoApp() {
                                <span className="text-[9px] md:text-[10px] text-slate-500 uppercase font-bold">ระยะเวลา (วัน)</span>
                                <div className="flex bg-slate-800 p-1 rounded-lg border border-slate-600">
                                  <button onClick={() => { const ns = [...taperSteps]; ns[idx].days = Math.max(1, ns[idx].days-1); setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-slate-700 text-white rounded font-black active:scale-90">-</button>
-                                 <input type="text" value={step.days} onChange={(e) => { const val = e.target.value; if (/^\d*$/.test(val)) { const ns = [...taperSteps]; ns[idx].days = Number(val); setTaperSteps(ns); } }} className="flex-1 w-6 md:w-8 text-center font-black text-white bg-transparent outline-none text-[16px]" />
+                                 <input type="text" value={step.days} onChange={(e) => handleTaperDaysChange(idx, e.target.value)} className="flex-1 w-6 md:w-8 text-center font-black text-white bg-transparent outline-none text-[16px]" />
                                  <button onClick={() => { const ns = [...taperSteps]; ns[idx].days++; setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-indigo-600 text-white rounded font-black active:scale-90">+</button>
                                </div>
                             </div>
@@ -1118,7 +1150,7 @@ export default function PharmaLingoApp() {
                                <span className="text-[9px] md:text-[10px] text-slate-500 uppercase font-bold">ปริมาณ (เม็ด)</span>
                                <div className="flex bg-slate-800 p-1 rounded-lg border border-slate-600">
                                  <button onClick={() => { const ns = [...taperSteps]; ns[idx].dose = Math.max(0.5, Number(ns[idx].dose)-0.5); setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-slate-700 text-white rounded font-black active:scale-90">-</button>
-                                 <input type="text" value={step.dose} onChange={(e) => { const val = e.target.value; if (/^\d*\.?\d*$/.test(val)) { const ns = [...taperSteps]; ns[idx].dose = val; setTaperSteps(ns); } }} className="flex-1 w-6 md:w-8 text-center font-black text-white bg-transparent outline-none text-[16px]" />
+                                 <input type="text" value={step.dose} onChange={(e) => handleTaperDoseChange(idx, e.target.value)} className="flex-1 w-6 md:w-8 text-center font-black text-white bg-transparent outline-none text-[16px]" />
                                  <button onClick={() => { const ns = [...taperSteps]; ns[idx].dose = Number(ns[idx].dose) + 0.5; setTaperSteps(ns);}} className="w-6 h-6 md:w-8 md:h-8 bg-indigo-600 text-white rounded font-black active:scale-90">+</button>
                                </div>
                             </div>
@@ -1290,7 +1322,7 @@ export default function PharmaLingoApp() {
         </div>
       )}
 
-      {/* 🎯 Popup Modal สำหรับส่งลิ้งก์ให้เภสัช (0 องศาเสมอ) 🎯 */}
+      {/* 🎯 Popup Modal สำหรับส่งลิ้งก์ให้เภสัช (หมุนหาเภสัชกรเสมอ 0 องศา) 🎯 */}
       {showLinkModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[200] print:hidden">
           <div className="bg-white rounded-3xl p-6 md:p-8 flex flex-col items-center max-w-sm w-[90%] shadow-2xl animate-in rotate-0">
